@@ -1,0 +1,5 @@
+__pycache__/
+*.py[cod]
+.venv/
+.aegis-local/
+.DS_Store

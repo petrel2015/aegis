@@ -1,0 +1,14 @@
+# AEGIS Issue Handoff v1
+- record_id: <same ID as the full report>
+- role: qa
+- actor: <instance ID>
+- issue: <Issue URL>
+- report_url: <actual full PR report/review URL>
+- source_records: <input record IDs/URLs>
+- pr: <PR URL>
+- head: <full candidate SHA>
+- outcome: <same decision/outcome as full report>
+- next_role: <actual next role>
+- next_state: <actual requested state; unchanged when waiting>
+- outstanding: <unresolved AC/F-IDs or none>
+- requested_action: <concrete next action>

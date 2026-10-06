@@ -1,0 +1,9 @@
+{
+  "summary": "Integration tests pass for recorded head and base",
+  "pr": 57,
+  "head": "dddddddddddddddddddddddddddddddddddddddd",
+  "base": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "tested_commit": "cccccccccccccccccccccccccccccccccccccccc",
+  "result": "pass",
+  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105"
+}

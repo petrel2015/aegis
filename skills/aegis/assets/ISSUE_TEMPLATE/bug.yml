@@ -1,0 +1,89 @@
+{
+  "name": "Bug",
+  "description": "Propose a bug for agent triage",
+  "title": "[bug] ",
+  "body": [
+    {
+      "type": "dropdown",
+      "id": "priority",
+      "attributes": {
+        "label": "Priority",
+        "options": [
+          "P0 - critical outage",
+          "P1 - high impact",
+          "P2 - normal",
+          "P3 - low"
+        ]
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "field-0",
+      "attributes": {
+        "label": "Environment",
+        "description": "Version/commit, OS and runtime."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "field-1",
+      "attributes": {
+        "label": "Reproduction",
+        "description": "Minimal steps or reproducible example."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "field-2",
+      "attributes": {
+        "label": "Expected behavior",
+        "description": "What should happen?"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "field-3",
+      "attributes": {
+        "label": "Actual behavior",
+        "description": "What happened? Include sanitized logs."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "field-4",
+      "attributes": {
+        "label": "Impact",
+        "description": "Affected users, frequency and workaround."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "field-5",
+      "attributes": {
+        "label": "Acceptance criteria",
+        "description": "How can the fix be verified?"
+      },
+      "validations": {
+        "required": true
+      }
+    }
+  ]
+}

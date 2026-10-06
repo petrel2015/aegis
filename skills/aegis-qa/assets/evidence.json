@@ -1,0 +1,9 @@
+{
+  "summary": "<actual summary>",
+  "pr": 0,
+  "head": "<actual head>",
+  "base": "<actual base>",
+  "tested_commit": "<actual tested_commit>",
+  "result": "pass",
+  "url": "<actual url>"
+}
