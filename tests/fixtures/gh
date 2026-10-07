@@ -1,14 +1,48 @@
 #!/usr/bin/env python3
+"""Process-boundary fake GitHub transport, with persistent Issue projections."""
 import sys,json,os,base64,hashlib
 from pathlib import Path
-p=Path(os.environ['FAKE_GH_ROOT']); sf=p/'state.json'; meta=json.loads((p/'meta.json').read_text()); route=next(x for x in sys.argv if x.startswith('repos/')); method=sys.argv[sys.argv.index('-X')+1]
-if '/contents/' in route:
+from urllib.parse import unquote, urlsplit, parse_qs
+p=Path(os.environ['FAKE_GH_ROOT']); sf=p/'state.json'
+meta=json.loads((p/'meta.json').read_text())
+route=next(x for x in sys.argv if x.startswith('repos/'))
+endpoint=urlsplit(route).path.removeprefix('repos/test/project')
+page=int(parse_qs(urlsplit(route).query).get('page',['1'])[0])
+method=sys.argv[sys.argv.index('-X')+1]
+ui_file=p/'ui.json'
+ui=json.loads(ui_file.read_text()) if ui_file.exists() else {'definitions':[], 'labels':['bug','aegis:intake'], 'comments':[]}
+def save(): ui_file.write_text(json.dumps(ui))
+def fail(code):
+ print(f'HTTP {code}',file=sys.stderr); sys.exit(1)
+if endpoint=='': print(json.dumps({'default_branch':'main'}))
+elif endpoint=='/contents/.github/aegis.json':
+ raw=(p/'policy.json').read_bytes();print(json.dumps({'content':base64.b64encode(raw).decode(),'sha':'policy-1'}))
+elif '/check-runs' in endpoint:
+ head=endpoint.split('/')[2];print(json.dumps({'check_runs':[{'id':1,'name':'test','head_sha':head,'app':{'slug':'github-actions'},'status':'completed','conclusion':'success'}]}))
+elif '/git/commits/' in endpoint:
+ print(json.dumps({'parents':[{'sha':meta['head']},{'sha':meta['base']}]}))
+elif '/contents/' in endpoint:
  raw=sf.read_bytes(); sha=hashlib.sha1(raw).hexdigest()
  if method=='GET': print(json.dumps({'content':base64.b64encode(raw).decode(),'sha':sha}))
  else:
   data=json.load(sys.stdin)
-  if data.get('sha')!=sha: sys.exit(1)
+  if data.get('sha')!=sha: fail(409)
   sf.write_bytes(base64.b64decode(data['content'])); print('{}')
-elif '/issues/' in route: print(json.dumps({'state':meta['issue_state']}))
-elif '/pulls/' in route: print(json.dumps({'head':{'sha':meta['head']},'base':{'sha':meta['base'],'repo':{'full_name':'test/project'}},'state':'closed' if meta.get('merged') else 'open','draft':False,'merged':meta.get('merged',False)}))
-else: sys.exit(3)
+elif endpoint=='/labels' and method=='POST':
+ data=json.load(sys.stdin);ui['definitions'].append(data['name']);save();print(json.dumps(data))
+elif endpoint.startswith('/labels/'):
+ name=unquote(endpoint.split('/labels/')[1])
+ if name not in ui['definitions']: fail(404)
+ print(json.dumps({'name':name}))
+elif '/issues/' in endpoint and '/labels' in endpoint:
+ if method=='POST': ui['labels']=sorted(set(ui['labels'])|set(json.load(sys.stdin)['labels']));save()
+ if method=='DELETE': ui['labels'].remove(unquote(endpoint.split('/labels/')[1]));save()
+ print(json.dumps([{'name':n} for n in ui['labels']][(page-1)*100:page*100]))
+elif endpoint.endswith('/comments'):
+ if method=='POST':
+  data=json.load(sys.stdin);data['html_url']=f'https://github.com/test/project/issues/1#issuecomment-{len(ui["comments"])+1}'
+  ui['comments'].append(data);save();print(json.dumps(data))
+ else: print(json.dumps(ui['comments'][(page-1)*100:page*100]))
+elif '/issues/' in endpoint: print(json.dumps(dict(json.loads((p/'issue.json').read_text()),state=meta['issue_state'])))
+elif '/pulls/' in endpoint: print(json.dumps({'head':{'sha':meta['head']},'base':{'ref':'main','sha':meta['base'],'repo':{'full_name':'test/project'}},'state':'closed' if meta.get('merged') else 'open','draft':False,'merged':meta.get('merged',False)}))
+else: fail(404)

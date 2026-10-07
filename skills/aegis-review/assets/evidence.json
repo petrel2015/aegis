@@ -2,5 +2,19 @@
   "summary": "<actual summary>",
   "pr": 0,
   "head": "<actual head>",
-  "url": "<actual url>"
+  "url": "<actual url>",
+  "schema": "aegis-evidence/v1",
+  "acceptance": {
+    "AC-1": {
+      "result": "pass",
+      "evidence": "<actual HTTPS evidence URL>"
+    },
+    "AC-2": {
+      "result": "pass",
+      "evidence": "<actual HTTPS evidence URL>"
+    }
+  },
+  "kind": "code-review",
+  "result": "approve",
+  "reviewed_head": "<actual head>"
 }

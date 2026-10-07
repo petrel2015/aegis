@@ -4,7 +4,7 @@
 
 1. Project AGENTS.md, policy and documentation entry; existing architecture and relevant decisions.
 2. Open Issues from all pages: only configured trusted intake, excluding PRs. For unregistered
-   Issues, verify author/maintainer intake approval before `register`. For registered work,
+   Issues, run `intake --actor ID` after preflight; it validates author/label, form fields and AC IDs. For registered work,
    use `scan --role planner`; only `new` with no claim is eligible.
 3. Feature/improvement: background, benefit, scope, acceptance. Bug: environment, reproduction,
    actual/expected behavior and impact. Missing information is not permission to guess.

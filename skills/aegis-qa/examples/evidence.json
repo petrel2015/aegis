@@ -5,5 +5,29 @@
   "base": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "tested_commit": "cccccccccccccccccccccccccccccccccccccccc",
   "result": "pass",
-  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105"
+  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105",
+  "schema": "aegis-evidence/v1",
+  "acceptance": {
+    "AC-1": {
+      "result": "pass",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+    },
+    "AC-2": {
+      "result": "pass",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+    }
+  },
+  "kind": "qa",
+  "tests": [
+    {
+      "argv": [
+        "npm",
+        "test",
+        "--",
+        "--run"
+      ],
+      "exit_code": 0,
+      "log_url": "https://github.com/example/taskboard/actions/runs/101"
+    }
+  ]
 }

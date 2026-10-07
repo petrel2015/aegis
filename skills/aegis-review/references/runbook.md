@@ -27,7 +27,9 @@ new findings. Every AC needs a result. `approve` is permitted only with no unres
 findings or unverified mandatory criteria. Reviewer may request additional tests without
 claiming those tests ran. A new PR head requires another code review.
 
-For code evidence include live `pr` and full `head`; design evidence needs only summary/url.
+All evidence requires schema, summary and URL. Design approval uses `kind: design-review`,
+`result: approve`, approved `design_ref` and complete AC coverage; use the [design template](../assets/design-evidence.json).
+Code approval additionally includes live `pr`, full `head` and matching `reviewed_head`.
 Do not modify implementation while reviewing or switch identity to self-approve. If shared
 GitHub credentials prevent an official approval, publish evidence and respect the repository's
 separate-account gate. A design comment digest/commit that changed must be reviewed again.
@@ -76,3 +78,10 @@ identical to the linked full report. A handoff comment requests a transition; on
 successful CLI write confirms it. On an ambiguous finish, retain the report and reconcile
 state instead of announcing completion. If publishing the complete report directly on the
 Issue (e.g. design review or pre-PR block), do not add a redundant handoff comment.
+
+## Offline review
+
+When explicitly reviewing local artifacts without a registered GitHub task, record
+`coordination: not-executed`, file digests and findings locally. Do not invent Issue URLs,
+leases or state transitions. Offline approval evaluates the design/code; it does not claim
+that coordinated GitHub review or live gates ran. Resume the managed flow only after setup.

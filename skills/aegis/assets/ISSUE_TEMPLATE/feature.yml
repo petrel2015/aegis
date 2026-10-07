@@ -57,7 +57,7 @@
       "id": "field-3",
       "attributes": {
         "label": "Acceptance criteria",
-        "description": "Observable conditions for completion."
+        "description": "List unique acceptance IDs: AC-1: observable result; AC-2: observable result."
       },
       "validations": {
         "required": true
@@ -72,6 +72,17 @@
       },
       "validations": {
         "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "dependencies",
+      "attributes": {
+        "label": "Dependencies",
+        "description": "Optional prerequisite Issue numbers, e.g. #12 #13. Leave blank if none."
+      },
+      "validations": {
+        "required": false
       }
     }
   ]

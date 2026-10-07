@@ -1,4 +1,17 @@
 {
   "summary": "<actual summary>",
-  "url": "<actual url>"
+  "url": "<actual url>",
+  "schema": "aegis-evidence/v1",
+  "acceptance": {
+    "AC-1": {
+      "result": "pass",
+      "evidence": "<actual HTTPS evidence URL>"
+    },
+    "AC-2": {
+      "result": "pass",
+      "evidence": "<actual HTTPS evidence URL>"
+    }
+  },
+  "kind": "design",
+  "design_ref": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 }

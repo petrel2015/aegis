@@ -17,10 +17,10 @@ If the target was initialized under an earlier project name, complete the
    DocTrail or another installed skill. Keep README short with links.
 4. Configure `.github/aegis.json`: verified test commands, acceptance/CI requirements,
    trusted Issue authors, budgets, intake label, merge policy. Empty `test_commands` means
-   unconfigured, never successful. These are agent policy instructions, not a sandbox or a
-   configuration executor inside `aegis.py`.
+   unconfigured, never successful. `preflight`, `intake`, `claim` and `finish` enforce these gates. The bounded host
+   runner enforces time limits; this cooperative protocol is not a sandbox.
 5. Create the intake label using `gh label create aegis:intake --repo OWNER/REPO --color 7057ff`.
-   A trusted maintainer applies it to approved Issues. Auto-enrollment can instead allow
+   A trusted maintainer applies it to approved Issues. State labels (`aegis:new`, `aegis:blocked`, etc.) are created automatically on first synchronization; the runtime needs permission to manage labels and comment on Issues. Auto-enrollment can instead allow
    `trusted_issue_authors`; never enroll arbitrary public submissions for privileged execution.
 6. After project initialization is authorized, run `aegis.py --repo OWNER/REPO init-remote` once.
    This creates branch `aegis-state` from default and adds `aegis-state.json`. Never merge

@@ -9,5 +9,7 @@
   "merge_mode": "manual",
   "required_checks": [],
   "documentation_entry": "README.md",
-  "release_policy": "separate authorization required"
+  "release_policy": "separate authorization required",
+  "review_mode": "agent-attestation",
+  "check_app": "github-actions"
 }

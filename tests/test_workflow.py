@@ -20,6 +20,10 @@ EVIDENCE = {'summary': 'Observed result', 'url': 'https://github.com/org/project
 
 class WorkflowTests(unittest.TestCase):
     def setUp(self):
+        for name in ('load_policy','intake_issue','validate_claim','evidence_gate','remote_gate'):
+            patcher=patch.object(aegis.policy,name,return_value={})
+            patcher.start();self.addCleanup(patcher.stop)
+
         self.s = aegis.mutate(aegis.new_state(), 'register', 1, 'p', now=10, op='register')
     def apply(self, cmd, actor='p', **kwargs):
         self.s = aegis.mutate(self.s, cmd, 1, actor, now=20, **kwargs)
@@ -156,6 +160,7 @@ class WorkflowTests(unittest.TestCase):
     def test_closed_issue_can_finalize_and_release(self):
         self.stage('merge-ready')
         self.s['tasks']['1']['history']=[{'evidence':EVIDENCE}]
+        self.s['tasks']['1']['requirements']={'source_body':''}
         with tempfile.TemporaryDirectory() as tmp:
             evidence=Path(tmp)/'evidence.json'; evidence.write_text(json.dumps(EVIDENCE))
             self.claim('qa','q')
@@ -169,6 +174,7 @@ class WorkflowTests(unittest.TestCase):
                 self.assertIsNone(result['task']['lease'])
     def test_closed_issue_merge_ready_claim(self):
         self.stage('merge-ready')
+        self.s['tasks']['1']['requirements']={'source_body':''}
         with patch.object(aegis.Store,'read',return_value=(self.s,'sha')), patch.object(aegis.Store,'write'), patch.object(aegis,'gh_api',return_value={'state':'closed'}):
             result=aegis.main(['--repo','o/r','claim','--issue','1','--actor','q','--role','qa'])
             self.assertEqual(result['task']['lease']['role'],'qa')

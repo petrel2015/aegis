@@ -31,7 +31,8 @@ Here `AEGIS` is the absolute path to `scripts/aegis.py` and `REPO` is the target
 
 ```bash
 python3 "$AEGIS" --repo "$REPO" status
-python3 "$AEGIS" --repo "$REPO" register --issue 12 --actor planner-01
+python3 "$AEGIS" --repo "$REPO" preflight
+python3 "$AEGIS" --repo "$REPO" intake --actor planner-01
 python3 "$AEGIS" --repo "$REPO" scan --role planner
 python3 "$AEGIS" --repo "$REPO" claim --issue 12 --actor planner-01 --role planner
 # Save returned token; renew before expiry, default 30 minutes.
@@ -39,11 +40,14 @@ python3 "$AEGIS" --repo "$REPO" heartbeat --issue 12 --actor planner-01 --token 
 python3 "$AEGIS" --repo "$REPO" finish --issue 12 --actor planner-01 --token "$TOKEN" --to design-review --evidence evidence.json
 ```
 
-Evidence file example for a design handoff:
-
-```json
-{"summary":"Design and acceptance criteria ready for independent review", "url":"https://github.com/OWNER/REPO/issues/12#issuecomment-123"}
-```
+Use the selected role's `assets/evidence.json` as the machine-readable evidence contract.
+All handoffs require `schema: aegis-evidence/v1`, a durable HTTPS report URL and summary.
+Forward handoffs require exact coverage of the Issue's explicit AC-1, AC-2… IDs.
+Designs carry an immutable SHA-256 digest; review and implementation bind that digest.
+Code reviews bind the exact PR head. QA includes configured command argv, actual exit code
+and durable log URL, plus a two-parent integration commit of exact head and base.
+For blocked/rework use schema, summary, URL and `result: blocked` or `fail`; include PR/head
+if a PR already exists. Report semantic evidence honestly: structure is not factual proof.
 
 Development, code-review and QA handoffs add `pr` (integer), `head` (full SHA).
 QA success additionally needs `result: "pass"`, `base` and `tested_commit` (full SHAs).
@@ -62,3 +66,23 @@ live objects; never blindly recreate a PR or repost after timeout.
 
 For expired claims, blocked work, ambiguous writes or operator recovery, read
 [recovery](recovery.md). Do not automatically retry mutations or steal leases.
+
+## Automatic Issue visibility
+
+Successful `register`, `finish`, and `recover` persist a durable event with the workflow
+change, then synchronize the Issue's `aegis:STATE` label and append a state-change comment.
+Comments contain operation ID, actor, reason/result and evidence URL. Claim/heartbeat/release
+do not create status comments. The CLI creates missing state label definitions as needed.
+Other labels, including `aegis:intake`, are preserved.
+
+A successful state write may return `sync.status: pending` if projection failed. The task
+is already transitioned; do not run finish again. Use `sync --issue N` to reconcile.
+Read [visibility and recovery details](issue-visibility.md) for concurrency, retries and
+ambiguous comment delivery. Status labels do not authorize claims or change the state file.
+
+## Executable gates and host invocation
+
+Read [policy and runner](policy-and-runner.md) for trusted intake, strict evidence,
+bounded host execution and optional merge-queue admission. `scan` remains a read-only
+view; eligibility is rechecked at claim. Existing tasks without an intake snapshot
+fail closed and need a deliberate maintainer migration; intake does not reset history.

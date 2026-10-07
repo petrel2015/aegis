@@ -77,3 +77,50 @@ All 27 tests pass under the renamed `skills/aegis/scripts/aegis.py`; all six ren
 Skills pass format validation and local documentation links resolve. Active source,
 examples and configuration use AEGIS naming. Earlier decision records preserve historical
 names with a link to decision 0003. No remote state or repository was renamed.
+
+## Automatic Issue projection — 2026-10-07
+
+41 offline tests pass. The process-boundary fake GitHub lifecycle now asserts that each
+successful transition returns synced, the final managed label is aegis:done, business/intake
+labels remain, and each durable event has exactly one corresponding comment.
+
+Fault-injection tests cover blocked reason/evidence, repeated reconciliation, permissions,
+timeout before/after comment creation, CAS conflicts, concurrent send reservation,
+paginated comments, legacy snapshots, manual label drift, recovery, stage changes during
+label updates, silent heartbeat/release, and no projection after a failed state write.
+Local Markdown links and git diff whitespace checks pass. No real GitHub Issue was modified.
+Label projection is eventually consistent; ambiguous comment attempts remain pending for
+reconciliation rather than automatic retransmission. See the Issue visibility reference.
+
+API references checked for this implementation:
+[labels](https://docs.github.com/en/rest/issues/labels) and
+[Issue comments](https://docs.github.com/en/rest/issues/comments).
+
+## Executable policy and host runner — 2026-10-07
+
+79 offline tests pass. New coverage includes policy validation, trusted issue intake,
+AC contracts, dependency/rework gates, design digests, current-head checks, QA command
+records, and fail-closed queue admission. `agent-attestation` is cooperative role evidence;
+it does not prove independent GitHub accounts or factual correctness.
+
+The Hermes worker produced the initial runner in a bounded requested run. Its process
+exceeded the requested 900-second budget and was explicitly stopped; its output/log was
+preserved locally, not silently replaced by a new run. Independent acceptance repaired
+CLI intake arguments, lost-lease behavior, descendant cleanup and completion reporting.
+A second independent forward-test reproduced SIGTERM leaving a host alive, coordinator
+timeout leaving a child alive and losing attempt IDs, and stale-round completion. Fixes
+were independently retested using actual isolated processes. `test_runner_process.py`
+asserts SIGTERM/SIGINT cleanup, preserved unknown-attempt IDs and exact current claim token.
+No provider usage/cost was available; unknown is not recorded as zero.
+
+All six Skills pass the bundled quick validator using the existing Hermes Python environment
+(the system Python lacks PyYAML; no runtime dependency was added to AEGIS). `git diff --check`
+passes. Added strict evidence/runbook guidance supersedes earlier minimal-field examples.
+
+ChronoAtlas was used as a real local role-workflow application: independent design rejection
+and revision, independent code review identifying two real HTTP/UTF-8 defects, repair,
+14 unit/API tests, production build, desktop/390px browser smoke and real terrain tiles.
+Target documentation preserves the exact approved design digest and local proof boundary.
+Creating/pushing its GitHub repository was rejected by automatic approval review pending
+explicit target authorization. No remote Issue/PR/CI/lease or merge is claimed by this trial.
+Live queue plan/account permissions and real AI provider calls remain unverified.

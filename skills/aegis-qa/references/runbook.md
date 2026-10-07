@@ -72,7 +72,7 @@ to `merge-ready (unchanged)` and next action to observe later; call `release`.
 For `merged`, retain source QA record and verified head/PR identity; record the actual
 merged commit (which may differ from PR head under squash), timestamp and PR URL. Set
 next role `none`, next state `done`, and requested action `close Issue with evidence`.
-Use JSON `summary`, `url`, `pr`, `head` with the original PR head, not the squash merge SHA.
+Keep `schema`, exact `acceptance` coverage and JSON `summary`, `url`, `pr`, `head` with the original PR head, not the squash merge SHA.
 Only call `finish --to done` after the live API confirms merge. If the PR's head differs
 from the approved candidate, stop for reconciliation instead of borrowing prior QA evidence.
 
@@ -87,12 +87,12 @@ The JSON asset is specifically the **test-pass → merge-ready** template. Do no
 
 | Action | Required JSON fields | Result handling |
 |---|---|---|
-| Test pass → merge-ready | summary, url, pr, head, base, tested_commit, result | result must be pass; all SHAs observed |
-| Failure → ready | summary, url, pr, head | Omit result/base/tested_commit unless separately explaining observed data |
-| Missing prerequisite → blocked | summary, url, pr, head | Omit result; describe missing evidence in report |
-| Base drift → testing | summary, url, pr, head | Omit result; no new test pass is claimed |
-| Head drift → ready | summary, url, pr, current head | Omit result; request review of new candidate |
-| Observed merge → done | summary, url, pr, approved PR head | Omit result; actual merge observation belongs in report |
+| Test pass → merge-ready | schema, kind, acceptance, tests, summary, url, pr, head, base, tested_commit, result | result must be pass; all SHAs observed |
+| Failure → ready | schema, summary, url, pr, head | Omit result/base/tested_commit unless separately explaining observed data |
+| Missing prerequisite → blocked | schema, summary, url, pr, head | Omit result; describe missing evidence in report |
+| Base drift → testing | schema, summary, url, pr, head | Omit result; no new test pass is claimed |
+| Head drift → ready | schema, summary, url, pr, current head | Omit result; request review of new candidate |
+| Observed merge → done | schema, acceptance, summary, url, pr, approved PR head | Omit result; actual merge observation belongs in report |
 | Queued / manual wait | No finish JSON; publish report and release | State remains merge-ready |
 
 The helper still requires a live open, non-draft PR for non-done transitions from QA

@@ -1,4 +1,17 @@
 {
   "summary": "CSV export design ready for independent review",
-  "url": "https://github.com/example/taskboard/issues/42#issuecomment-101"
+  "url": "https://github.com/example/taskboard/issues/42#issuecomment-101",
+  "schema": "aegis-evidence/v1",
+  "acceptance": {
+    "AC-1": {
+      "result": "pass",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+    },
+    "AC-2": {
+      "result": "pass",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+    }
+  },
+  "kind": "design",
+  "design_ref": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 }

@@ -2,5 +2,19 @@
   "summary": "Code review requests F-1 newline preservation fix",
   "pr": 57,
   "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105"
+  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105",
+  "schema": "aegis-evidence/v1",
+  "acceptance": {
+    "AC-1": {
+      "result": "pass",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+    },
+    "AC-2": {
+      "result": "pass",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+    }
+  },
+  "kind": "code-review",
+  "result": "changes-requested",
+  "reviewed_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 }

@@ -32,7 +32,7 @@ exists, keep its required sections and include the AEGIS report as an appended s
 
 If blocked before a PR exists, use the same report with unknown values as `unknown — reason` (retain any observed base),
 record unverified ACs and a concrete requested action; publish on the Issue and finish
-`blocked` with JSON containing only `summary` and the actual report `url` (no invented PR).
+`blocked` with JSON containing `schema: aegis-evidence/v1`, `result: blocked`, `summary` and the actual report `url` (no invented PR).
 Test failure requiring more implementation stays in your claimed `ready` task; repair within
 budget. If unable to proceed, publish blocked evidence. You cannot approve your own PR.
 
@@ -102,7 +102,7 @@ If a required private dependency is unavailable, retain the report headings, set
 and request a named maintainer to supply access. Post the report to the Issue. Its JSON is:
 
 ```json
-{"summary":"Blocked before PR: dependency unavailable; maintainer access required", "url":"https://github.com/example/taskboard/issues/42#issuecomment-106"}
+{"schema":"aegis-evidence/v1", "result":"blocked", "summary":"Blocked before PR: dependency unavailable; maintainer access required", "url":"https://github.com/example/taskboard/issues/42#issuecomment-106"}
 ```
 
 Use `finish --to blocked`, not `--to code-review`. The URL here is fictional; use the
