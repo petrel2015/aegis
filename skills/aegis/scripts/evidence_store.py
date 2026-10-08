@@ -32,6 +32,7 @@ def seal(directory,metadata):
     files={}
     for file in sorted(directory.rglob('*')):
         policy.require(not file.is_symlink(),'EVIDENCE_SYMLINK: evidence must be self-contained')
+        policy.require(not any(part in ('.git','node_modules','.ssh') or part.startswith('.env') for part in file.relative_to(directory).parts),'EVIDENCE_PRIVATE_PATH: collect explicit logs/screenshots/results, not repositories or dependency trees')
         if file.is_file():files[file.relative_to(directory).as_posix()]=hashlib.sha256(file.read_bytes()).hexdigest()
     policy.require(len(files)>1,'EVIDENCE_EMPTY: add actual logs/screenshots before sealing')
     result={'schema':'aegis-manifest/v1','run':identity,'metadata':metadata,'files':files}
@@ -45,6 +46,7 @@ def verify(directory):
     manifest=json.loads((directory/'manifest.json').read_text());actual={}
     for file in directory.rglob('*'):
         policy.require(not file.is_symlink(),'EVIDENCE_SYMLINK')
+        policy.require(not any(part in ('.git','node_modules','.ssh') or part.startswith('.env') for part in file.relative_to(directory).parts),'EVIDENCE_PRIVATE_PATH')
         if file.is_file() and file.relative_to(directory).as_posix()!='manifest.json':actual[file.relative_to(directory).as_posix()]=hashlib.sha256(file.read_bytes()).hexdigest()
     policy.require(actual==manifest['files'],'EVIDENCE_CHANGED: missing, added or modified file')
     return {'status':'integrity_verified','run_id':manifest['run']['run_id'],'proof':'local file integrity only; not semantic acceptance or remote publication'}

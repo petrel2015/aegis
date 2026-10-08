@@ -49,6 +49,9 @@ class ReleasePipelineTests(unittest.TestCase):
   with self.assertRaisesRegex(ValueError,'PUBLIC_FILE_MISMATCH'):rp.verify(self.out,self.root/'fail',lambda url:b'old')
   r=json.loads((self.root/'fail/verification.json').read_text());self.assertEqual(r['status'],'remote_unknown');self.assertNotIn('observed_artifact_digest',r)
   with self.assertRaisesRegex(ValueError,'RUN_EXISTS'):rp.verify(self.out,self.root/'fail',lambda url:b'')
+ def test_regenerated_version_metadata_is_a_change_not_deletion(self):
+  (self.old/'build.json').write_text(json.dumps({'sourceCommit':'b'*40,'mode':'pages'}))
+  result=self.prepare();self.assertNotIn('build.json',result['diff']['removed']);self.assertIn('build.json',result['diff']['changed']);self.assertEqual(json.loads((self.out/'artifact/build.json').read_text())['sourceCommit'],self.sha)
  def test_truncated_download_preserves_unknown_without_success_digest(self):
   self.prepare()
   def truncated(url):raise rp.http.client.IncompleteRead(b'partial',7)
@@ -145,3 +148,11 @@ class ActualGitPublicationTests(unittest.TestCase):
   self.assertEqual(len(outcomes),1);self.assertIsInstance(outcomes[0],ValueError);self.assertIn('LOCAL_BASE_CHANGED',str(outcomes[0]))
   self.assertEqual((self.checkout/'index.html').read_text(),'A');self.assertEqual(len(self.pushes),1)
   self.assertFalse((second/'publish.json').exists());self.assertFalse((self.checkout/'.git/aegis-release.lock').exists())
+
+class EvidenceCollectionTests(unittest.TestCase):
+ def test_dependencies_and_environment_cannot_be_sealed_as_evidence(self):
+  import evidence_store
+  for name in ('fixture/node_modules/package/index.js','fixture/.env.local','copy/.git/config'):
+   with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
+    run=evidence_store.new_run(tmp,'owner/repo',3,'qa');root=Path(run['directory']);path=root/name;path.parent.mkdir(parents=True);path.write_text('not evidence')
+    with self.assertRaisesRegex(ValueError,'EVIDENCE_PRIVATE_PATH'):evidence_store.seal(root,{'candidate_sha':'a'*40,'environment':{'runtime':'node','build_mode':'pages','target':'local'}})

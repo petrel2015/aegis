@@ -72,3 +72,5 @@ recorded file and detects additions, removals and edits. Symlinks are refused. T
 local integrity evidence, not a WORM store or protection against a writer replacing the
 manifest itself. Publish the sealed directory as a durable CI/report artifact; record its
 actual URL before handoff. Do not upload secrets. Unpublished local files are local proof only.
+
+Collect explicit logs, results, source snapshots and screenshots into the run before sealing. The manifest helper rejects node_modules, .git, .ssh and .env paths; do not copy a whole fixture/checkout. This path guard does not detect secrets inside arbitrary log content.

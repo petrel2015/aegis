@@ -62,6 +62,11 @@ def prepare(build, previous, output, source_sha, site, allow_remove=(), protecte
     require(not output.resolve().is_relative_to(build.resolve()) and not output.resolve().is_relative_to(previous.resolve()), 'OUTPUT_OVERLAP')
     current, old = inventory(build), inventory(previous)
     require('index.html' in current, 'ARTIFACT_ENTRY: index.html required')
+    if 'build.json' in current:
+        metadata = json.loads(current['build.json'])
+        require(metadata.get('sourceCommit') == source_sha, 'BUILD_VERSION: existing metadata disagrees with source')
+    else:
+        current['build.json'] = (json.dumps({'sourceCommit': source_sha, 'mode': 'pages'}, indent=2) + '\n').encode()
     retained = []
     patterns = (*PROTECTED, *protected)
     for name, data in old.items():
@@ -74,11 +79,6 @@ def prepare(build, previous, output, source_sha, site, allow_remove=(), protecte
     removed = sorted(set(old) - set(current))
     unapproved = [name for name in removed if name not in allow_remove]
     require(not unapproved, 'REMOVAL_REVIEW: ' + ', '.join(unapproved))
-    if 'build.json' in current:
-        metadata = json.loads(current['build.json'])
-        require(metadata.get('sourceCommit') == source_sha, 'BUILD_VERSION: existing metadata disagrees with source')
-    else:
-        current['build.json'] = (json.dumps({'sourceCommit': source_sha, 'mode': 'pages'}, indent=2) + '\n').encode()
     output.mkdir(parents=True)
     stage = output / 'artifact'
     stage.mkdir()
