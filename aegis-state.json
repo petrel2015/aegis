@@ -1,7 +1,7 @@
 {
-  "last_operation": "9d74c83e2aaf468b9d6219bcbe6de8f6",
+  "last_operation": "969aa7b9394b42f89ccdf91803f06d5f",
   "qa": null,
-  "revision": 15,
+  "revision": 16,
   "tasks": {
     "3": {
       "authors": {
@@ -338,7 +338,12 @@
           "to": "design-review"
         }
       ],
-      "lease": null,
+      "lease": {
+        "actor": "agent-aegis-release-reviewer",
+        "expires": 1791442077,
+        "role": "reviewer",
+        "token": "672d53cd39e241fd8cfe5a17cfa18b74"
+      },
       "requirements": {
         "acceptance_ids": [
           "AC-1",
