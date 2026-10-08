@@ -102,7 +102,8 @@ def validate_claim(state, task, p):
     require(req, 'LEGACY_TASK: missing intake contract; maintainer migration required; do not reset history')
     missing=[n for n in req.get('dependencies',[]) if state['tasks'].get(str(n),{}).get('state')!='done']
     require(not missing, f'DEPENDENCY_BLOCKED: {missing}')
-    rounds=sum(e['to'] in ('new','ready') and e['from'] in ('design-review','code-review','testing') for e in task['history'])
+    rework_edges={('design-review','new'),('code-review','ready'),('testing','ready')}
+    rounds=sum((e['from'],e['to']) in rework_edges for e in task['history'])
     require(rounds < p['max_rework_rounds'], 'REWORK_LIMIT: maintainer must review; no further automatic claim')
 
 def durable_url(value):

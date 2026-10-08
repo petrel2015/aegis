@@ -43,6 +43,20 @@ class PolicyTests(unittest.TestCase):
   policy.evidence_gate(t,'design-review',E,P)
   for e in (dict(E,acceptance={}),dict(E,acceptance={'AC-1':{'result':'unverified','evidence':'https://example.test'}})):
    with self.assertRaises(policy.PolicyError):policy.evidence_gate(t,'design-review',e,P)
+ def test_approved_design_does_not_consume_rework_budget(self):
+  t={'requirements':policy.intake_issue(I,P),'history':[{'from':'design-review','to':'ready'}]}
+  policy.validate_claim({'tasks':{}},t,dict(P,max_rework_rounds=1))
+ def test_mixed_rework_history_preserves_actual_limit(self):
+  t={'requirements':policy.intake_issue(I,P),'history':[
+   {'from':'design-review','to':'new'},
+   {'from':'design-review','to':'ready'},
+   {'from':'code-review','to':'ready'}]}
+  before=copy.deepcopy(t)
+  policy.validate_claim({'tasks':{}},t,dict(P,max_rework_rounds=3))
+  self.assertEqual(t,before)
+  t['history'].append({'from':'testing','to':'ready'})
+  with self.assertRaisesRegex(policy.PolicyError,'REWORK_LIMIT'):
+   policy.validate_claim({'tasks':{}},t,dict(P,max_rework_rounds=3))
  def test_blocked_cannot_say_pass(self):
   with self.assertRaises(policy.PolicyError):policy.evidence_gate({'state':'testing'},'blocked',dict(E,result='pass'),P)
  def test_design_review_digest_binding(self):
