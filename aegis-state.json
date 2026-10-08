@@ -1,7 +1,7 @@
 {
-  "last_operation": "969aa7b9394b42f89ccdf91803f06d5f",
+  "last_operation": "5530c6ff83e046d68e4285317ece24cf",
   "qa": null,
-  "revision": 16,
+  "revision": 17,
   "tasks": {
     "3": {
       "authors": {
@@ -167,6 +167,57 @@
           "operation": "9d74c83e2aaf468b9d6219bcbe6de8f6",
           "role": "planner",
           "to": "design-review"
+        },
+        {
+          "actor": "agent-aegis-release-reviewer",
+          "at": 1791440336,
+          "claim_token": "672d53cd39e241fd8cfe5a17cfa18b74",
+          "evidence": {
+            "acceptance": {
+              "AC-1": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Design binds observed clean Git origin/HEAD, pre/post source status, fresh output and inventory to a governed build record; arbitrary caller SHA alone is insufficient. Ignored dependency reproducibility limitation is explicit.",
+                "result": "reviewed"
+              },
+              "AC-2": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "F-1 resolved: trusted workflow path/ID, explicit same-repo deployment ID/SHA/environment, latest success status/exact site and same Actions run log correlation required; generic same-head test success, missing deployment, wrong identities and superseded success are explicit reject fixtures. aegis mode requires actual task done, matching QA and merged PR/source identity; browser truth boundary remains explicit.",
+                "result": "reviewed"
+              },
+              "AC-3": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Design reserves operation records before writes, reconciles original commits/run IDs/comment IDs using full pagination, and prohibits automatic replay or lock stealing; fault injection before/after effects specified.",
+                "result": "reviewed"
+              },
+              "AC-4": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Design verifies sealed contents, blocks workflow/private/dependency paths, keeps operation outside seal, and publishes orphan evidence-only commit to exact authorized ref with no force push; interrupted upload and immutable URL reconciliation specified.",
+                "result": "reviewed"
+              },
+              "AC-5": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Design records initial UI state/normal interaction/original failure replay, consumes existing authorization after fresh revalidation, and preserves manual versus server-queue boundary.",
+                "result": "reviewed"
+              },
+              "AC-6": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Actual self-adoption starts empty, this task follows recorded claim/design/development/review/QA roles; earlier PRs remain external history. Only current planning/review observed so far; later stages require actual future evidence.",
+                "result": "reviewed"
+              }
+            },
+            "design_ref": "sha256:51cd2bf505e21f18cd023386bb2072113439d34e9672fe168507262519642e0d",
+            "kind": "design-review",
+            "requirements_digest": "sha256:8ef1b640a5bca607ae32c59ecdab9935b6b89fd9ee876d83a75bc9c8ceefa47a",
+            "requirements_version": 1,
+            "result": "approve",
+            "schema": "aegis-evidence/v2",
+            "summary": "Independent revised design approval: F-1 resolved through trusted workflow plus explicit deployment/latest success/exact site/run correlation; all six AC plans covered. Runtime evidence remains for developer, code review and QA.",
+            "url": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141"
+          },
+          "from": "design-review",
+          "operation": "5530c6ff83e046d68e4285317ece24cf",
+          "role": "reviewer",
+          "to": "ready"
         }
       ],
       "issue_events": [
@@ -336,14 +387,60 @@
           "id": "9d74c83e2aaf468b9d6219bcbe6de8f6",
           "kind": "transition",
           "to": "design-review"
+        },
+        {
+          "actor": "agent-aegis-release-reviewer",
+          "at": 1791440336,
+          "delivery": "pending",
+          "evidence": {
+            "acceptance": {
+              "AC-1": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Design binds observed clean Git origin/HEAD, pre/post source status, fresh output and inventory to a governed build record; arbitrary caller SHA alone is insufficient. Ignored dependency reproducibility limitation is explicit.",
+                "result": "reviewed"
+              },
+              "AC-2": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "F-1 resolved: trusted workflow path/ID, explicit same-repo deployment ID/SHA/environment, latest success status/exact site and same Actions run log correlation required; generic same-head test success, missing deployment, wrong identities and superseded success are explicit reject fixtures. aegis mode requires actual task done, matching QA and merged PR/source identity; browser truth boundary remains explicit.",
+                "result": "reviewed"
+              },
+              "AC-3": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Design reserves operation records before writes, reconciles original commits/run IDs/comment IDs using full pagination, and prohibits automatic replay or lock stealing; fault injection before/after effects specified.",
+                "result": "reviewed"
+              },
+              "AC-4": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Design verifies sealed contents, blocks workflow/private/dependency paths, keeps operation outside seal, and publishes orphan evidence-only commit to exact authorized ref with no force push; interrupted upload and immutable URL reconciliation specified.",
+                "result": "reviewed"
+              },
+              "AC-5": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Design records initial UI state/normal interaction/original failure replay, consumes existing authorization after fresh revalidation, and preserves manual versus server-queue boundary.",
+                "result": "reviewed"
+              },
+              "AC-6": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141",
+                "observation": "Actual self-adoption starts empty, this task follows recorded claim/design/development/review/QA roles; earlier PRs remain external history. Only current planning/review observed so far; later stages require actual future evidence.",
+                "result": "reviewed"
+              }
+            },
+            "design_ref": "sha256:51cd2bf505e21f18cd023386bb2072113439d34e9672fe168507262519642e0d",
+            "kind": "design-review",
+            "requirements_digest": "sha256:8ef1b640a5bca607ae32c59ecdab9935b6b89fd9ee876d83a75bc9c8ceefa47a",
+            "requirements_version": 1,
+            "result": "approve",
+            "schema": "aegis-evidence/v2",
+            "summary": "Independent revised design approval: F-1 resolved through trusted workflow plus explicit deployment/latest success/exact site/run correlation; all six AC plans covered. Runtime evidence remains for developer, code review and QA.",
+            "url": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053701141"
+          },
+          "from": "design-review",
+          "id": "5530c6ff83e046d68e4285317ece24cf",
+          "kind": "transition",
+          "to": "ready"
         }
       ],
-      "lease": {
-        "actor": "agent-aegis-release-reviewer",
-        "expires": 1791442077,
-        "role": "reviewer",
-        "token": "672d53cd39e241fd8cfe5a17cfa18b74"
-      },
+      "lease": null,
       "requirements": {
         "acceptance_ids": [
           "AC-1",
@@ -395,7 +492,7 @@
         "source_body": "## Background\nThe ChronoAtlas Issue 3 release completed successfully but relied on temporary scripts to bind merged source to its build, collect provider observations, upload evidence and assemble the final receipt. An interrupted run needs deterministic reconciliation. AEGIS itself is now being explicitly initialized; earlier PRs remain external/adoption history.\n\n## Expected benefit\nA replacement agent or Hermes can inspect saved records, continue an authorized release and diagnose failures without duplicate pushes/comments or unsupported success claims.\n\n## Scope and exclusions\nImplement stdlib-only source-bound build records, observation-backed finalization for the existing GitHub static-release adapter, resumable release records, standardized sealed-evidence publication, and QA/manual-merge guidance. Exercise the new requirement through actual AEGIS roles in petrel2015/aegis. Preserve existing commands and historic receipts. No new runtime, scheduler, provider, automatic merge queue, visibility changes or ChronoAtlas feature changes. Live mutations are confined to the authorized aegis repository and its task/evidence branches; use isolated local Git fixtures for interrupted publish testing, not production redeployment.\n\n## Priority\nP1\n\n## Acceptance criteria\nAC-1: Bind built artifacts to observed source\nOutcome: A deterministic build record captures actual repository/commit, clean source status, trusted argv, runtime, exit codes and output inventory; the new governed path refuses mismatched or changed output/source.\nCounterexample: Passing an arbitrary SHA with an unrelated build directory produces governed release provenance.\nVerification: Temporary real Git checkout tests cover successful build, dirty/source drift, failed build, stale output and tampered output; legacy preparation stays explicitly lower-proof.\n\nAC-2: Generate final receipt from observations\nOutcome: Finalization derives the receipt from matching build/artifact/publication, exact GitHub deployment commit and success, all-file verification and structured project smoke observations for the same target/candidate. Missing, failed, changed or mismatched evidence cannot become verified.\nCounterexample: Caller-supplied success booleans or a zero exit smoke command alone produce verified status.\nVerification: Offline provider fixtures and real local artifacts test all binding failures and successful finalization; retained legacy receipt validator continues to describe structural proof only.\n\nAC-3: Resume without replaying external effects\nOutcome: Persisted run identity and operation records allow read-only resume/reconciliation to identify the next safe action after interruption, including unknown push/comment outcomes; old attempts and diagnostics remain available.\nCounterexample: Restart automatically repeats a push, deployment or comment, overwrites the old result, or rotates run identity to hide failure.\nVerification: Fault-injected temporary Git/transport tests interrupt before and after effects; subsequent resume reconciles the original object or returns an actionable unknown/blocker without mutation.\n\nAC-4: Publish immutable sealed evidence\nOutcome: A reusable helper verifies a sealed run, prepares an evidence-only commit, records exact authorized destination and reconciles publication to a durable commit URL; dependencies/private paths and modified manifests are refused.\nCounterexample: Whole worktrees or workflow files are uploaded, or an ambiguous upload is silently pushed again.\nVerification: Real local Git fixtures and bounded adapter fakes cover success, tampering, interrupted upload and destination/ref mismatch; one authorized aegis evidence publication supplies separately labeled live proof.\n\nAC-5: Preserve actual user-flow failures and authorization\nOutcome: QA templates record initial UI state, normal interaction, expected/actual outcome and original failure replay; manual merge guidance consumes existing explicit user authorization, revalidates candidate/base and records actual merge without claiming server-queue guarantees.\nCounterexample: Manually hiding the interfering control is accepted as the original failure passing, or unchanged explicit authorization triggers another permission request.\nVerification: Independent forward testing walks the mobile-popup and authorized-manual-merge scenarios using the revised role instructions.\n\nAC-6: Exercise truthful AEGIS self-maintenance\nOutcome: This requirement has actual intake, planner claim, independent design review, development, independent code review and fresh integration QA records under the initialized policy; release/merge evidence only reports actions actually authorized and observed.\nCounterexample: Earlier untracked PR history is retroactively labeled a complete AEGIS lifecycle.\nVerification: Durable Issue/PR links and state transitions bind the exact requirement digest and candidate; initialization and offline/live proof remain separately recorded.\n\n## Dependencies\nNone; self-adoption policy initialization is a prerequisite and is recorded in the setup PR.\n",
         "version": 1
       },
-      "state": "design-review"
+      "state": "ready"
     }
   },
   "version": 1
