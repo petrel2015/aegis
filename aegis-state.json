@@ -1,7 +1,7 @@
 {
-  "last_operation": "5530c6ff83e046d68e4285317ece24cf",
+  "last_operation": "117e17f06cfe4e358ee4747a1f1ab76d",
   "qa": null,
-  "revision": 19,
+  "revision": 20,
   "tasks": {
     "3": {
       "authors": {
@@ -9,6 +9,9 @@
         "reviewer": "agent-aegis-release-reviewer"
       },
       "contributors": {
+        "developer": [
+          "agent-aegis-release-developer"
+        ],
         "planner": [
           "agent-aegis-release-planner"
         ],
@@ -441,7 +444,12 @@
           "to": "ready"
         }
       ],
-      "lease": null,
+      "lease": {
+        "actor": "agent-aegis-release-developer",
+        "expires": 1791442197,
+        "role": "developer",
+        "token": "b6406b75babe41779d7fa2556da84329"
+      },
       "requirements": {
         "acceptance_ids": [
           "AC-1",
