@@ -1,0 +1,28 @@
+{
+  "schema": "aegis-release/v1",
+  "run_id": "<unique release run ID>",
+  "retry_of": null,
+  "execution_mode": "external",
+  "authorization_ref": "<reference to actual user authorization>",
+  "source_repo": "OWNER/PROJECT",
+  "source_sha": "<full source SHA>",
+  "artifact_repo": "OWNER/PROJECT-pages",
+  "artifact_commit": "<full artifact commit>",
+  "artifact_digest": "sha256:<retained published archive hash>",
+  "environment": "production",
+  "build_mode": "pages",
+  "site_url": "https://OWNER.github.io/PROJECT-pages/",
+  "deployment_url": null,
+  "deployment_status": "pending",
+  "status": "pending",
+  "observed_source_sha": null,
+  "observed_artifact_digest": null,
+  "smoke": {
+    "result": "unverified",
+    "target": "https://OWNER.github.io/PROJECT-pages/",
+    "evidence_url": null
+  },
+  "rollback": "<project rollback procedure and previous artifact>",
+  "workflow_evidence_url": null,
+  "diagnostics": null
+}

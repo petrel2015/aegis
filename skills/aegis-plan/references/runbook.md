@@ -58,3 +58,11 @@ with observed data. [Filled evidence example](../examples/evidence.json) demonst
 `finish --to design-review --evidence evidence.json`; select the actual outcome's allowed
 state from the table above, not the example by default. JSON evidence points to the
 published report. It is a local CLI input, not a replacement for the readable report.
+
+## Continued work and current evidence contract
+
+For a follow-up request, use [continuation and revision](../../aegis/references/continuation.md).
+Read [evidence versions](../../aegis/references/evidence-v2.md) when preparing a report.
+New tasks use v2; every report, including blocked/rework, binds the current requirement
+version and digest. Existing v1 tasks remain explicitly legacy; do not rewrite their history.
+The JSON examples are fictional and must be filled from the current task.

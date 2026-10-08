@@ -1,18 +1,22 @@
 {
   "summary": "Design approved; proceed with implementation and actual acceptance tests",
   "url": "https://github.com/example/taskboard/issues/42#issuecomment-102",
-  "schema": "aegis-evidence/v1",
+  "schema": "aegis-evidence/v2",
   "acceptance": {
     "AC-1": {
-      "result": "pass",
-      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+      "result": "reviewed",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Reviewed filtered-selector design against the hidden-row counterexample."
     },
     "AC-2": {
-      "result": "pass",
-      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+      "result": "reviewed",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Reviewed parse-back verification; merely opening a readable CSV is insufficient."
     }
   },
   "kind": "design-review",
   "result": "approve",
-  "design_ref": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  "design_ref": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "requirements_version": 1,
+  "requirements_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 }

@@ -55,3 +55,14 @@ class Guards(unittest.TestCase):
    with patch.object(r,'AEGIS',script):
     with self.assertRaises(r.RemoteUnknown) as caught:r.call_aegis('o/r',['claim'],timeout=.15)
    self.assertEqual(caught.exception.attempt['token'],'tok')
+
+class ContinuationGuardTests(unittest.TestCase):
+ def test_changed_requirements_never_claim_or_spawn(self):
+  from tests.test_runner import make_cfg
+  with tempfile.TemporaryDirectory() as tmp:
+   cfg=make_cfg(tmp);calls=[]
+   def call(repo,args,**kwargs):
+    calls.append(args[0])
+    return {'preflight':{'policy':{'max_run_minutes':1,'max_issues_per_run':1}},'scan':{'tasks':[{'issue':1}]},'resume':{'status':'needs_attention','diagnostics':['REQUIREMENTS_CHANGED']}}[args[0]]
+   spawn=Mock();result=r.run_once(cfg,call=call,spawn=spawn)
+   self.assertEqual(result['status'],'blocked');self.assertNotIn('claim',calls);spawn.assert_not_called()

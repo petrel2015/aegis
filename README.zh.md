@@ -111,3 +111,14 @@ Skill。角色职责和项目权限保持一致；这些是调用示例，不表
 使用 [单次宿主运行器](skills/aegis/references/policy-and-runner.md) 对接本地 Agent CLI，
 运行器负责单任务、锁、超时、续约和日志；不内置模型或常驻调度器。
 离线通过不等于 GitHub 账户权限、真实模型调用或线上交付通过，见 [验证记录](docs/validation.md)。
+
+## 连续迭代与发布
+
+用户补充需求时，先用 [resume 续接检查与 revise 需求修订](skills/aegis/references/continuation.md)，
+保留旧需求和证据，修订后重新设计、独立审查。新任务的验收标准必须写出可观察结果、
+不算通过的反例及验证方式；[v2 证据](skills/aegis/references/evidence-v2.md)区分设计覆盖、
+实现、审查和实际验证。配置的浏览器/发布构建验收组都必须执行，每次运行保留独立证据。
+
+发布时按需读取 [aegis-release](skills/aegis-release/SKILL.md)，记录源码、产物、部署与公网验证。
+构建成功、合并完成都不等于已上线；已有 v1 任务保持原契约，不重写历史。
+参见[实战修正决策](docs/decisions/0004-continuation-and-evidence.md)。

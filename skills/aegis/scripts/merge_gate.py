@@ -13,6 +13,10 @@ def enqueue(store, actor, token, issue, api, held):
     lease=held(task,actor,token,int(time.time()))
     policy.require(lease['role']=='qa' and task['state']=='merge-ready','MERGE_ROLE: owned QA merge-ready task required')
     e=task['history'][-1]['evidence']
+    if task.get('requirements',{}).get('evidence_schema')=='aegis-evidence/v2':
+        policy.evidence_gate(task,'done',e,p)
+        issue_record=api(store.repo,f'/issues/{issue}')
+        policy.require(task['requirements']['source_body']==(issue_record.get('body') or ''),'ISSUE_CHANGED: reconcile requirements before enqueue')
     pr=api(store.repo,f"/pulls/{e['pr']}")
     policy.require(pr['state']=='open' and not pr['draft'],'MERGE_PR: open non-draft required')
     policy.require(pr['head']['sha']==e['head'] and pr['base']['sha']==e['base'],'MERGE_STALE: re-review/retest changed candidate')

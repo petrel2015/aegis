@@ -32,7 +32,7 @@ exists, keep its required sections and include the AEGIS report as an appended s
 
 If blocked before a PR exists, use the same report with unknown values as `unknown — reason` (retain any observed base),
 record unverified ACs and a concrete requested action; publish on the Issue and finish
-`blocked` with JSON containing `schema: aegis-evidence/v1`, `result: blocked`, `summary` and the actual report `url` (no invented PR).
+`blocked` with JSON containing the task’s evidence schema and requirement version/digest, `result: blocked`, `summary` and the actual report `url` (no invented PR).
 Test failure requiring more implementation stays in your claimed `ready` task; repair within
 budget. If unable to proceed, publish blocked evidence. You cannot approve your own PR.
 
@@ -102,7 +102,7 @@ If a required private dependency is unavailable, retain the report headings, set
 and request a named maintainer to supply access. Post the report to the Issue. Its JSON is:
 
 ```json
-{"schema":"aegis-evidence/v1", "result":"blocked", "summary":"Blocked before PR: dependency unavailable; maintainer access required", "url":"https://github.com/example/taskboard/issues/42#issuecomment-106"}
+{"schema":"aegis-evidence/v2", "requirements_version":1, "requirements_digest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "result":"blocked", "summary":"Blocked before PR: dependency unavailable; maintainer access required", "url":"https://github.com/example/taskboard/issues/42#issuecomment-106"}
 ```
 
 Use `finish --to blocked`, not `--to code-review`. The URL here is fictional; use the
@@ -125,3 +125,11 @@ and [filled section example](../examples/document-section.md). This is user-faci
 separate from the PR delivery report. For architecture changes, update the actual design/
 decision document and link its version from the report; do not dump operational logs into
 user documentation. Every new example must describe behavior actually verified on the candidate.
+
+## Continued work and current evidence contract
+
+For a follow-up request, use [continuation and revision](../../aegis/references/continuation.md).
+Read [evidence versions](../../aegis/references/evidence-v2.md) when preparing a report.
+New tasks use v2; every report, including blocked/rework, binds the current requirement
+version and digest. Existing v1 tasks remain explicitly legacy; do not rewrite their history.
+The JSON examples are fictional and must be filled from the current task.

@@ -183,6 +183,9 @@ def write_prompt(path, cfg, issue, token, claim_state, policy):
         '  python3 ' + str(AEGIS) + ' --repo ' + cfg.repo + ' finish --issue ' + str(issue) +
         ' --actor ' + cfg.actor + ' --token ' + token + ' --to <state> --evidence evidence.json\n'
         '  (use the role evidence template: schema, AC coverage, design digest or PR/head and test logs).\n'
+        '- Run resume for this Issue/actor/role before edits; reconcile drift instead of bypassing the workflow.\n'
+        '- Read the task requirement version/digest and evidence schema; use phase-specific v2 acceptance states for new tasks.\n'
+        '- Use a fresh evidence run directory for screenshots/logs; retain failed attempts.\n'
         '- If you cannot proceed, exit nonzero and explain; do not release the claim.\n',
         encoding='utf-8')
     return skill
@@ -350,6 +353,10 @@ def _run_once(cfg, call=call_aegis, spawn=spawn_host, killer=kill_tree, clock=ti
                                  'detail': 'no eligible task; host not invoked'}, run)
         issue = tasks[0]['issue']  # exactly one item per run, regardless of max_issues_per_run
         base['issue'] = issue
+        continuation=call(cfg.repo,['resume','--issue',str(issue),'--actor',cfg.actor,'--role',cfg.role],run=run)
+        if continuation.get('status')!='ready_to_claim':
+            return write_result({**base,'status':'blocked','detail':'continuation requires reconciliation; host not invoked',
+                                 'continuation':continuation},run)
         try:
             claimed = call(cfg.repo, ['claim', '--issue', str(issue), '--actor', cfg.actor,
                                       '--role', cfg.role], run=run)

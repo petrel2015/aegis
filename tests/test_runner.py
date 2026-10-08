@@ -26,7 +26,7 @@ def scripted_call(responses, log=None):
     def call(repo, args, run=None, timeout=120):
         if log is not None:
             log.append(args[0])
-        result = responses.get(args[0], responses.get('*', {'tasks': []}))
+        result = responses.get(args[0], responses.get('*', {'status':'ready_to_claim'} if args[0]=='resume' else {'tasks': []}))
         if isinstance(result, Exception):
             raise result
         return result

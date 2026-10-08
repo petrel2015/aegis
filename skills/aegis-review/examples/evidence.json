@@ -3,18 +3,22 @@
   "pr": 57,
   "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "url": "https://github.com/example/taskboard/pull/57#issuecomment-105",
-  "schema": "aegis-evidence/v1",
+  "schema": "aegis-evidence/v2",
   "acceptance": {
     "AC-1": {
-      "result": "pass",
-      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+      "result": "reviewed",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Reviewed exact diff to confirm export receives filtered rows rather than the full store."
     },
     "AC-2": {
-      "result": "pass",
-      "evidence": "https://github.com/example/taskboard/actions/runs/100"
+      "result": "reviewed",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Reviewed escaping logic and multiline-cell tests at the recorded candidate head."
     }
   },
   "kind": "code-review",
   "result": "changes-requested",
-  "reviewed_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  "reviewed_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "requirements_version": 1,
+  "requirements_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 }

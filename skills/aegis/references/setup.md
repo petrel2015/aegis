@@ -23,8 +23,9 @@ If the target was initialized under an earlier project name, complete the
    A trusted maintainer applies it to approved Issues. State labels (`aegis:new`, `aegis:blocked`, etc.) are created automatically on first synchronization; the runtime needs permission to manage labels and comment on Issues. Auto-enrollment can instead allow
    `trusted_issue_authors`; never enroll arbitrary public submissions for privileged execution.
 6. After project initialization is authorized, run `aegis.py --repo OWNER/REPO init-remote` once.
-   This creates branch `aegis-state` from default and adds `aegis-state.json`. Never merge
-   that branch into product code. If initialization is interrupted, inspect the branch/file
+   This creates an orphan branch `aegis-state` containing only `aegis-state.json`. Product
+   files and `.github/workflows` are not inherited, so coordination writes do not run
+   product CI. Never merge that branch into product code. If initialization is interrupted, inspect the branch/file
    before continuing; an existing branch is an error, not permission to reset state.
 7. Select `manual` merge initially, or explicitly configure `merge-queue` after verifying
    active server-side rules, required checks (including `merge_group` CI), approval policy,
@@ -47,3 +48,48 @@ For initial setup use `aegis-init`; it runs this setup procedure, not `scan`. Fo
 prompt with a stable actor/session identity, no overlapping local run, and a timeout.
 Run the cheap CLI `scan` first and invoke the model only if eligible work exists.
 Do not install model-specific runtime dependencies into this skill.
+
+## Upgrading existing projects to continued-delivery contracts
+
+Bootstrap deliberately preserves existing project files. Compare the new intake templates
+with the installed forms and update their Acceptance criteria instructions to include
+Outcome, Counterexample and Verification blocks. Review any added verification_groups and
+verification_environment fields as trusted project configuration; do not reset existing
+commands or permissions. Existing v1 tasks retain their snapshots and evidence schema.
+A genuine requirement revision uses the documented revise command; it archives v1 evidence
+and adopts v2 without rewriting old records. New registrations require the structured AC
+blocks. The optional aegis-release folder needs the same-version shared aegis core.
+
+## Isolating CI on an existing coordination branch
+
+Older initializers copied the default branch, including product Actions workflows.
+Plan the migration against the explicitly authorized target:
+
+```sh
+python3 /ABS/SKILL/scripts/aegis.py --repo OWNER/REPO isolate-state-ci
+```
+
+This command only reads the branch and reports its full head SHA, state revision and
+workflow files to remove. Review that list, stop all coordination writers, and release
+all claims and the QA slot. Resolve any pending merge queue request before migration.
+Then apply the reviewed plan using its exact head:
+
+```sh
+python3 /ABS/SKILL/scripts/aegis.py --repo OWNER/REPO isolate-state-ci \
+  --apply --expected-head FULL_REVIEWED_SHA --confirm-stopped
+```
+
+The migration removes only `.github/workflows` from the coordination branch. It leaves
+product branches, other inherited files and the state blob untouched, and adds one
+commit whose parent preserves the existing branch history. It refuses stale heads,
+claims (including expired claims), occupied QA slots and unresolved queue requests.
+Its non-force fast-forward update refuses concurrent state commits. If a mutation
+times out or conflicts, inspect the original branch before a fresh plan; never retry
+blindly. The result checks that workflows are absent and the state blob is unchanged.
+This isolates branch-triggered product workflows; other workflows that explicitly
+watch all repository ref events still need project-specific trigger review.
+
+API semantics: [Git trees](https://docs.github.com/en/rest/git/trees#create-a-tree)
+and [non-force reference updates](https://docs.github.com/en/rest/git/refs#update-a-reference).
+Offline tests exercise request structure, preservation and race refusal. A successful
+local mock test does not establish live GitHub permissions or remote readiness.

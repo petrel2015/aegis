@@ -9,12 +9,12 @@ label, validates the issue-form sections and unique AC-N identifiers, then regis
 `max_issues_per_run`, ordered by priority and Issue number. Dependencies use `#N` in the
 optional Dependencies field and must all be done before claiming. Closed/malformed/untrusted
 Issues are reported, not silently promoted. Claim and forward finish detect edited Issue bodies.
-A blocker can still be recorded after an edit. Changed requirements need maintainer resolution.
+A blocker can still be recorded after an edit. Changed requirements use the explicit [revision procedure](continuation.md); completed tasks need follow-up Issues.
 
 `claim` enforces dependency and rework limits. Exhausted rounds require maintainer attention;
 changing actor identity does not reset the budget. Labels alone are never ownership.
 
-Every evidence file uses `aegis-evidence/v1`. Forward evidence includes exact AC coverage
+New tasks use `aegis-evidence/v2`; existing v1 tasks retain their declared legacy contract. See [phase meanings and migration](evidence-v2.md). Forward evidence includes exact AC coverage
 with HTTPS report links. Design review and development bind the SHA-256 of the approved
 design file. Review binds PR head. QA includes every configured command, exit code and log,
 plus a real remote integration commit whose parents include the reviewed head and current
@@ -37,7 +37,7 @@ control (never from Issue content), for example:
 
 The same adapter can invoke Codex, ZCode or Claude through their locally verified CLI syntax;
 AEGIS does not assume identical flags. Placeholders are substituted as argv, without a shell.
-The runner preflights, optionally intakes for planner, scans and claims at most one Issue,
+The runner preflights, optionally intakes for planner, scans, runs read-only `resume`, and claims at most one Issue,
 then invokes only that role. A local lock prevents duplicate host execution. It maintains
 heartbeats, enforces `max_run_minutes`, terminates the worker process group on loss of ownership
 or timeout, and saves request/prompt/log/result under `.aegis-local/runs`. Unavailable token
@@ -59,3 +59,7 @@ merge-ready unchanged. Only observed merged PR permits `finish --to done`.
 
 Offline tests do not prove a particular account/plan supports merge queues. Unsupported
 server rules fail closed; keep manual mode until the destination is configured and verified.
+
+Optional `verification_groups` maps names to nonempty arrays of argv commands. All configured groups are required by QA in addition to `test_commands`; none are silently skipped. The helper validates command evidence; it does not execute commands found in Issue text. Browser runtime, viewport, build mode and target URL belong in the evidence environment.
+
+`resume` diagnostics prevent the runner from claiming/spawning a host until reconciled. The role then checks the actual workspace before edits. Optional `verification_environment` lists additional QA metadata fields required by policy (for example browser_version and viewport). A viewport, when supplied, must have positive integer width/height.

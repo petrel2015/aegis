@@ -85,3 +85,13 @@ When explicitly reviewing local artifacts without a registered GitHub task, reco
 `coordination: not-executed`, file digests and findings locally. Do not invent Issue URLs,
 leases or state transitions. Offline approval evaluates the design/code; it does not claim
 that coordinated GitHub review or live gates ran. Resume the managed flow only after setup.
+
+## Continued work and current evidence contract
+
+For a follow-up request, use [continuation and revision](../../aegis/references/continuation.md).
+Read [evidence versions](../../aegis/references/evidence-v2.md) when preparing a report.
+New tasks use v2; every report, including blocked/rework, binds the current requirement
+version and digest. Existing v1 tasks remain explicitly legacy; do not rewrite their history.
+The JSON examples are fictional and must be filled from the current task.
+
+Check every observable outcome and counterexample against the original user request and current requirement snapshot. A screenshot of a legend is not proof of changed map fills. Publish a concrete mismatch even when all implementation tests pass.

@@ -41,12 +41,17 @@ python3 "$AEGIS" --repo "$REPO" finish --issue 12 --actor planner-01 --token "$T
 ```
 
 Use the selected role's `assets/evidence.json` as the machine-readable evidence contract.
-All handoffs require `schema: aegis-evidence/v1`, a durable HTTPS report URL and summary.
+New intake tasks and explicitly revised tasks require `schema: aegis-evidence/v2`,
+including the current requirements version/digest, durable HTTPS report URL and summary.
+Read [phase-specific evidence](evidence-v2.md) for each role's required AC results.
+Unchanged legacy tasks without the v2 intake marker retain the v1 contract; do not
+silently reinterpret or upgrade their history. Inspect the actual task snapshot first.
 Forward handoffs require exact coverage of the Issue's explicit AC-1, AC-2… IDs.
 Designs carry an immutable SHA-256 digest; review and implementation bind that digest.
 Code reviews bind the exact PR head. QA includes configured command argv, actual exit code
 and durable log URL, plus a two-parent integration commit of exact head and base.
-For blocked/rework use schema, summary, URL and `result: blocked` or `fail`; include PR/head
+For blocked/rework retain the task's schema and current requirement binding, summary, URL
+and `result: blocked` or `fail`; include PR/head
 if a PR already exists. Report semantic evidence honestly: structure is not factual proof.
 
 Development, code-review and QA handoffs add `pr` (integer), `head` (full SHA).

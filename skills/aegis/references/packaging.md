@@ -16,7 +16,7 @@ For native installation, preserve sibling paths in the host's configured skill d
 ```
 
 Copy the **whole shared core directory** plus each desired role directory from the same
-repository commit. For all roles copy all six directories under `skills/`. Do not install
+repository commit. For all roles copy all seven directories (including optional `aegis-release`) under `skills/`. Do not install
 only a role's SKILL.md, flatten paths, or mix versions. A host installer that only copies
 one selected folder needs a second install of the core at the sibling location. If the host
 cannot preserve sibling resources, use a full repository checkout and direct file reading.

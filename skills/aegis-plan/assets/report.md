@@ -16,9 +16,9 @@
 <Included work; explicitly excluded work.>
 
 ## Acceptance criteria
-| ID | Observable result | Verification method |
-|---|---|---|
-| AC-1 | <specific result> | <test or observable check> |
+| ID | Observable result | Counterexample that fails | Verification method |
+|---|---|---|---|
+| AC-1 | <specific result> | <misleading substitute> | <test or observable check> |
 
 ## Design and alternatives
 <Selected approach, affected components, rejected alternatives and reasons.>

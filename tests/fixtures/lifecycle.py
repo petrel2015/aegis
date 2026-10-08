@@ -1,4 +1,4 @@
-import sys, json, os, subprocess, pathlib
+import sys, json, os, subprocess, pathlib, hashlib, uuid
 root=pathlib.Path(sys.argv[2])
 cli=sys.argv[1]
 os.environ['PATH']=str(root)+os.pathsep+os.environ['PATH'];os.environ['FAKE_GH_ROOT']=str(root)
@@ -13,7 +13,7 @@ save(); results=[]; tok=None
  'required_checks':['test'],'review_mode':'agent-attestation'}))
 body='\n'.join('### '+h+'\n'+v for h,v in [('Priority','P2'),('Background','Test feature'),
  ('Expected benefit','Useful change'),('Scope and exclusions','Small scope'),
- ('Acceptance criteria','AC-1: verified outcome'),('Alternatives and compatibility','No migration')])
+ ('Acceptance criteria','AC-1: verified outcome\nOutcome: changed output\nCounterexample: label alone changes\nVerification: exercise output'),('Alternatives and compatibility','No migration')])
 (root/'issue.json').write_text(json.dumps({'number':1,'title':'[feature] Test','body':body,'user':{'login':'owner'},'labels':[]}))
 def run(*args,ok=True):
  p=subprocess.run([sys.executable,cli,'--repo','test/project',*args],capture_output=True,text=True)
@@ -25,10 +25,10 @@ def run(*args,ok=True):
 def claim(role,actor):return run('claim','--issue','1','--actor',actor,'--role',role)['token']
 def finish(actor,token,target,extra=None,ok=True):
  stage=json.loads((root/'state.json').read_text())['tasks']['1']['state']
- e={'summary':'offline fixture','url':'https://example.test/fixture','pr':2,'head':meta['head']};e.update({'schema':'aegis-evidence/v1','design_ref':'sha256:'+'e'*64,
- 'acceptance':{'AC-1':{'result':'pass','evidence':'https://example.test/log'}},
+ e={'summary':'offline fixture','url':'https://example.test/fixture','pr':2,'head':meta['head']};e.update({'schema':'aegis-evidence/v2','requirements_version':1,'requirements_digest':'sha256:'+hashlib.sha256(body.encode()).hexdigest(), 'run_id':uuid.uuid4().hex,'environment':{'runtime':'python','build_mode':'test','target':'offline fixture'},'design_ref':'sha256:'+'e'*64,
+ 'acceptance':{'AC-1':{'result':{'new':'covered','design-review':'reviewed','ready':'implemented','code-review':'reviewed','testing':'verified','merge-ready':'verified'}[stage],'observation':'Fixture verifies output','evidence':'https://example.test/log'}},
  'kind':{'new':'design','design-review':'design-review','ready':'development','code-review':'code-review','testing':'qa','merge-ready':'merge'}[stage],
- 'result':'approve' if stage in ('design-review','code-review') else 'pass',
+ 'result':'approve' if stage in ('design-review','code-review') else {'new':'covered','ready':'implemented'}.get(stage,'pass'),
  'reviewed_head':meta['head'], 'tests':[{'argv':['python3','-m','unittest'],'exit_code':0,'log_url':'https://example.test/log'}]})
  if target in ('blocked','ready','new') and stage!='design-review': e['result']='fail'
  e.update(extra or {});(root/'evidence.json').write_text(json.dumps(e))

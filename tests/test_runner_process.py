@@ -54,7 +54,7 @@ cfg = SimpleNamespace(repo='o/r', actor='a', role='developer', workspace=str(p),
     argv=[sys.executable, '-c', 'import time;time.sleep(60)'])
 def call(repo, args, **kwargs):
     return {'preflight': {'policy': {'max_run_minutes': 30, 'max_issues_per_run': 1}},
-            'scan': {'tasks': [{'issue': 1}]},
+            'scan': {'tasks': [{'issue': 1}]}, 'resume': {'status':'ready_to_claim'},
             'claim': {'token': 't', 'task': {'state': 'ready', 'history': []}}}[args[0]]
 def spawn(*args):
     proc = r.spawn_host(*args)

@@ -35,3 +35,22 @@ class MergeGate(unittest.TestCase):
   self.task['merge_request']={'status':'sending'}
   with patch.object(m.subprocess,'run') as run,self.assertRaisesRegex(ValueError,'MERGE_REQUEST_EXISTS'):self.run_queue()
   run.assert_not_called()
+
+class RevisionQueueGate(unittest.TestCase):
+ def test_revised_or_edited_requirement_never_enqueues_stale_candidate(self):
+  import copy
+  from test_policy import E,I,P
+  import policy
+  req=policy.intake_issue(I,P)
+  e=copy.deepcopy(E);e.update(kind='qa',result='pass',pr=2,head='a'*40,base='b'*40,tested_commit='c'*40)
+  e['acceptance']['AC-1']['result']='verified'
+  task={'state':'merge-ready','requirements':req,'history':[{'from':'testing','to':'merge-ready','evidence':e}]}
+  store=Mock(repo='o/r');store.read.return_value=({'revision':1,'tasks':{'1':task}},'blob')
+  p=dict(P,merge_mode='merge-queue')
+  api=Mock(return_value=dict(I,body=I['body']+' changed'))
+  with patch.object(m.policy,'load_policy',return_value=p),patch.object(m.subprocess,'run') as run:
+   with self.assertRaisesRegex(ValueError,'ISSUE_CHANGED'):m.enqueue(store,'qa','token',1,api,lambda *a:{'role':'qa'})
+   store.write.assert_not_called();run.assert_not_called()
+   task['requirements']['version']=2
+   with self.assertRaisesRegex(ValueError,'REQUIREMENTS_STALE'):m.enqueue(store,'qa','token',1,api,lambda *a:{'role':'qa'})
+   store.write.assert_not_called();run.assert_not_called()

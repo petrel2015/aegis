@@ -1,6 +1,7 @@
 """Deterministic policy, intake and evidence gates. No model or shell execution."""
 import base64
 import json
+import hashlib
 import re
 import shlex
 from urllib.parse import quote, urlparse
@@ -26,6 +27,15 @@ def validate_policy(p):
     require(isinstance(p.get('required_checks'),list) and p['required_checks'] and all(isinstance(x,str) and x for x in p['required_checks']), 'POLICY_UNCONFIGURED: required_checks must not be empty')
     require(p.get('review_mode','agent-attestation') in ('agent-attestation','github-review'), 'POLICY_INVALID: review_mode')
     require(p.get('check_app','github-actions') == 'github-actions', 'POLICY_INVALID: currently only GitHub Actions checks supported')
+    groups=p.get('verification_groups', {})
+    require(isinstance(groups,dict),'POLICY_INVALID: verification_groups must be an object')
+    for name, commands in groups.items():
+        require(isinstance(name,str) and re.fullmatch(r'[a-z][a-z0-9_-]*',name), 'POLICY_INVALID: verification group name')
+        require(isinstance(commands,list) and commands, 'POLICY_INVALID: empty verification group')
+        for command in commands:
+            require(isinstance(command,list) and command and all(isinstance(x,str) and x for x in command), 'POLICY_INVALID: group commands must be argv arrays')
+    fields=p.get('verification_environment',[])
+    require(isinstance(fields,list) and all(isinstance(k,str) and k.strip() for k in fields),'POLICY_INVALID: verification_environment needs field names')
     return p
 
 def load_policy(repo, api):
@@ -59,9 +69,33 @@ def intake_issue(issue, p):
     require(ac and len(ac)==len(set(ac)), 'INTAKE_FORMAT: unique AC-1, AC-2 acceptance IDs required')
     deps=[int(n) for n in re.findall(r'#([1-9][0-9]*)',sections.get('dependencies',''))]
     require(issue['number'] not in deps,'DEPENDENCY_CYCLE: Issue depends on itself')
-    return {'kind':kind,'priority':int(priority.group(1)),'acceptance_ids':ac,
+    criteria={}
+    blocks=re.split(r'(?m)^\s*(?:-\s*)?(AC-[1-9][0-9]*):', sections['acceptance criteria'])
+    for i in range(1,len(blocks),2):
+        values={}
+        for field in ('Outcome','Counterexample','Verification'):
+            found=re.search(r'(?im)^[ \t]*'+field+r':[ \t]*(\S[^\n]*)',blocks[i+1])
+            require(found and found.group(1).strip().lower() not in ('tbd','n/a','_no response_'),f'INTAKE_ACCEPTANCE: {blocks[i]} needs {field}')
+            values[field.lower()]=found.group(1).strip()
+        criteria[blocks[i]]=values
+    require(set(criteria)==set(ac), 'INTAKE_ACCEPTANCE: each AC needs its own AC-N: block')
+    return {'version':1, 'digest':requirements_digest(issue.get('body') or ''),
+            'evidence_schema':'aegis-evidence/v2', 'criteria':criteria,
+            'kind':kind,'priority':int(priority.group(1)),'acceptance_ids':ac,
             'dependencies':sorted(set(deps)), 'issue_updated_at':issue.get('updated_at'),
             'source_body':issue.get('body') or '', 'policy_sha':p.get('policy_sha')}
+
+def requirements_digest(body):
+    return 'sha256:'+hashlib.sha256(body.encode('utf-8')).hexdigest()
+
+def current_history(task):
+    return task['history'][task.get('requirements_history_start',0):]
+
+def verification_commands(p):
+    result=[{'group':'default','argv':shlex.split(c) if isinstance(c,str) else c} for c in p['test_commands']]
+    for name,commands in p.get('verification_groups',{}).items():
+        result.extend({'group':name,'argv':c} for c in commands)
+    return result
 
 def validate_claim(state, task, p):
     req=task.get('requirements')
@@ -77,7 +111,11 @@ def durable_url(value):
     return u.scheme=='https' and bool(u.netloc) and not u.username and not u.password
 
 def evidence_gate(task, target, e, p):
-    require(e.get('schema')=='aegis-evidence/v1','EVIDENCE_SCHEMA: aegis-evidence/v1 required')
+    schema=task.get('requirements',{}).get('evidence_schema','aegis-evidence/v1')
+    require(e.get('schema')==schema,f'EVIDENCE_SCHEMA: {schema} required')
+    if schema=='aegis-evidence/v2':
+        require(type(e.get('requirements_version')) is int and e['requirements_version']==task['requirements']['version'], 'REQUIREMENTS_STALE: exact requirement version required')
+        require(e.get('requirements_digest')==task['requirements']['digest'],'REQUIREMENTS_STALE: exact requirement digest required')
     require(durable_url(e.get('url')), 'EVIDENCE_URL: durable HTTPS report URL required')
     require(isinstance(e.get('summary'),str) and 0 < len(e['summary']) <= 6000, 'EVIDENCE_SUMMARY: nonempty bounded summary required')
     current=task['state']
@@ -88,27 +126,60 @@ def evidence_gate(task, target, e, p):
     require(task.get('requirements'), 'LEGACY_TASK: missing acceptance contract')
     acceptance=e.get('acceptance')
     require(isinstance(acceptance,dict) and set(acceptance)==set(task['requirements']['acceptance_ids']), 'EVIDENCE_AC: exact acceptance ID coverage required')
+    if schema=='aegis-evidence/v2':
+        predecessors={'design-review':('new','design-review','design',None),
+                      'ready':('design-review','ready','design-review','approve'),
+                      'code-review':('ready','code-review','development',None),
+                      'testing':('code-review','testing','code-review','approve'),
+                      'merge-ready':('testing','merge-ready','qa','pass')}
+        if current in predecessors:
+            origin,destination,kind,decision=predecessors[current]
+            records=[h for h in current_history(task) if h.get('from')==origin]
+            record=records[-1] if records else {}
+            previous=record.get('evidence',{})
+            require(record.get('to')==destination and previous.get('kind')==kind and
+                    (decision is None or previous.get('result')==decision) and
+                    previous.get('requirements_version')==task['requirements']['version'] and
+                    previous.get('requirements_digest')==task['requirements']['digest'],
+                    'EVIDENCE_CHAIN: current requirement epoch needs successful preceding role transition')
+            if current in ('testing','merge-ready'):
+                require(previous.get('head')==e.get('head') and previous.get('pr')==e.get('pr'),
+                        'EVIDENCE_CHAIN: approval belongs to another candidate')
+        if current in ('new','ready'):
+            require(e.get('result') not in ('pass','verified'),'EVIDENCE_PHASE: implementation/design is not QA acceptance')
+    phase={'new':'covered','design-review':'reviewed','ready':'implemented','code-review':'reviewed','testing':'verified','merge-ready':'verified'}[current] if schema=='aegis-evidence/v2' else 'pass'
     for key, item in acceptance.items():
-        require(isinstance(item,dict) and item.get('result')=='pass' and durable_url(item.get('evidence')),f'EVIDENCE_AC: {key} needs pass and HTTPS evidence')
+        require(isinstance(item,dict) and item.get('result')==phase and durable_url(item.get('evidence')),f'EVIDENCE_AC: {key} needs {phase} and HTTPS evidence')
+        if schema=='aegis-evidence/v2':
+            require(isinstance(item.get('observation'),str) and item['observation'].strip(),f'EVIDENCE_AC: {key} needs a concrete observation or design coverage explanation')
     if current=='new':
         require(e.get('kind')=='design' and re.fullmatch(r'sha256:[0-9a-f]{64}',e.get('design_ref','')), 'DESIGN_REF: immutable sha256 design digest required')
     if current=='design-review':
         require(e.get('kind')=='design-review' and e.get('result')=='approve','REVIEW_REQUIRED: approved design review required')
-        require(e.get('design_ref')==task['history'][-1]['evidence'].get('design_ref'), 'DESIGN_CHANGED: reviewed design digest differs')
+        require(current_history(task) and e.get('design_ref')==current_history(task)[-1]['evidence'].get('design_ref'), 'DESIGN_CHANGED: reviewed design digest differs')
     if current=='ready':
         require(e.get('kind')=='development','EVIDENCE_KIND: development required')
-        approved=[h['evidence'] for h in task['history'] if h['from']=='design-review' and h['to']=='ready']
+        approved=[h['evidence'] for h in current_history(task) if h['from']=='design-review' and h['to']=='ready']
         require(approved and e.get('design_ref')==approved[-1].get('design_ref'),'DESIGN_REQUIRED: candidate must link approved design')
     if current=='code-review':
         require(e.get('kind')=='code-review' and e.get('result')=='approve', 'REVIEW_REQUIRED: approved code review required')
         require(e.get('reviewed_head')==e.get('head'),'REVIEW_STALE: exact reviewed head required')
     if current=='testing':
+        if schema=='aegis-evidence/v2':
+            require(isinstance(e.get('run_id'),str) and bool(re.fullmatch(r'[a-zA-Z0-9_-]{8,100}',e['run_id'])), 'QA_RUN: unique run ID required')
+            require(isinstance(e.get('environment'),dict) and all(isinstance(e['environment'].get(k),str) and e['environment'][k].strip() for k in ('runtime','build_mode','target')), 'QA_ENVIRONMENT: runtime, build_mode and target required')
+            require(all(e['environment'].get(k) for k in p.get('verification_environment',[])), 'QA_ENVIRONMENT: configured environment metadata missing')
+            if 'viewport' in e['environment']:
+                viewport=e['environment']['viewport']
+                require(isinstance(viewport,dict) and all(type(viewport.get(k)) is int and viewport[k]>0 for k in ('width','height')), 'QA_ENVIRONMENT: viewport needs positive width/height')
+            prior=[h['evidence'].get('run_id') for h in task['history'] if h.get('evidence',{}).get('kind')=='qa']
+            require(e['run_id'] not in prior,'QA_RUN_REUSED: preserve earlier runs and create a fresh run ID')
         require(e.get('kind')=='qa' and e.get('result')=='pass','QA_REQUIRED: passing QA report required')
         commands=e.get('tests',[])
-        expected=[shlex.split(c) if isinstance(c,str) else c for c in p['test_commands']]
+        expected=verification_commands(p)
         require(len(commands)==len(expected), 'QA_TESTS: all configured commands required')
-        for command,expected_argv in zip(commands,expected):
-            require(command.get('argv')==expected_argv and type(command.get('exit_code')) is int and command['exit_code']==0 and durable_url(command.get('log_url')), 'QA_TESTS: command/result/log mismatch')
+        for command,spec in zip(commands,expected):
+            require(command.get('group','default')==spec['group'] and command.get('argv')==spec['argv'] and type(command.get('exit_code')) is int and command['exit_code']==0 and durable_url(command.get('log_url')), 'QA_TESTS: command/result/log mismatch')
 
 def required_checks(repo, head, p, api):
     runs=[]

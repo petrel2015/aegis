@@ -357,6 +357,19 @@ def main(argv=None):
     p.add_argument('--repo', required=True, type=repo_name)
     sub = p.add_subparsers(dest='command', required=True)
     sub.add_parser('status')
+    resume_parser=sub.add_parser('resume', help='Read-only task, requirement, candidate and workspace reconciliation')
+    resume_parser.add_argument('--issue',type=int,required=True)
+    resume_parser.add_argument('--actor',required=True)
+    resume_parser.add_argument('--role',choices=sorted(set(ROLES.values())),required=True)
+    resume_parser.add_argument('--workspace',type=Path)
+    revise_parser=sub.add_parser('revise', help='Operator-authorized requirement revision; previous evidence remains archived')
+    revise_parser.add_argument('--issue',type=int,required=True)
+    revise_parser.add_argument('--actor',required=True)
+    revise_parser.add_argument('--reason',required=True)
+    revise_parser.add_argument('--affected-ac',nargs='+',required=True)
+    revise_parser.add_argument('--evidence-url',required=True)
+    revise_parser.add_argument('--expected-revision',type=int,required=True)
+    revise_parser.add_argument('--confirm-stopped',action='store_true',required=True)
     merge = sub.add_parser('queue-merge', help='Verify server gates and enqueue an owned QA candidate once')
     merge.add_argument('--issue', type=int, required=True)
     merge.add_argument('--actor', required=True)
@@ -368,6 +381,10 @@ def main(argv=None):
     sync.add_argument('--issue', type=int, required=True)
     scan = sub.add_parser('scan'); scan.add_argument('--role', choices=sorted(set(ROLES.values())), required=True)
     sub.add_parser('init-remote')
+    isolation = sub.add_parser('isolate-state-ci', help='Plan or apply reviewed removal of inherited coordination branch CI')
+    isolation.add_argument('--apply', action='store_true')
+    isolation.add_argument('--expected-head')
+    isolation.add_argument('--confirm-stopped', action='store_true')
     recovery = sub.add_parser('recover')
     recovery.add_argument('--issue', type=int, required=True)
     recovery.add_argument('--actor', required=True)
@@ -393,11 +410,11 @@ def main(argv=None):
         import merge_gate
         return merge_gate.enqueue(store, a.actor, a.token, a.issue, gh_api, held)
     if a.command == 'init-remote':
-        r = gh_api(a.repo)
-        branch = gh_api(a.repo, '/git/ref/heads/' + r['default_branch'])
-        gh_api(a.repo, '/git/refs', 'POST', {'ref': 'refs/heads/' + BRANCH, 'sha': branch['object']['sha']})
-        store.write(new_state(), None, 'initialize')
-        return {'status': 'initialized', 'branch': BRANCH}
+        import state_branch
+        return state_branch.initialize(a.repo, gh_api, new_state())
+    if a.command == 'isolate-state-ci':
+        import state_branch
+        return state_branch.isolate(a.repo, gh_api, a.apply, a.expected_head, a.confirm_stopped)
     project_policy = None
     if a.command not in ('status', 'scan', 'sync', 'heartbeat', 'release'):
         project_policy = policy.load_policy(a.repo, gh_api)
@@ -420,11 +437,22 @@ def main(argv=None):
     ttl = getattr(a, 'ttl', 1800)
     require(60 <= ttl <= 7200, 'TTL must be 60..7200 seconds')
     issue = gh_api(a.repo, f'/issues/{a.issue}')
-    closed_reconciliation = (a.command in ('release', 'heartbeat', 'recover') or
+    closed_reconciliation = (a.command in ('release', 'heartbeat', 'recover', 'resume') or
         (a.command == 'finish' and a.to == 'done') or
         (a.command == 'claim' and state['tasks'].get(str(a.issue), {}).get('state') == 'merge-ready'))
     require('pull_request' not in issue and (issue['state'] == 'open' or closed_reconciliation),
             'Expected open issue, except finalization/release of an existing task')
+    if a.command == 'resume':
+        import continuation
+        return continuation.resume(a.repo,state,a.issue,a.actor,a.role,issue,gh_api,a.workspace)
+    if a.command == 'revise':
+        import continuation
+        requirements=policy.intake_issue(issue,project_policy)
+        operation=uuid.uuid4().hex
+        updated=continuation.revise(state,a.issue,requirements,a.actor,a.reason,a.affected_ac,a.evidence_url,a.expected_revision,operation)
+        print(json.dumps({'operation':operation,'phase':'attempt'}),file=sys.stderr,flush=True)
+        store.write(updated,sha,operation)
+        return {'status':'ok','operation':operation,'task':updated['tasks'][str(a.issue)],'sync':sync_issue(store,a.issue)}
     requirements = None
     if a.command == 'register':
         requirements = policy.intake_issue(issue, project_policy)

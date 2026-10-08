@@ -68,3 +68,12 @@ design digests, exact-candidate CI/review checks and guarded merge-queue admissi
 implemented. The [one-shot host adapter](skills/aegis/references/policy-and-runner.md)
 provides locking, bounded execution, heartbeat supervision and durable logs without a
 model runtime or resident scheduler. See [proof boundaries](docs/validation.md).
+
+## Continued delivery
+
+For follow-up requests use [resume and versioned revisions](skills/aegis/references/continuation.md).
+New tasks use [phase-specific evidence](skills/aegis/references/evidence-v2.md), observable
+acceptance with counterexamples, mandatory configured verification groups and unique run
+artifacts. Existing v1 task history remains explicitly legacy. Publish authorized candidates
+with the optional [release Skill](skills/aegis-release/SKILL.md); merge and deployment are
+separate records. See [the field-trial decision](docs/decisions/0004-continuation-and-evidence.md).

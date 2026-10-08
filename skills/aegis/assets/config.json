@@ -11,5 +11,6 @@
   "documentation_entry": "README.md",
   "release_policy": "separate authorization required",
   "review_mode": "agent-attestation",
-  "check_app": "github-actions"
+  "check_app": "github-actions",
+  "verification_groups": {}
 }
