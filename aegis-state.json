@@ -1,7 +1,7 @@
 {
-  "last_operation": "554f210c193c46dbb726f8d638d587e9",
+  "last_operation": "0dc1278fdc104ab5a9983217d94e7026",
   "qa": null,
-  "revision": 11,
+  "revision": 12,
   "tasks": {
     "3": {
       "authors": {
@@ -237,7 +237,12 @@
           "to": "new"
         }
       ],
-      "lease": null,
+      "lease": {
+        "actor": "agent-aegis-release-planner",
+        "expires": 1791441984,
+        "role": "planner",
+        "token": "35bf13413cea4bc788847df98973655f"
+      },
       "requirements": {
         "acceptance_ids": [
           "AC-1",
