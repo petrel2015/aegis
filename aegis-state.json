@@ -1,7 +1,7 @@
 {
   "last_operation": "9d74c83e2aaf468b9d6219bcbe6de8f6",
   "qa": null,
-  "revision": 13,
+  "revision": 14,
   "tasks": {
     "3": {
       "authors": {
@@ -289,7 +289,7 @@
         {
           "actor": "agent-aegis-release-planner",
           "at": 1791440238,
-          "delivery": "pending",
+          "delivery": "sending",
           "evidence": {
             "acceptance": {
               "AC-1": {
