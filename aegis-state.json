@@ -1,7 +1,7 @@
 {
   "last_operation": "3e2df8cef3dc449ab6a6774ff6fe9a7d",
   "qa": null,
-  "revision": 26,
+  "revision": 27,
   "tasks": {
     "3": {
       "authors": {
@@ -605,7 +605,7 @@
         {
           "actor": "agent-aegis-release-reviewer",
           "at": 1791441707,
-          "delivery": "pending",
+          "delivery": "sending",
           "evidence": {
             "acceptance": {
               "AC-1": {
