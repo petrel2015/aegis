@@ -26,7 +26,7 @@ user authorization in the session remains valid within its scope; do not ask red
    documented provider-generated files from a file-by-file comparison.
 6. Run public browser smoke tests for the intended user flow at the exact site URL. Capture
    mobile evidence when required. Authentication/network failures remain failed or unknown.
-7. Fill [receipt template](../assets/record.json), validate it with the shared
+7. Prefer [source-bound release and recovery](governed-release.md) for new GitHub Pages releases. Its finalization retrieves the actual deployment and task linkage and binds project smoke observations. Legacy path: fill [receipt template](../assets/record.json), validate it with the shared
    `release_record.py RECORD_JSON`, then publish a new immutable report linked from the task.
    Validation checks structure/bindings, not the truth of the supplied observations. It does
    not deploy or update Issue state. Keep a failed record and create a linked retry record.
