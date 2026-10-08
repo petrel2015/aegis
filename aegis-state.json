@@ -1,7 +1,7 @@
 {
   "last_operation": "ade41ca6ae304279b13f8757dccede3e",
   "qa": null,
-  "revision": 31,
+  "revision": 32,
   "tasks": {
     "3": {
       "authors": {
@@ -711,7 +711,8 @@
         {
           "actor": "agent-aegis-release-developer",
           "at": 1791442495,
-          "delivery": "sending",
+          "comment_url": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6054300841",
+          "delivery": "sent",
           "evidence": {
             "acceptance": {
               "AC-1": {
