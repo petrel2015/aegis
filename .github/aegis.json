@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "intake_label": "aegis:intake",
+  "trusted_issue_authors": [
+    "petrel2015"
+  ],
+  "test_commands": [
+    [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ]
+  ],
+  "max_issues_per_run": 1,
+  "max_rework_rounds": 3,
+  "max_run_minutes": 30,
+  "merge_mode": "manual",
+  "required_checks": [
+    "test"
+  ],
+  "documentation_entry": "README.md",
+  "release_policy": "separate authorization required",
+  "review_mode": "agent-attestation",
+  "check_app": "github-actions",
+  "verification_groups": {}
+}
