@@ -1,7 +1,7 @@
 {
-  "last_operation": "117e17f06cfe4e358ee4747a1f1ab76d",
+  "last_operation": "e61fca9e39cb497ebbcd3c056612ab3b",
   "qa": null,
-  "revision": 20,
+  "revision": 21,
   "tasks": {
     "3": {
       "authors": {
@@ -446,7 +446,7 @@
       ],
       "lease": {
         "actor": "agent-aegis-release-developer",
-        "expires": 1791442197,
+        "expires": 1791442824,
         "role": "developer",
         "token": "b6406b75babe41779d7fa2556da84329"
       },
