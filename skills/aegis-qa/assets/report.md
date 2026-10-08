@@ -1,4 +1,7 @@
 # AEGIS QA v1
+- evidence_schema: aegis-evidence/v2
+- requirements_version: <current version from authoritative task>
+- requirements_digest: <current sha256 digest from authoritative task>
 - record_id: <UUID>
 - role: qa
 - actor: <instance ID>

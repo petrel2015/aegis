@@ -1,6 +1,9 @@
 <!-- Fictional format example, not execution evidence. -->
 
 # AEGIS QA v1
+- evidence_schema: aegis-evidence/v2
+- requirements_version: 1
+- requirements_digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 - record_id: 44444444-4444-4444-8444-444444444444
 - role: qa
 - actor: hermes-server-01

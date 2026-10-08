@@ -77,7 +77,7 @@ Only call `finish --to done` after the live API confirms merge. If the PR's head
 from the approved candidate, stop for reconciliation instead of borrowing prior QA evidence.
 
 For test failure use `outcome: fail`, mark the affected AC as `fail`, and include F-ID,
-reproduction and logs. JSON still includes `pr` and current full `head`, but must not carry
+reproduction and logs. JSON still includes `pr` and current full `head`, with `result: fail`; it must not carry
 `result: pass`. Finish to `ready`, preserving the report for the developer's next run.
 
 ## Evidence fields by decision
@@ -88,10 +88,10 @@ The JSON asset is specifically the **test-pass → merge-ready** template. Do no
 | Action | Required JSON fields | Result handling |
 |---|---|---|
 | Test pass → merge-ready | schema, kind, acceptance, tests, run_id, environment, summary, url, pr, head, base, tested_commit, result | result must be pass; all SHAs observed |
-| Failure → ready | schema, summary, url, pr, head | Omit result/base/tested_commit unless separately explaining observed data |
-| Missing prerequisite → blocked | schema, summary, url, pr, head | Omit result; describe missing evidence in report |
-| Base drift → testing | schema, summary, url, pr, head | Omit result; no new test pass is claimed |
-| Head drift → ready | schema, summary, url, pr, current head | Omit result; request review of new candidate |
+| Failure → ready | schema, summary, url, pr, head, result | result: fail; retain original reproduction and failed evidence |
+| Missing prerequisite → blocked | schema, summary, url, pr, head, result | result: blocked; describe missing external prerequisite |
+| Base drift → testing | schema, summary, url, pr, head, result | result: fail; no current integration pass is claimed |
+| Head drift → ready | schema, summary, url, pr, current head, result | result: fail; request review of new candidate |
 | Observed merge → done | schema, acceptance, summary, url, pr, approved PR head | Omit result; actual merge observation belongs in report |
 | Queued / manual wait | No finish JSON; publish report and release | State remains merge-ready |
 
