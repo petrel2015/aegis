@@ -1,7 +1,7 @@
 {
-  "last_operation": "3e2df8cef3dc449ab6a6774ff6fe9a7d",
+  "last_operation": "bc1650dd7d724cc989139becaa1e2410",
   "qa": null,
-  "revision": 28,
+  "revision": 29,
   "tasks": {
     "3": {
       "authors": {
@@ -657,7 +657,12 @@
           "to": "ready"
         }
       ],
-      "lease": null,
+      "lease": {
+        "actor": "agent-aegis-release-developer",
+        "expires": 1791444003,
+        "role": "developer",
+        "token": "dcfd57dc36744e28b99496856c940f12"
+      },
       "requirements": {
         "acceptance_ids": [
           "AC-1",
