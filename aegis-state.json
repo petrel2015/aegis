@@ -1,11 +1,15 @@
 {
-  "last_operation": "dc135bac8bd14fc1858f1c40f1a06416",
+  "last_operation": "be3d278f5c474083abb63f7cdfe92b2b",
   "qa": null,
-  "revision": 3,
+  "revision": 4,
   "tasks": {
     "3": {
       "authors": {},
-      "contributors": {},
+      "contributors": {
+        "planner": [
+          "agent-aegis-release-planner"
+        ]
+      },
       "history": [],
       "issue_events": [
         {
@@ -22,7 +26,12 @@
           "to": "new"
         }
       ],
-      "lease": null,
+      "lease": {
+        "actor": "agent-aegis-release-planner",
+        "expires": 1791441655,
+        "role": "planner",
+        "token": "29fd968ba1ef466bbd203a8ed86d14fa"
+      },
       "requirements": {
         "acceptance_ids": [
           "AC-1",
