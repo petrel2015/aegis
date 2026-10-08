@@ -1,7 +1,7 @@
 {
-  "last_operation": "ade41ca6ae304279b13f8757dccede3e",
+  "last_operation": "da3070f278ba41138f0386bf72738957",
   "qa": null,
-  "revision": 32,
+  "revision": 33,
   "tasks": {
     "3": {
       "authors": {
@@ -762,7 +762,12 @@
           "to": "code-review"
         }
       ],
-      "lease": null,
+      "lease": {
+        "actor": "agent-aegis-release-reviewer",
+        "expires": 1791444336,
+        "role": "reviewer",
+        "token": "67be1207fb6243b999ee702283f20cc5"
+      },
       "requirements": {
         "acceptance_ids": [
           "AC-1",
