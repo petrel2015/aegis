@@ -1,7 +1,7 @@
 {
   "last_operation": "dc135bac8bd14fc1858f1c40f1a06416",
   "qa": null,
-  "revision": 2,
+  "revision": 3,
   "tasks": {
     "3": {
       "authors": {},
@@ -11,7 +11,8 @@
         {
           "actor": "agent-aegis-release-planner",
           "at": 1791439809,
-          "delivery": "sending",
+          "comment_url": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053583708",
+          "delivery": "sent",
           "evidence": {
             "summary": "Task registered for planning"
           },
