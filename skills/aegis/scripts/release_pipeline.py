@@ -7,6 +7,7 @@ import argparse
 import fnmatch
 import hashlib
 import http.client
+from html.parser import HTMLParser
 import json
 import os
 import signal
@@ -53,6 +54,27 @@ def valid_site(site):
     return site
 
 
+def validate_base(index, site):
+    origin = urllib.parse.urlsplit(site)
+    class Resources(HTMLParser):
+        def handle_starttag(self, tag, attrs):
+            attrs = dict(attrs)
+            if tag == 'base' and attrs.get('href') is not None:
+                require(urllib.parse.urljoin(site, attrs['href']) == site, 'BUILD_BASE_PATH: HTML base must equal authorized site base')
+            ref = attrs.get('src') if tag in ('script', 'img', 'source') else attrs.get('href') if tag == 'link' else None
+            if not ref or ref.startswith(('data:', 'blob:')):
+                return
+            decoded = urllib.parse.unquote(ref)
+            require('\\' not in decoded, 'BUILD_BASE_PATH: backslash resource path')
+            raw_path = urllib.parse.urlsplit(ref).path
+            require(not any(urllib.parse.unquote(part) in ('.', '..') and urllib.parse.unquote(part) != part for part in raw_path.split('/')), 'BUILD_BASE_PATH: encoded dot segment')
+            resolved = urllib.parse.urlsplit(urllib.parse.urljoin(site, ref))
+            if resolved.netloc == origin.netloc:
+                require(resolved.scheme == origin.scheme and resolved.path.startswith(origin.path),
+                        'BUILD_BASE_PATH: local resource escapes authorized site base: ' + ref)
+    Resources().feed(index.decode('utf-8'))
+
+
 def prepare(build, previous, output, source_sha, site, allow_remove=(), protected=()):
     require(re.fullmatch('[0-9a-f]{40}', source_sha), 'SOURCE_SHA: full commit required')
     valid_site(site)
@@ -62,6 +84,7 @@ def prepare(build, previous, output, source_sha, site, allow_remove=(), protecte
     require(not output.resolve().is_relative_to(build.resolve()) and not output.resolve().is_relative_to(previous.resolve()), 'OUTPUT_OVERLAP')
     current, old = inventory(build), inventory(previous)
     require('index.html' in current, 'ARTIFACT_ENTRY: index.html required')
+    validate_base(current['index.html'], site)
     if 'build.json' in current:
         metadata = json.loads(current['build.json'])
         require(metadata.get('sourceCommit') == source_sha, 'BUILD_VERSION: existing metadata disagrees with source')
@@ -112,6 +135,7 @@ def load_artifact(directory):
         require(set(archive.namelist()) == set(actual) and len(archive.namelist()) == len(actual), 'ARCHIVE_FILES')
         require(all(archive.read(n) == data for n, data in actual.items()), 'ARCHIVE_CHANGED')
     valid_site(manifest['site_url'])
+    validate_base(actual['index.html'], manifest['site_url'])
     return manifest, actual
 
 

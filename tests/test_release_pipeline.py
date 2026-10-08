@@ -49,6 +49,22 @@ class ReleasePipelineTests(unittest.TestCase):
   with self.assertRaisesRegex(ValueError,'PUBLIC_FILE_MISMATCH'):rp.verify(self.out,self.root/'fail',lambda url:b'old')
   r=json.loads((self.root/'fail/verification.json').read_text());self.assertEqual(r['status'],'remote_unknown');self.assertNotIn('observed_artifact_digest',r)
   with self.assertRaisesRegex(ValueError,'RUN_EXISTS'):rp.verify(self.out,self.root/'fail',lambda url:b'')
+ def test_local_preview_root_assets_refused_for_project_pages(self):
+  (self.build/'index.html').write_text('<script src="/assets/app.js"></script>')
+  with self.assertRaisesRegex(ValueError,'BUILD_BASE_PATH'):self.prepare()
+  self.assertFalse(self.out.exists())
+ def test_project_base_and_relative_resources_are_allowed(self):
+  (self.build/'index.html').write_text('<script src="/app/assets/app.js"></script><link rel="stylesheet" href="assets/app.css">')
+  self.prepare();rp.load_artifact(self.out)
+ def test_parent_relative_asset_cannot_escape_base(self):
+  (self.build/'index.html').write_text('<script src="../assets/app.js"></script>')
+  with self.assertRaisesRegex(ValueError,'BUILD_BASE_PATH'):self.prepare()
+ def test_html_base_and_encoded_escape_are_not_accepted(self):
+  for html in ('<base href="/"><script src="assets/a.js"></script>', '<script src="/app/%2e%2e/assets/a.js"></script>', '<script src="/app/%5c../assets/a.js"></script>'):
+   with self.subTest(html=html):
+    (self.build/'index.html').write_text(html)
+    with self.assertRaisesRegex(ValueError,'BUILD_BASE_PATH'):self.prepare()
+  (self.build/'index.html').write_text('<base href="/app/"><script src="assets/a.js"></script>');self.prepare()
  def test_regenerated_version_metadata_is_a_change_not_deletion(self):
   (self.old/'build.json').write_text(json.dumps({'sourceCommit':'b'*40,'mode':'pages'}))
   result=self.prepare();self.assertNotIn('build.json',result['diff']['removed']);self.assertIn('build.json',result['diff']['changed']);self.assertEqual(json.loads((self.out/'artifact/build.json').read_text())['sourceCommit'],self.sha)
