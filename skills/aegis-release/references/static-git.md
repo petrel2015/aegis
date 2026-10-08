@@ -2,6 +2,8 @@
 
 Use `skills/aegis/scripts/release_pipeline.py` from the Skill repository root. Helpers use the standard library, Git and gh. They do not infer permission from an Issue, run deployment automatically, or certify browser observations from a zero exit code.
 
+**Proof boundary:** legacy `prepare --source-sha` labels supplied files with a caller SHA; it does not prove their source. Use [source-bound build/prepare/finalize](governed-release.md) for new governed releases. Existing command signatures and receipts remain compatible.
+
 Prepare an isolated build and a clean checkout of the existing artifact repository. Run the configured build and tests. Use `environment_check.py` when localhost tests fail or the host is unknown; preserve original failure and associate any approved retry with its evidence run.
 
 ```text

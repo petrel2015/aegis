@@ -117,3 +117,22 @@ version and digest. Existing v1 tasks remain explicitly legacy; do not rewrite t
 The JSON examples are fictional and must be filled from the current task.
 
 Use all `verification_groups` as well as `test_commands`; groups are mandatory when configured. Use a unique evidence directory per run, preserving screenshots and logs. Record viewport in browser evidence. Do not overwrite a failed run on retry. See [evidence versions](../../aegis/references/evidence-v2.md) for the storage helper.
+
+
+## Original user-flow replay and existing authorization
+
+For UI regressions record initial panels/popups, selected item/date, viewport and normal
+input in the report. Reproduce from that state before the fix, then repeat the same steps
+on the repaired candidate. Do not manually collapse an obstructing panel or use forced
+clicks to make the reproduction pass; keep such workaround checks separate. Preserve F-ID,
+original failure artifact and retry linkage. A zero exit code is insufficient without
+actual expected/observed results.
+
+In `manual` merge mode, existing explicit user authorization to merge this exact PR allows
+the assigned agent to perform the maintainer action. Do not ask again merely because the
+mode is manual. Freshly claim the `merge-ready` task, revalidate current PR head, base,
+required checks and bound QA evidence, then use the established authorized merge method.
+Head drift returns to development/review; base drift requires fresh integration QA. Record
+actual merged SHA/time from GitHub before `finish --to done`. Without authorization, publish
+`manual-wait` and release the claim. A head guard does not protect concurrent base movement;
+manual execution does not provide server merge-queue guarantees.

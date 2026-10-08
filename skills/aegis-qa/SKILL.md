@@ -33,7 +33,10 @@ For `testing`:
 For `merge-ready`, claim afresh and reread PR/base/review/QA evidence. If head changed,
 return `ready`; if base changed, return `testing`. Only after live revalidation:
 
-- `manual`: report ready and release the claim while awaiting an authorized maintainer.
+- `manual`: existing explicit user authorization for this exact PR permits the assigned
+  agent to perform the maintainer merge after the fresh checks above, following the runbook.
+  Do not ask for the same authorization again. Without it, report `manual-wait` and release
+  the claim while awaiting authorization. Manual action does not provide atomic base protection.
 - `merge-queue`: verify active target branch rules require the queue, required independent
   reviews and checks, and no bypass. The project must configure CI for `merge_group` to test
   the server-generated integration candidate. Enqueue using
@@ -43,8 +46,9 @@ return `ready`; if base changed, return `testing`. Only after live revalidation:
   final authority if base moves after local QA. A policy string alone does not prove rules.
 
 If the configured server gate cannot be verified, block automatic merge and explain the
-missing setting. Don't substitute a naive check-then-merge API call: its head guard cannot
-atomically protect the tested base. On merge completion, record actual merged PR evidence,
+missing setting. Do not substitute a check-then-merge API call for that automatic server
+gate: its head guard cannot atomically protect the tested base. This does not prohibit
+an explicitly authorized manual maintainer action described above. On merge completion, record actual merged PR evidence,
 finish `done`, then close the Issue with the evidence link. If GitHub already auto-closed it,
 reconcile completion without reopening it. Publishing a release/deployment follows the
 project's explicit release policy and requires its own environment evidence.

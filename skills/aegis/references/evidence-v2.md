@@ -74,3 +74,22 @@ manifest itself. Publish the sealed directory as a durable CI/report artifact; r
 actual URL before handoff. Do not upload secrets. Unpublished local files are local proof only.
 
 Collect explicit logs, results, source snapshots and screenshots into the run before sealing. The manifest helper rejects node_modules, .git, .ssh and .env paths; do not copy a whole fixture/checkout. This path guard does not detect secrets inside arbitrary log content.
+
+
+### Sealed evidence publication
+
+`evidence_publish.py publish --directory RUN --output FRESH_OPERATION --repo OWNER/REPO
+--authorization-ref ACTUAL_AUTHORIZATION` verifies the sealed run, refuses workflow trees,
+and creates an orphan evidence-only commit on `aegis-evidence/RUN_ID`. It reserves the exact
+remote/ref/commit before one non-force push. Its operation directory must be outside the
+sealed run. `evidence_publish.py resume --output ORIGINAL_OPERATION` reads the original ref
+and returns its immutable URL only when reconciled; it never pushes or removes a lock.
+Local bare-remote tests are offline proof, not proof that a constructed GitHub URL exists.
+
+For append-only role reports use `report_publish.py publish --body-file REPORT.md --output
+FRESH_OPERATION --repo OWNER/REPO --issue N --record-id UUID --authorization-ref AUTHORIZATION`.
+The Issue comments API also accepts PR numbers. It reads every comment page before one
+POST and retains an ambiguous request for `report_publish.py resume --output ORIGINAL`.
+An API/pagination failure is unknown, not absence. These helpers coordinate cooperative
+single attempts; separate operation directories are not a server-side exactly-once lock.
+Do not run concurrent publishers for the same run/report identity.

@@ -26,7 +26,20 @@
 | <command/check> | <observed value> | <durable URL> |
 
 ## Failures and reproduction
-<F-ID, reproduction, actual/expected, owner/action; or none.>
+| Failure ID / check | Initial UI state and viewport | Normal action | Expected / actual | Original-step retest and evidence |
+|---|---|---|---|---|
+| <F-ID or new check> | <open panels, selected item/date, viewport> | <ordinary user input, no forced click> | <expected / observed> | <same starting state and action on repaired candidate; durable URL> |
+
+Record `none` only when no failures occurred. Preserve the original failed run and screenshots.
+A workaround that hides the interfering panel, uses force-click or changes the starting
+state does not pass the original reproduction. Record workaround checks separately.
+Manual scenario observations identify the observer; runner observations identify the command.
+
+## Existing merge authorization
+- authorization_ref: <actual user instruction/approved project policy or none>
+- scope: <exact repository/PR/destination and remaining limits>
+- fresh_revalidation: <claim, current head/base/checks or unverified>
+
 
 ## Merge observation
 - policy: <manual | merge-queue>
