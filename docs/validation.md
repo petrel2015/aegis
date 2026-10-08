@@ -237,3 +237,34 @@ Issue#3 preparation additionally exposed a sequencing defect: generated build.js
 The first new-candidate preparation used an ordinary localhost build with /assets URLs for a project Pages base; it was never published. That draft archive and pending receipt remain retained with a supersession record. Preparation/load now validate HTML resource paths against the authorized site base, including base tags and encoded traversal. Independent checks reject the actual ordinary index and prior draft while accepting actual Pages index and unchanged current-public archive. Full suite is141 tests; publication-specific suite24. The guard covers HTML resources, not arbitrary runtime URLs or semantic browser correctness.
 
 Independent QA of Issue#3 found a mobile popup close control covered by an expanded country panel. The previously passing country browser test manually collapsed that panel and therefore missed the user flow. QA published failure and returned the task to ready under actual claim/state operations; this is a genuine rework cycle, not a waived acceptance condition. New candidate must receive fresh code review and integration QA.
+
+## ChronoAtlas Issue #3 field trial and rework — 2026-10-08
+
+The requested country-background requirement is Issue #3; there was no PR #3.
+Its implementation is [PR #5](https://github.com/petrel2015/ChronoAtlas/pull/5).
+Six country fills, borders and labels, independent background visibility, and two
+explicitly generalized junction reference points were implemented. Existing geometry
+and history files remain byte-identical; no China–Thailand–Myanmar junction is invented.
+
+[Failed independent QA](https://github.com/petrel2015/ChronoAtlas/pull/5#issuecomment-6053113594)
+returned the task to ready. Repair head `2d38b0a9870a829b85d099e96128e0fb074bdb91`
+automatically collapses the country panel before opening a junction popup.
+[Fresh independent review](https://github.com/petrel2015/ChronoAtlas/pull/5#issuecomment-6053202539)
+and [fresh integration QA](https://github.com/petrel2015/ChronoAtlas/pull/5#issuecomment-6053268920)
+passed. QA checked actual integration commit `d383659bff12fa33ec660cbcb1bfc6773b7d0841`,
+with base `6554631600015b92c80e06261db44374365e46d1` and repaired head as parents.
+All 26 unit/API tests, normal/Pages builds, desktop/mobile country pixels and labels,
+both junctions, monthly playback and existing panel/territory regressions passed.
+The original failed popup steps now pass without forced clicks or manual panel collapse.
+Sealed independent evidence is retained at private source commit
+`84e01ee2666dc8eadef52e22210ad90dd5d1b390`, run `d3feaae81409427fba4640c4d12ec363`.
+Finish operation `71ef5dba3e3b4ab8bd9a688f14d46750` confirmed `merge-ready`,
+synced the Issue label and released the QA slot. Manual merge remains pending.
+
+The final integration Pages build was freshly prepared using the repaired helper:
+10 public files, retained attribution, individually reviewed replaced CSS/JS deletions,
+and correct `/ChronoAtlas-pages/` resource paths. Archive digest is
+`sha256:92324a334cd525dfade50db0737bb38e809a11a7832528aa0b7c45840f1855f8`.
+This is an unmerged candidate archive, not a published release. The old wrong-base
+draft, failed QA and explicit retries remain historical evidence. No candidate merge
+or new Pages deployment was performed in this trial.
