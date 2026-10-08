@@ -28,3 +28,12 @@ remain unknown until reconciled. Ignored dependencies remain a reproducibility l
 Offline tests use real temporary Git sources/bare remotes and injected provider records.
 Live self-maintenance records belong to Issue #3; earlier PR ownership is not backfilled.
 No product deployment is required or authorized by this implementation exercise.
+
+
+Code review F-2 reproduced a resume path that observed the original push but could not
+finalize because the original record remained unknown. Finalization now records fresh
+read-only ref reconciliation and applies all remaining gates, preserving the original
+unknown bytes. Code review F-3 reproduced a nested output directory corrupting an input
+artifact before validation. Output/source/build/artifact/record-directory overlap and
+resolved aliases are now rejected before reservation; the same narrow guard protects
+plan and deployment-record writers. Regression tests assert unchanged input bytes.

@@ -79,6 +79,7 @@ def validate(path):
 def prepare(build_record, previous, output, site, allow_remove=(), protected=()):
     record = validate(build_record)
     disjoint(Path(build_record).parent, output)
+    disjoint(record['source'], output)
     result = pipeline.prepare(record['build_output'], previous, output, record['source_sha'], site, allow_remove, protected)
     result['build_binding'] = {'record_digest': fingerprint(build_record), 'operation_id': record['operation_id'],
                                'source_repo': record['source_repo'], 'build_mode': record['build_mode']}

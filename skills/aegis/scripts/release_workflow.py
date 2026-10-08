@@ -7,7 +7,7 @@ import subprocess
 import release_build
 import release_finalize
 import release_pipeline
-from release_support import api, fingerprint, read, require, reserve, write
+from release_support import api, fingerprint, guard_release_output, read, require, reserve, write
 
 PATHS = ('source', 'build_output', 'build_record', 'artifact', 'publication_record',
          'verification_record', 'smoke_record', 'deployment_record')
@@ -18,6 +18,7 @@ def start(plan, output):
         require(key in plan and Path(plan[key]).is_absolute(), 'PLAN_PATH: explicit absolute ' + key)
     release_pipeline.valid_site(plan['site_url'])
     require(plan['authorization_ref'].strip(), 'AUTHORIZATION')
+    guard_release_output(output, plan)
     return reserve(output, 'aegis-release-plan/v1', plan=plan)
 
 
@@ -31,11 +32,13 @@ def observed_plan(manifest):
     plan = load_plan(manifest)
     observation = read(plan['deployment_record'])
     require(observation.get('status') == 'observed' and observation['manifest_digest'] == fingerprint(manifest), 'DEPLOYMENT_PLAN_BINDING')
-    return dict(plan, deployment_run_id=observation['deployment_run_id'], deployment_id=observation['deployment_id'])
+    return dict(plan, release_manifest=str(Path(manifest).resolve()),
+                deployment_run_id=observation['deployment_run_id'], deployment_id=observation['deployment_id'])
 
 
 def observe(manifest, run_id, deployment_id):
     plan = load_plan(manifest)
+    guard_release_output(plan['deployment_record'], plan, record_directories=False)
     publication = read(plan['publication_record'])
     bound = dict(plan, deployment_run_id=run_id, deployment_id=deployment_id)
     # IDs are supplied explicitly, then retrieved; no search for a convenient green run.

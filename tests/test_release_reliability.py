@@ -16,7 +16,7 @@ import release_finalize as rf
 import release_pipeline as rp
 import release_workflow as rw
 import report_publish as report
-from release_support import command, read, write
+from release_support import command, fingerprint, read, write
 
 
 class Fixtures(unittest.TestCase):
@@ -96,7 +96,8 @@ class BuildTests(Fixtures):
 class FinalizeTests(Fixtures):
     def setUp(self):
         super().setUp(); self.manifest = self.artifact(); self.commit = 'c' * 40
-        self.publication = self.root / 'publish.json'; self.verification = self.root / 'verify.json'; self.smoke = self.root / 'smoke.json'
+        self.records = self.root / 'records'; self.records.mkdir()
+        self.publication = self.records / 'publish.json'; self.verification = self.records / 'verify.json'; self.smoke = self.records / 'smoke.json'
         write(self.publication, dict(status='pending', repo='o/site', source_sha=self.sha, artifact_commit=self.commit, branch='main'))
         write(self.verification, dict(status='files_verified', site_url=self.site, observed_source_sha=self.sha,
               observed_artifact_digest=self.manifest['artifact_digest'], files=self.manifest['files'], exclusions=[]))
@@ -105,7 +106,7 @@ class FinalizeTests(Fixtures):
               checks=[dict(id='popup', kind='browser', result='pass', initial_state='panel expanded', action='normal click', expected='close works', actual='closed', evidence_url='https://example.test/evidence', viewport='390x844', browser_version='Chromium fixture')]))
         self.plan = dict(source_repo='o/source', artifact_repo='o/site', source=str(self.source), build_output=str(self.build_output), build_record=str(self.build_run / 'operation.json'),
              artifact=str(self.artifact_dir), publication_record=str(self.publication), verification_record=str(self.verification), smoke_record=str(self.smoke),
-             deployment_record=str(self.root / 'deployment.json'), site_url=self.site, authorization_ref='fixture authorization', rollback='previous artifact',
+             deployment_record=str(self.records / 'deployment.json'), site_url=self.site, authorization_ref='fixture authorization', rollback='previous artifact',
              execution_mode='external', deployment_run_id=11, deployment_id=22, workflow_path='dynamic/pages/pages-build-deployment', deployment_environment='github-pages')
         self.responses = {
             'repos/o/site/actions/runs/11': dict(id=11, repository={'full_name':'o/site'}, head_sha=self.commit, status='completed', conclusion='success', path=self.plan['workflow_path']),
@@ -198,6 +199,54 @@ class FinalizeTests(Fixtures):
     def test_browser_environment_and_step_observations_required(self):
         smoke=read(self.smoke); smoke['checks'][0].pop('initial_state'); write(self.smoke,smoke)
         with self.assertRaisesRegex(ValueError,'SMOKE_CHECK'): self.finish()
+
+    def test_reconciled_unknown_publication_can_finalize_without_rewriting_original(self):
+        publication=read(self.publication); publication['status']='remote_unknown'; write(self.publication,publication)
+        original=self.publication.read_bytes()
+        rw.start(self.plan,self.root/'plan'); manifest=self.root/'plan/operation.json'
+        write(self.plan['deployment_record'],dict(status='observed',manifest_digest=fingerprint(manifest),deployment_run_id=11,deployment_id=22))
+        self.assertEqual(rw.resume(manifest,self.get)['next_action'],'finalize_new_attempt')
+        result=rf.finalize(rw.observed_plan(manifest),self.root/'final',self.get)
+        self.assertEqual(result['status'],'verified')
+        self.assertEqual(self.publication.read_bytes(),original)
+        observations=read(self.root/'final/observations.json')
+        self.assertEqual(observations['publication_reconciliation']['artifact_commit'],self.commit)
+
+    def test_unknown_publication_absent_or_moved_ref_cannot_finalize(self):
+        publication=read(self.publication); publication['status']='remote_unknown'; write(self.publication,publication)
+        original=self.publication.read_bytes()
+        self.responses['repos/o/site/git/ref/heads/main']['object']['sha']='e'*40
+        with self.assertRaisesRegex(ValueError,'PUBLICATION_REF_UNKNOWN_OR_MOVED'): self.finish()
+        self.assertEqual(self.publication.read_bytes(),original)
+
+    def test_finalize_overlapping_directories_and_aliases_leave_inputs_unchanged(self):
+        def snapshot(): return {str(p.relative_to(self.root)):p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        alias=self.root/'artifact-alias'; alias.symlink_to(self.artifact_dir,target_is_directory=True)
+        before=snapshot()
+        destinations=[self.artifact_dir/'artifact/corrupt-final',self.source/'record',self.build_output/'record',
+                      self.records/'record',self.build_run/'record',alias/'artifact/corrupt-final']
+        for output in destinations:
+            with self.subTest(output=output):
+                with self.assertRaisesRegex(ValueError,'PATH_OVERLAP'): rf.finalize(self.plan,output,self.get)
+                self.assertEqual(snapshot(),before)
+                rp.load_artifact(self.artifact_dir)
+
+    def test_start_and_observe_do_not_write_into_artifact_or_source(self):
+        before={str(p.relative_to(self.root)):p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        with self.assertRaisesRegex(ValueError,'PATH_OVERLAP'): rw.start(self.plan,self.artifact_dir/'artifact/bad-plan')
+        self.assertEqual({str(p.relative_to(self.root)):p.read_bytes() for p in self.root.rglob('*') if p.is_file()},before)
+        bad_plan=dict(self.plan,deployment_record=str(self.source/'bad-observation.json'))
+        # A malformed/externally supplied manifest is read-only input, not authority to overwrite source.
+        manifest=self.root/'bad-manifest.json';write(manifest,dict(schema='aegis-release-plan/v1',plan=bad_plan))
+        with patch.object(rf,'deployment') as observer:
+            with self.assertRaisesRegex(ValueError,'PATH_OVERLAP'): rw.observe(manifest,11,22)
+            observer.assert_not_called()
+        self.assertFalse((self.source/'bad-observation.json').exists())
+
+    def test_build_bound_prepare_cannot_dirty_source(self):
+        with self.assertRaisesRegex(ValueError,'PATH_OVERLAP'):
+            rb.prepare(self.build_run/'operation.json',self.previous,self.source/'bad-artifact',self.site)
+        self.assertEqual(command(['git','status','--porcelain'],self.source),'')
 
 
 class EvidencePublicationTests(Fixtures):

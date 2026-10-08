@@ -45,6 +45,16 @@ def disjoint(first, second):
     require(not a.is_relative_to(b) and not b.is_relative_to(a), 'PATH_OVERLAP')
 
 
+def guard_release_output(output, plan, record_directories=True):
+    """Reject aliases/overlap before creating any release record directory."""
+    for key in ('source', 'build_output', 'artifact'):
+        disjoint(output, plan[key])
+    if record_directories:
+        for key, path in plan.items():
+            if key.endswith('_record') or key == 'release_manifest':
+                disjoint(output, Path(path).parent)
+
+
 def repo_origin(source, repo):
     origin = command(['git', 'remote', 'get-url', 'origin'], source)
     require(origin.rstrip('/').removesuffix('.git') in

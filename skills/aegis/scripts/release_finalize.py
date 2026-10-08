@@ -4,7 +4,7 @@ from pathlib import Path
 import re
 import release_build
 import release_pipeline as pipeline
-from release_support import api, fingerprint, read, require, reserve, write
+from release_support import api, fingerprint, guard_release_output, read, require, reserve, write
 
 
 def deployment(plan, commit, get=api):
@@ -59,6 +59,11 @@ def workflow(plan, source_sha, get=api):
 
 def finalize(plan, output, get=api):
     # Plan is explicit trusted operator configuration, never inferred from Issue text.
+    guard_release_output(output, plan)
+    # The plan cannot hide the build's actual source/output behind other paths.
+    build_identity = read(plan['build_record'])
+    guard_release_output(output, dict(plan, source=build_identity['source'],
+                                     build_output=build_identity['build_output']))
     result = reserve(output, 'aegis-release-finalization/v1', plan=plan, status_detail='Inputs not yet verified')
     observations = {}
     try:
@@ -73,9 +78,19 @@ def finalize(plan, output, get=api):
         require(manifest['source_sha'] == build['source_sha'] and build['source_repo'] == plan['source_repo'], 'SOURCE_BINDING')
         require(manifest['site_url'] == plan['site_url'], 'SITE_BINDING')
         publication = read(plan['publication_record'])
-        require(publication.get('status') == 'pending' and publication.get('repo') == plan['artifact_repo'] and publication.get('source_sha') == build['source_sha'], 'PUBLICATION_BINDING')
+        require(publication.get('status') in ('pending', 'remote_unknown') and publication.get('repo') == plan['artifact_repo'] and publication.get('source_sha') == build['source_sha'], 'PUBLICATION_BINDING')
         commit = publication.get('artifact_commit')
         require(isinstance(commit, str) and re.fullmatch('[a-f0-9]{40}', commit), 'ARTIFACT_COMMIT')
+        if publication['status'] == 'remote_unknown':
+            # Reconcile the original effect in this NEW observation, never rewrite/retry it.
+            branch = publication.get('branch')
+            require(isinstance(branch, str) and branch, 'PUBLICATION_BRANCH_UNKNOWN')
+            remote_ref = get(f'repos/{plan["artifact_repo"]}/git/ref/heads/{branch}')
+            require(remote_ref.get('object', {}).get('sha') == commit, 'PUBLICATION_REF_UNKNOWN_OR_MOVED')
+            observations['publication_reconciliation'] = {
+                'original_status': publication['status'], 'original_record_digest': fingerprint(plan['publication_record']),
+                'branch': branch, 'artifact_commit': commit, 'observed_ref': remote_ref,
+                'proof': 'Original remote effect observed; original publication record retained unchanged.'}
         # Validate published commit's complete Git tree against the retained exact files.
         tree = get(f'repos/{plan["artifact_repo"]}/git/trees/{commit}?recursive=1')
         require(not tree.get('truncated'), 'ARTIFACT_TREE_TRUNCATED')

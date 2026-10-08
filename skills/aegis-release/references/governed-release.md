@@ -16,8 +16,8 @@ Create a trusted plan JSON with these fields before publication:
   "build_record": "/ABS/BUILD_RUN/operation.json", "artifact": "/ABS/ARTIFACT_RUN",
   "publication_record": "/ABS/ARTIFACT_RUN/publish.json",
   "verification_record": "/ABS/VERIFY_RUN/verification.json",
-  "smoke_record": "/ABS/SMOKE_OBSERVATIONS.json",
-  "deployment_record": "/ABS/DEPLOYMENT_OBSERVATION.json",
+  "smoke_record": "/ABS/OBSERVATIONS/SMOKE.json",
+  "deployment_record": "/ABS/OBSERVATIONS/DEPLOYMENT.json",
   "site_url": "https://OWNER.github.io/SITE/",
   "workflow_path": "dynamic/pages/pages-build-deployment",
   "deployment_environment": "github-pages",
@@ -31,7 +31,10 @@ Create a trusted plan JSON with these fields before publication:
 The legacy Pages provider uses `dynamic/pages/pages-build-deployment`; custom Actions
 must pin their actual deployment workflow path. `execution_mode: external` omits the
 Issue/PR lifecycle claim; it still requires source, deployment, files and browser bindings.
-The plan is explicit local operator policy, not signed attestation.
+The plan is explicit local operator policy, not signed attestation. Keep source, build,
+artifact, observation records and each release/finalization run in separate directories.
+Start/finalize reject overlapping record directories, including resolved symlink aliases,
+before creating files; deployment observations cannot be written into source/build/artifact.
 
 ```text
 python3 skills/aegis/scripts/release_workflow.py start --plan /ABS/PLAN.json --output /ABS/RELEASE_RUN
@@ -104,6 +107,12 @@ re-queries deployment, checks all public file hashes and structured browser obse
 and hashes each input record. In AEGIS mode it retrieves the task's current completed
 requirement, original passing QA head/base/two-parent integration, actual merged PR/source
 commit and matching integration/merged trees. A receipt URL alone cannot establish this.
+If an original push returned `remote_unknown`, finalization first retrieves its original
+branch/ref and requires the exact recorded artifact commit. It records this reconciliation
+in the new observations, then applies every normal deployment/file/smoke gate. It never
+changes the original unknown record, repushes, or removes its retained lock. An absent or
+moved ref still requires investigation.
+
 It writes a new versioned finalization receipt plus retrieved observations; legacy
 `release_record.py` remains a structure-only v1 validator. Do not feed the new receipt to
 that legacy validator or upgrade older records silently.
