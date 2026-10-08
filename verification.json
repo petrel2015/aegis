@@ -1,0 +1,18 @@
+{
+  "candidate_sha": "3d236b3cb5efd3fbce9d9bfc4e66a15e8b8e9ba8",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "exit_code": 0,
+  "tests": 170,
+  "new_tests": 29,
+  "proof": "Offline real Git/provider fixtures; real evidence-only upload and read-only recovery to explicitly authorized aegis repo; no product redeployment.",
+  "prior_candidate": "c494b1a54122199069255aa02b364e3ad8e4558e",
+  "new_candidate_changes": "QA docs forward-test fixes only; complete configured tests rerun on this candidate."
+}

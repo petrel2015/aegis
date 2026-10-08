@@ -1,0 +1,16 @@
+{
+  "schema": "aegis-evidence-publication/v1",
+  "operation_id": "fb3896fc6fe24cb7b32df6ed63648ef9",
+  "recorded_at": "2026-10-08T06:32:48.519974+00:00",
+  "status": "published",
+  "repo": "petrel2015/aegis",
+  "ref": "refs/heads/aegis-evidence/348984643a0748edbca13a4f1de5b2d2",
+  "remote": "https://github.com/petrel2015/aegis.git",
+  "run_id": "348984643a0748edbca13a4f1de5b2d2",
+  "authorization_ref": "User authorized AEGIS Issue 3 implementation and workflow evidence in petrel2015/aegis",
+  "manifest_digest": "sha256:5204f9779ca864ca36ded5b0279e3e0ab3bb11c34507c458018572c3920cb871",
+  "commit": "24fca9cb288ed308d9467080f70242c4bc12433c",
+  "proof_mode": "github",
+  "tree": "b319c207372f147a9a0c4196f35fce43fcc0a2bc",
+  "url": "https://github.com/petrel2015/aegis/tree/24fca9cb288ed308d9467080f70242c4bc12433c"
+}
