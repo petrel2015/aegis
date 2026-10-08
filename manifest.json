@@ -1,0 +1,28 @@
+{
+  "files": {
+    "final-head-full.log": "c6fbe56817f8f22e512090792de40769e6e9053c98afd2bf26635e4af4b0eb22",
+    "independent-forward-test.json": "9cc4959a65c55ec3b7cc60f4b18f908476ba43c41b66affd0756989fefa51924",
+    "original-review-reproduction.log": "d157ff489f92fa57b9fcae41ebe1860e19b3f931035c3870a98077c162b1e8e9",
+    "original-review-reproduction.py": "98534f425fa77dff6f90067a7c43df9870cf7aeb6b15585331180b0a8a12b18a",
+    "run.json": "9e032c5087ceb49dd7e0a0debbc6f7dc5cbc4bb153b6f682dd74d707d7c2ffad",
+    "targeted34.log": "af5339af4affd40c23bf52df466abe117f3aa6998357637ff0fbf1a3936dd9f2",
+    "verification.json": "ae7455b300a88fffc9820852759d8d3734515bd915d820620d768539c6f6ed75"
+  },
+  "metadata": {
+    "candidate_sha": "ba33a8d41c746f578166a25b355f935853ec6f36",
+    "environment": {
+      "build_mode": "stdlib unittest",
+      "runtime": "Python 3.14.7",
+      "target": "isolated rework candidate and local Git/provider fixtures"
+    }
+  },
+  "run": {
+    "issue": 3,
+    "repo": "petrel2015/aegis",
+    "retry_of": "655f5ede315a4240a92f11a254f88324",
+    "role": "developer",
+    "run_id": "424c8a73c5234794a6139b7df85893d6",
+    "schema": "aegis-run/v1"
+  },
+  "schema": "aegis-manifest/v1"
+}

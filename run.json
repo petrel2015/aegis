@@ -1,0 +1,8 @@
+{
+  "schema": "aegis-run/v1",
+  "run_id": "424c8a73c5234794a6139b7df85893d6",
+  "repo": "petrel2015/aegis",
+  "issue": 3,
+  "role": "developer",
+  "retry_of": "655f5ede315a4240a92f11a254f88324"
+}

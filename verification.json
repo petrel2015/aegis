@@ -1,0 +1,22 @@
+{
+  "candidate_sha": "ba33a8d41c746f578166a25b355f935853ec6f36",
+  "base_sha": "e87acde7918983aaa48f0d1375423a8549a492b1",
+  "tests": 177,
+  "targeted_tests": 34,
+  "exit_code": 0,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "findings": {
+    "F-2": "Original unknown effect observed in NEW finalization record; original bytes unchanged; resume-to-finalize passes",
+    "F-3": "All reservation overlap checks happen before writes; aliases rejected and inputs byte-identical"
+  },
+  "maintenance": "First rework claim was correctly blocked by old implementation but wrong count: REWORK_LIMIT. No edits until separately reviewed maintainer PR5 correction merged. Same actor, Issue and unchanged history; fresh successful claim bc1650dd7d724cc989139becaa1e2410.",
+  "proof": "Offline local Git/provider fixtures; earlier actual evidence/report publication retained. No product deployment."
+}

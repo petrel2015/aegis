@@ -1,0 +1,6 @@
+candidate 3d236b3cb5efd3fbce9d9bfc4e66a15e8b8e9ba8
+F-2 resume pending finalize_new_attempt
+F-2 finalize fails PUBLICATION_BINDING
+F-3 nested output fails ARTIFACT_CHANGED
+F-3 retained artifact corrupted ARTIFACT_CHANGED
+PASS both findings reproduced on immutable candidate with local/provider fixtures; no live effects

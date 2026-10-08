@@ -1,0 +1,26 @@
+{
+  "schema": "aegis-role-forward-test/v1",
+  "agent": "release_skill_forward",
+  "mode": "offline scenario evaluation; no GitHub mutations",
+  "recorded_at": "2026-10-08T06:35:17.583493+00:00",
+  "candidate_short_sha": "3d236b3",
+  "result": "pass",
+  "scenarios": {
+    "mobile_popup": "Workaround collapse and force:true do not verify original path; retain unverified and run normal-click original-state replay before a state decision.",
+    "authorized_manual_merge": "Fresh claim and candidate/base/check/QA revalidation; consume existing exact authorization, observe actual merge then done and separate release.",
+    "base_drift": "Return testing for fresh integration QA; do not claim current pass."
+  },
+  "resolved_findings": [
+    "entrypoint unconditional manual wait",
+    "automatic merge prohibition scope",
+    "failure/blocked/drift result guidance",
+    "QA report explicit v2 requirement fields"
+  ],
+  "hashes": {
+    "skills/aegis-qa/SKILL.md": "6edadd5440f7bbf7f21486ac6640de09efe24e2621b7cea8bf8112a496c38aa6",
+    "skills/aegis-qa/references/runbook.md": "ec4287b2dc9f9ec77001d8ebd8ba5228d527c18eb02b7d629eae7eaba8037e79",
+    "skills/aegis-qa/assets/report.md": "11cc4d6231aceb9e1da3290dd7f6f68f62fefa4c57825064c57a927a4db6e4e0",
+    "skills/aegis-qa/examples/report.md": "331c0c2f8597fcdc00e2da8bcf779c712153af42abf67fd100f379154d84c01a",
+    "skills/aegis/references/operations.md": "5d70ffcab5f94d9325cc1b26882780d75930b6ee6c7ffbb184a354b1c47f345a"
+  }
+}
