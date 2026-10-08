@@ -1,16 +1,69 @@
 {
-  "last_operation": "be3d278f5c474083abb63f7cdfe92b2b",
+  "last_operation": "29d5e172172f42b491f9de13315c5092",
   "qa": null,
-  "revision": 4,
+  "revision": 5,
   "tasks": {
     "3": {
-      "authors": {},
+      "authors": {
+        "planner": "agent-aegis-release-planner"
+      },
       "contributors": {
         "planner": [
           "agent-aegis-release-planner"
         ]
       },
-      "history": [],
+      "history": [
+        {
+          "actor": "agent-aegis-release-planner",
+          "at": 1791439952,
+          "claim_token": "29fd968ba1ef466bbd203a8ed86d14fa",
+          "evidence": {
+            "acceptance": {
+              "AC-1": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "A deterministic build record captures actual repository/commit, clean source status, trusted argv, runtime, exit codes and output inventory; the new governed path refuses mismatched or changed output/source.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-2": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "Finalization derives the receipt from matching build/artifact/publication, exact GitHub deployment commit and success, all-file verification and structured project smoke observations for the same target/candidate. Missing, failed, changed or mismatched evidence cannot become verified.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-3": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "Persisted run identity and operation records allow read-only resume/reconciliation to identify the next safe action after interruption, including unknown push/comment outcomes; old attempts and diagnostics remain available.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-4": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "A reusable helper verifies a sealed run, prepares an evidence-only commit, records exact authorized destination and reconciles publication to a durable commit URL; dependencies/private paths and modified manifests are refused.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-5": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "QA templates record initial UI state, normal interaction, expected/actual outcome and original failure replay; manual merge guidance consumes existing explicit user authorization, revalidates candidate/base and records actual merge without claiming server-queue guarantees.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-6": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "This requirement has actual intake, planner claim, independent design review, development, independent code review and fresh integration QA records under the initialized policy; release/merge evidence only reports actions actually authorized and observed.; validation and counterexample mapped in design.",
+                "result": "covered"
+              }
+            },
+            "design_ref": "sha256:b2f26968a33d7dc34eb04b695df7cb899dcef2132f7068184e4df02a2097c9ea",
+            "kind": "design",
+            "requirements_digest": "sha256:8ef1b640a5bca607ae32c59ecdab9935b6b89fd9ee876d83a75bc9c8ceefa47a",
+            "requirements_version": 1,
+            "schema": "aegis-evidence/v2",
+            "summary": "Source-bound builds, observation-derived finalization, read-only recovery, sealed evidence publication and role guidance; additive stdlib/Git/gh design with explicit trust boundaries.",
+            "url": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181"
+          },
+          "from": "new",
+          "operation": "29d5e172172f42b491f9de13315c5092",
+          "role": "planner",
+          "to": "design-review"
+        }
+      ],
       "issue_events": [
         {
           "actor": "agent-aegis-release-planner",
@@ -24,14 +77,59 @@
           "id": "dc135bac8bd14fc1858f1c40f1a06416",
           "kind": "transition",
           "to": "new"
+        },
+        {
+          "actor": "agent-aegis-release-planner",
+          "at": 1791439952,
+          "delivery": "pending",
+          "evidence": {
+            "acceptance": {
+              "AC-1": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "A deterministic build record captures actual repository/commit, clean source status, trusted argv, runtime, exit codes and output inventory; the new governed path refuses mismatched or changed output/source.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-2": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "Finalization derives the receipt from matching build/artifact/publication, exact GitHub deployment commit and success, all-file verification and structured project smoke observations for the same target/candidate. Missing, failed, changed or mismatched evidence cannot become verified.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-3": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "Persisted run identity and operation records allow read-only resume/reconciliation to identify the next safe action after interruption, including unknown push/comment outcomes; old attempts and diagnostics remain available.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-4": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "A reusable helper verifies a sealed run, prepares an evidence-only commit, records exact authorized destination and reconciles publication to a durable commit URL; dependencies/private paths and modified manifests are refused.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-5": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "QA templates record initial UI state, normal interaction, expected/actual outcome and original failure replay; manual merge guidance consumes existing explicit user authorization, revalidates candidate/base and records actual merge without claiming server-queue guarantees.; validation and counterexample mapped in design.",
+                "result": "covered"
+              },
+              "AC-6": {
+                "evidence": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181",
+                "observation": "This requirement has actual intake, planner claim, independent design review, development, independent code review and fresh integration QA records under the initialized policy; release/merge evidence only reports actions actually authorized and observed.; validation and counterexample mapped in design.",
+                "result": "covered"
+              }
+            },
+            "design_ref": "sha256:b2f26968a33d7dc34eb04b695df7cb899dcef2132f7068184e4df02a2097c9ea",
+            "kind": "design",
+            "requirements_digest": "sha256:8ef1b640a5bca607ae32c59ecdab9935b6b89fd9ee876d83a75bc9c8ceefa47a",
+            "requirements_version": 1,
+            "schema": "aegis-evidence/v2",
+            "summary": "Source-bound builds, observation-derived finalization, read-only recovery, sealed evidence publication and role guidance; additive stdlib/Git/gh design with explicit trust boundaries.",
+            "url": "https://github.com/petrel2015/aegis/issues/3#issuecomment-6053608181"
+          },
+          "from": "new",
+          "id": "29d5e172172f42b491f9de13315c5092",
+          "kind": "transition",
+          "to": "design-review"
         }
       ],
-      "lease": {
-        "actor": "agent-aegis-release-planner",
-        "expires": 1791441655,
-        "role": "planner",
-        "token": "29fd968ba1ef466bbd203a8ed86d14fa"
-      },
+      "lease": null,
       "requirements": {
         "acceptance_ids": [
           "AC-1",
@@ -83,7 +181,7 @@
         "source_body": "## Background\nThe ChronoAtlas Issue 3 release completed successfully but relied on temporary scripts to bind merged source to its build, collect provider observations, upload evidence and assemble the final receipt. An interrupted run needs deterministic reconciliation. AEGIS itself is now being explicitly initialized; earlier PRs remain external/adoption history.\n\n## Expected benefit\nA replacement agent or Hermes can inspect saved records, continue an authorized release and diagnose failures without duplicate pushes/comments or unsupported success claims.\n\n## Scope and exclusions\nImplement stdlib-only source-bound build records, observation-backed finalization for the existing GitHub static-release adapter, resumable release records, standardized sealed-evidence publication, and QA/manual-merge guidance. Exercise the new requirement through actual AEGIS roles in petrel2015/aegis. Preserve existing commands and historic receipts. No new runtime, scheduler, provider, automatic merge queue, visibility changes or ChronoAtlas feature changes. Live mutations are confined to the authorized aegis repository and its task/evidence branches; use isolated local Git fixtures for interrupted publish testing, not production redeployment.\n\n## Priority\nP1\n\n## Acceptance criteria\nAC-1: Bind built artifacts to observed source\nOutcome: A deterministic build record captures actual repository/commit, clean source status, trusted argv, runtime, exit codes and output inventory; the new governed path refuses mismatched or changed output/source.\nCounterexample: Passing an arbitrary SHA with an unrelated build directory produces governed release provenance.\nVerification: Temporary real Git checkout tests cover successful build, dirty/source drift, failed build, stale output and tampered output; legacy preparation stays explicitly lower-proof.\n\nAC-2: Generate final receipt from observations\nOutcome: Finalization derives the receipt from matching build/artifact/publication, exact GitHub deployment commit and success, all-file verification and structured project smoke observations for the same target/candidate. Missing, failed, changed or mismatched evidence cannot become verified.\nCounterexample: Caller-supplied success booleans or a zero exit smoke command alone produce verified status.\nVerification: Offline provider fixtures and real local artifacts test all binding failures and successful finalization; retained legacy receipt validator continues to describe structural proof only.\n\nAC-3: Resume without replaying external effects\nOutcome: Persisted run identity and operation records allow read-only resume/reconciliation to identify the next safe action after interruption, including unknown push/comment outcomes; old attempts and diagnostics remain available.\nCounterexample: Restart automatically repeats a push, deployment or comment, overwrites the old result, or rotates run identity to hide failure.\nVerification: Fault-injected temporary Git/transport tests interrupt before and after effects; subsequent resume reconciles the original object or returns an actionable unknown/blocker without mutation.\n\nAC-4: Publish immutable sealed evidence\nOutcome: A reusable helper verifies a sealed run, prepares an evidence-only commit, records exact authorized destination and reconciles publication to a durable commit URL; dependencies/private paths and modified manifests are refused.\nCounterexample: Whole worktrees or workflow files are uploaded, or an ambiguous upload is silently pushed again.\nVerification: Real local Git fixtures and bounded adapter fakes cover success, tampering, interrupted upload and destination/ref mismatch; one authorized aegis evidence publication supplies separately labeled live proof.\n\nAC-5: Preserve actual user-flow failures and authorization\nOutcome: QA templates record initial UI state, normal interaction, expected/actual outcome and original failure replay; manual merge guidance consumes existing explicit user authorization, revalidates candidate/base and records actual merge without claiming server-queue guarantees.\nCounterexample: Manually hiding the interfering control is accepted as the original failure passing, or unchanged explicit authorization triggers another permission request.\nVerification: Independent forward testing walks the mobile-popup and authorized-manual-merge scenarios using the revised role instructions.\n\nAC-6: Exercise truthful AEGIS self-maintenance\nOutcome: This requirement has actual intake, planner claim, independent design review, development, independent code review and fresh integration QA records under the initialized policy; release/merge evidence only reports actions actually authorized and observed.\nCounterexample: Earlier untracked PR history is retroactively labeled a complete AEGIS lifecycle.\nVerification: Durable Issue/PR links and state transitions bind the exact requirement digest and candidate; initialization and offline/live proof remain separately recorded.\n\n## Dependencies\nNone; self-adoption policy initialization is a prerequisite and is recorded in the setup PR.\n",
         "version": 1
       },
-      "state": "new"
+      "state": "design-review"
     }
   },
   "version": 1
