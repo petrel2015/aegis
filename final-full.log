@@ -1,0 +1,204 @@
+test_lifecycle_through_fake_gh (test_cli.CLITests.test_lifecycle_through_fake_gh) ... ok
+test_cli_revision_uses_cas_and_syncs (test_continuation.ContinuationTests.test_cli_revision_uses_cas_and_syncs) ... {"operation": "a52cd969b7ea41128acbc189df7b4d9e", "phase": "attempt"}
+ok
+test_resume_candidate_and_role_drift (test_continuation.ContinuationTests.test_resume_candidate_and_role_drift) ... ok
+test_resume_cli_is_read_only (test_continuation.ContinuationTests.test_resume_cli_is_read_only) ... ok
+test_resume_owned_expired_and_unregistered (test_continuation.ContinuationTests.test_resume_owned_expired_and_unregistered) ... ok
+test_resume_reports_edits_without_mutation (test_continuation.ContinuationTests.test_resume_reports_edits_without_mutation) ... ok
+test_revision_preserves_audit_and_invalidates_old_approval (test_continuation.ContinuationTests.test_revision_preserves_audit_and_invalidates_old_approval) ... ok
+test_revision_refuses_busy_done_queued_and_stale_state (test_continuation.ContinuationTests.test_revision_refuses_busy_done_queued_and_stale_state) ... ok
+test_blank_outcome_cannot_consume_next_field (test_continuation.EvidenceV2Tests.test_blank_outcome_cannot_consume_next_field) ... ok
+test_intake_requires_observable_negative_and_verification (test_continuation.EvidenceV2Tests.test_intake_requires_observable_negative_and_verification) ... ok
+test_legacy_evidence_remains_explicit_legacy (test_continuation.EvidenceV2Tests.test_legacy_evidence_remains_explicit_legacy) ... ok
+test_qa_groups_environment_and_duplicate_run (test_continuation.EvidenceV2Tests.test_qa_groups_environment_and_duplicate_run) ... ok
+test_qa_retest_keeps_approved_same_candidate_review (test_continuation.EvidenceV2Tests.test_qa_retest_keeps_approved_same_candidate_review) ... ok
+test_recovery_cannot_use_unsuccessful_development (test_continuation.EvidenceV2Tests.test_recovery_cannot_use_unsuccessful_development) ... ok
+test_rejected_design_cannot_reuse_older_approval_after_recovery (test_continuation.EvidenceV2Tests.test_rejected_design_cannot_reuse_older_approval_after_recovery) ... ok
+test_stage_cannot_claim_qa_pass_during_design (test_continuation.EvidenceV2Tests.test_stage_cannot_claim_qa_pass_during_design) ... ok
+test_external_release_without_issue_and_failed_artifact (test_continuation.StorageAndReleaseTests.test_external_release_without_issue_and_failed_artifact) ... ok
+test_nested_manifest_is_not_excluded_from_integrity (test_continuation.StorageAndReleaseTests.test_nested_manifest_is_not_excluded_from_integrity) ... ok
+test_release_build_is_not_live_verification (test_continuation.StorageAndReleaseTests.test_release_build_is_not_live_verification) ... ok
+test_symlink_evidence_rejected (test_continuation.StorageAndReleaseTests.test_symlink_evidence_rejected) ... ok
+test_unique_runs_manifest_and_tamper_detection (test_continuation.StorageAndReleaseTests.test_unique_runs_manifest_and_tamper_detection) ... ok
+test_isolated_cli_help (test_environment_check.EnvironmentCheckTests.test_isolated_cli_help) ... ok
+test_localhost_error_classifies_only_permission (test_environment_check.EnvironmentCheckTests.test_localhost_error_classifies_only_permission) ... ok
+test_localhost_opt_in_and_dependencies_aggregated (test_environment_check.EnvironmentCheckTests.test_localhost_opt_in_and_dependencies_aggregated) ... ok
+test_log_restriction_never_means_tests_pass (test_environment_check.EnvironmentCheckTests.test_log_restriction_never_means_tests_pass) ... ok
+test_missing_tool_does_not_execute (test_environment_check.EnvironmentCheckTests.test_missing_tool_does_not_execute) ... ok
+test_node_multiline_and_unrelated_distant_error (test_environment_check.EnvironmentCheckTests.test_node_multiline_and_unrelated_distant_error) ... ok
+test_non_shell_version_and_no_auth_probe (test_environment_check.EnvironmentCheckTests.test_non_shell_version_and_no_auth_probe) ... ok
+test_version_timeout_and_failure_structured (test_environment_check.EnvironmentCheckTests.test_version_timeout_and_failure_structured) ... ok
+test_blocked_label_comment_and_unrelated_labels (test_issue_sync.IssueSyncTests.test_blocked_label_comment_and_unrelated_labels) ... ok
+test_cas_conflict_prevents_comment_post (test_issue_sync.IssueSyncTests.test_cas_conflict_prevents_comment_post) ... ok
+test_concurrent_sync_cannot_post_reserved_event (test_issue_sync.IssueSyncTests.test_concurrent_sync_cannot_post_reserved_event) ... ok
+test_failed_state_commit_never_projects (test_issue_sync.IssueSyncTests.test_failed_state_commit_never_projects) ... {"operation": "30964fcfce454ceebac202296e806c17", "phase": "attempt", "token": null}
+ok
+test_heartbeat_does_not_create_events (test_issue_sync.IssueSyncTests.test_heartbeat_does_not_create_events) ... ok
+test_label_failure_keeps_transition_and_resumes (test_issue_sync.IssueSyncTests.test_label_failure_keeps_transition_and_resumes) ... ok
+test_legacy_snapshot_includes_blocker (test_issue_sync.IssueSyncTests.test_legacy_snapshot_includes_blocker) ... ok
+test_manual_label_does_not_change_state (test_issue_sync.IssueSyncTests.test_manual_label_does_not_change_state) ... ok
+test_paginated_reconciliation (test_issue_sync.IssueSyncTests.test_paginated_reconciliation) ... ok
+test_recovery_removes_blocked_and_records_reason (test_issue_sync.IssueSyncTests.test_recovery_removes_blocked_and_records_reason) ... ok
+test_repeated_sync_does_not_repeat_comments (test_issue_sync.IssueSyncTests.test_repeated_sync_does_not_repeat_comments) ... ok
+test_state_drift_reports_pending_then_converges (test_issue_sync.IssueSyncTests.test_state_drift_reports_pending_then_converges) ... ok
+test_timeout_after_post_reconciles_without_duplicate (test_issue_sync.IssueSyncTests.test_timeout_after_post_reconciles_without_duplicate) ... ok
+test_timeout_before_post_never_blindly_reposts (test_issue_sync.IssueSyncTests.test_timeout_before_post_never_blindly_reposts) ... ok
+test_attempt_is_never_replayed (test_merge_gate.MergeGate.test_attempt_is_never_replayed) ... ok
+test_intent_precedes_queue_and_no_admin_bypass (test_merge_gate.MergeGate.test_intent_precedes_queue_and_no_admin_bypass) ... ok
+test_manual_never_invokes_gh (test_merge_gate.MergeGate.test_manual_never_invokes_gh) ... ok
+test_missing_rules_never_writes (test_merge_gate.MergeGate.test_missing_rules_never_writes) ... ok
+test_stale_head_never_writes (test_merge_gate.MergeGate.test_stale_head_never_writes) ... ok
+test_revised_or_edited_requirement_never_enqueues_stale_candidate (test_merge_gate.RevisionQueueGate.test_revised_or_edited_requirement_never_enqueues_stale_candidate) ... ok
+test_acceptance_gate_rejects_missing_and_false_pass (test_policy.PolicyTests.test_acceptance_gate_rejects_missing_and_false_pass) ... ok
+test_blocked_cannot_say_pass (test_policy.PolicyTests.test_blocked_cannot_say_pass) ... ok
+test_dependency_and_rework_gate (test_policy.PolicyTests.test_dependency_and_rework_gate) ... ok
+test_design_review_digest_binding (test_policy.PolicyTests.test_design_review_digest_binding) ... ok
+test_empty_checks_fail_closed (test_policy.PolicyTests.test_empty_checks_fail_closed) ... ok
+test_empty_tests_fail_closed (test_policy.PolicyTests.test_empty_tests_fail_closed) ... ok
+test_latest_check_must_pass_and_trusted_app (test_policy.PolicyTests.test_latest_check_must_pass_and_trusted_app) ... ok
+test_maintainer_label_allows_intake (test_policy.PolicyTests.test_maintainer_label_allows_intake) ... ok
+test_missing_acceptance_or_duplicate_rejected (test_policy.PolicyTests.test_missing_acceptance_or_duplicate_rejected) ... ok
+test_qa_requires_all_commands_and_logs (test_policy.PolicyTests.test_qa_requires_all_commands_and_logs) ... ok
+test_reject_boolean_budget (test_policy.PolicyTests.test_reject_boolean_budget) ... ok
+test_self_dependency_rejected (test_policy.PolicyTests.test_self_dependency_rejected) ... ok
+test_trusted_intake_and_acceptance (test_policy.PolicyTests.test_trusted_intake_and_acceptance) ... ok
+test_untrusted_issue_rejected (test_policy.PolicyTests.test_untrusted_issue_rejected) ... ok
+test_delayed_concurrent_publisher_cannot_reuse_stale_preflight (test_release_pipeline.ActualGitPublicationTests.test_delayed_concurrent_publisher_cannot_reuse_stale_preflight) ... ok
+test_success_retains_files_receipt_and_clean_checkout (test_release_pipeline.ActualGitPublicationTests.test_success_retains_files_receipt_and_clean_checkout) ... ok
+test_dependencies_and_environment_cannot_be_sealed_as_evidence (test_release_pipeline.EvidenceCollectionTests.test_dependencies_and_environment_cannot_be_sealed_as_evidence) ... ok
+test_actual_checkout_extra_file_refuses_unreviewed_removal (test_release_pipeline.ReleasePipelineTests.test_actual_checkout_extra_file_refuses_unreviewed_removal) ... ok
+test_dated_public_report_is_not_automatically_deleted (test_release_pipeline.ReleasePipelineTests.test_dated_public_report_is_not_automatically_deleted) ... ok
+test_destination_and_dirty_checkout_block_before_mutation (test_release_pipeline.ReleasePipelineTests.test_destination_and_dirty_checkout_block_before_mutation) ... ok
+test_html_base_and_encoded_escape_are_not_accepted (test_release_pipeline.ReleasePipelineTests.test_html_base_and_encoded_escape_are_not_accepted) ... ok
+test_local_preview_root_assets_refused_for_project_pages (test_release_pipeline.ReleasePipelineTests.test_local_preview_root_assets_refused_for_project_pages) ... ok
+test_local_tampering_refuses_public_verification (test_release_pipeline.ReleasePipelineTests.test_local_tampering_refuses_public_verification) ... ok
+test_optional_transport_does_not_accept_partial_download (test_release_pipeline.ReleasePipelineTests.test_optional_transport_does_not_accept_partial_download) ... ok
+test_parent_relative_asset_cannot_escape_base (test_release_pipeline.ReleasePipelineTests.test_parent_relative_asset_cannot_escape_base) ... ok
+test_preserves_legacy_attribution_domain_and_nojekyll (test_release_pipeline.ReleasePipelineTests.test_preserves_legacy_attribution_domain_and_nojekyll) ... ok
+test_project_base_and_relative_resources_are_allowed (test_release_pipeline.ReleasePipelineTests.test_project_base_and_relative_resources_are_allowed) ... ok
+test_protected_changes_and_unreviewed_deletion_rejected_before_output (test_release_pipeline.ReleasePipelineTests.test_protected_changes_and_unreviewed_deletion_rejected_before_output) ... ok
+test_public_files_verified_against_archive (test_release_pipeline.ReleasePipelineTests.test_public_files_verified_against_archive) ... ok
+test_public_mismatch_and_network_error_preserve_unknown (test_release_pipeline.ReleasePipelineTests.test_public_mismatch_and_network_error_preserve_unknown) ... ok
+test_regenerated_version_metadata_is_a_change_not_deletion (test_release_pipeline.ReleasePipelineTests.test_regenerated_version_metadata_is_a_change_not_deletion) ... ok
+test_rejects_symlinks_private_files_overlap_and_stale_metadata (test_release_pipeline.ReleasePipelineTests.test_rejects_symlinks_private_files_overlap_and_stale_metadata) ... ok
+test_remote_base_change_blocks_publish (test_release_pipeline.ReleasePipelineTests.test_remote_base_change_blocks_publish) ... ok
+test_replaced_hashed_asset_allowed_but_regular_data_not (test_release_pipeline.ReleasePipelineTests.test_replaced_hashed_asset_allowed_but_regular_data_not) ... ok
+test_replay_refused_before_any_git_command (test_release_pipeline.ReleasePipelineTests.test_replay_refused_before_any_git_command) ... ok
+test_smoke_runs_actual_command_and_retains_failure (test_release_pipeline.ReleasePipelineTests.test_smoke_runs_actual_command_and_retains_failure) ... ok
+test_truncated_download_preserves_unknown_without_success_digest (test_release_pipeline.ReleasePipelineTests.test_truncated_download_preserves_unknown_without_success_digest) ... ok
+test_verification_output_cannot_pollute_retained_artifact (test_release_pipeline.ReleasePipelineTests.test_verification_output_cannot_pollute_retained_artifact) ... ok
+test_actual_clean_source_and_output_bound (test_release_reliability.BuildTests.test_actual_clean_source_and_output_bound) ... ok
+test_dirty_source_and_stale_output_refused (test_release_reliability.BuildTests.test_dirty_source_and_stale_output_refused) ... ok
+test_failed_build_retained_and_not_reusable (test_release_reliability.BuildTests.test_failed_build_retained_and_not_reusable) ... ok
+test_governed_prepare_binds_record_and_keeps_protected (test_release_reliability.BuildTests.test_governed_prepare_binds_record_and_keeps_protected) ... ok
+test_output_tampering_and_source_drift_refused (test_release_reliability.BuildTests.test_output_tampering_and_source_drift_refused) ... ok
+test_post_build_source_mutation_rejected (test_release_reliability.BuildTests.test_post_build_source_mutation_rejected) ... ok
+test_timeout_retains_logs (test_release_reliability.BuildTests.test_timeout_retains_logs) ... ok
+test_wrong_origin_or_overlapping_record_rejected (test_release_reliability.BuildTests.test_wrong_origin_or_overlapping_record_rejected) ... ok
+test_before_and_after_push_interruption_never_retries (test_release_reliability.EvidencePublicationTests.test_before_and_after_push_interruption_never_retries) ... ok
+test_push_failure_before_effect_preserves_commit_and_stays_unknown (test_release_reliability.EvidencePublicationTests.test_push_failure_before_effect_preserves_commit_and_stays_unknown) ... ok
+test_real_bare_remote_orphan_only_evidence_and_readonly_resume (test_release_reliability.EvidencePublicationTests.test_real_bare_remote_orphan_only_evidence_and_readonly_resume) ... ok
+test_workflow_and_tampering_rejected (test_release_reliability.EvidencePublicationTests.test_workflow_and_tampering_rejected) ... ok
+test_workflow_tree_and_destination_rejected (test_release_reliability.EvidencePublicationTests.test_workflow_tree_and_destination_rejected) ... ok
+test_actual_commit_tree_must_match_artifact (test_release_reliability.FinalizeTests.test_actual_commit_tree_must_match_artifact) ... ok
+test_aegis_requires_real_done_qa_merge_integration (test_release_reliability.FinalizeTests.test_aegis_requires_real_done_qa_merge_integration) ... ok
+test_browser_environment_and_step_observations_required (test_release_reliability.FinalizeTests.test_browser_environment_and_step_observations_required) ... ok
+test_deployment_binding_failures (test_release_reliability.FinalizeTests.test_deployment_binding_failures) ... ok
+test_failed_deployment_observation_is_retained_and_not_overwritten (test_release_reliability.FinalizeTests.test_failed_deployment_observation_is_retained_and_not_overwritten) ... ok
+test_generic_success_wrong_workflow_rejected (test_release_reliability.FinalizeTests.test_generic_success_wrong_workflow_rejected) ... ok
+test_legacy_prepare_cannot_claim_governed_build (test_release_reliability.FinalizeTests.test_legacy_prepare_cannot_claim_governed_build) ... ok
+test_missing_deployment_cannot_be_success (test_release_reliability.FinalizeTests.test_missing_deployment_cannot_be_success) ... ok
+test_observation_derived_success (test_release_reliability.FinalizeTests.test_observation_derived_success) ... ok
+test_partial_file_verification_refused (test_release_reliability.FinalizeTests.test_partial_file_verification_refused) ... ok
+test_resume_does_not_rewrite_or_repush_unknown_publication (test_release_reliability.FinalizeTests.test_resume_does_not_rewrite_or_repush_unknown_publication) ... ok
+test_smoke_wrong_candidate_or_workaround_missing_steps (test_release_reliability.FinalizeTests.test_smoke_wrong_candidate_or_workaround_missing_steps) ... ok
+test_zero_exit_only_not_browser_observation (test_release_reliability.FinalizeTests.test_zero_exit_only_not_browser_observation) ... ok
+test_after_effect_timeout_reconciles_original_without_repost (test_release_reliability.ReportTests.test_after_effect_timeout_reconciles_original_without_repost) ... ok
+test_incomplete_pagination_never_posts (test_release_reliability.ReportTests.test_incomplete_pagination_never_posts) ... ok
+test_same_record_with_changed_content_is_not_reused (test_release_reliability.ReportTests.test_same_record_with_changed_content_is_not_reused) ... ok
+test_arg_substitution_is_shell_free (test_runner.RunnerTests.test_arg_substitution_is_shell_free) ... ok
+test_coordination_failure_is_structured_resumable_blocker (test_runner.RunnerTests.test_coordination_failure_is_structured_resumable_blocker) ... ok
+test_empty_scan_never_spawns_host (test_runner.RunnerTests.test_empty_scan_never_spawns_host) ... ok
+test_invalid_command_file_and_policy (test_runner.RunnerTests.test_invalid_command_file_and_policy) ... ok
+test_local_lock_blocks_concurrent_same_scope (test_runner.RunnerTests.test_local_lock_blocks_concurrent_same_scope) ... ok
+test_no_release_or_finish_without_owned_lease (test_runner.RunnerTests.test_no_release_or_finish_without_owned_lease) ... ok
+test_planner_runs_intake_once (test_runner.RunnerTests.test_planner_runs_intake_once) ... ok
+test_timeout_kills_tree_and_does_not_claim_completion (test_runner.RunnerTests.test_timeout_kills_tree_and_does_not_claim_completion) ... ok
+test_changed_requirements_never_claim_or_spawn (test_runner_guards.ContinuationGuardTests.test_changed_requirements_never_claim_or_spawn) ... ok
+test_completed_requires_success_and_own_handoff (test_runner_guards.Guards.test_completed_requires_success_and_own_handoff) ... ok
+test_confirmed_handoff_grants_only_bounded_exit (test_runner_guards.Guards.test_confirmed_handoff_grants_only_bounded_exit) ... ok
+test_coord_timeout_keeps_attempt_and_kills_group (test_runner_guards.Guards.test_coord_timeout_keeps_attempt_and_kills_group) ... ok
+test_lost_claim_is_not_grace (test_runner_guards.Guards.test_lost_claim_is_not_grace) ... ok
+test_old_round_does_not_complete_new_claim (test_runner_guards.Guards.test_old_round_does_not_complete_new_claim) ... ok
+test_planner_intake_passes_actor (test_runner_guards.Guards.test_planner_intake_passes_actor) ... ok
+test_release_requires_matching_token_and_success (test_runner_guards.Guards.test_release_requires_matching_token_and_success) ... ok
+test_tree_killed_even_when_leader_already_exited (test_runner_guards.Guards.test_tree_killed_even_when_leader_already_exited) ... ok
+test_coord_timeout_stops_descendants_and_keeps_attempt (test_runner_process.RunnerProcessTests.test_coord_timeout_stops_descendants_and_keeps_attempt) ... ok
+test_old_handoff_and_new_other_claim_never_complete_current_run (test_runner_process.RunnerProcessTests.test_old_handoff_and_new_other_claim_never_complete_current_run) ... ok
+test_operator_signals_stop_host_and_record_blocker (test_runner_process.RunnerProcessTests.test_operator_signals_stop_host_and_record_blocker) ... ok
+test_already_isolated_no_commit (test_state_branch.StateBranchTests.test_already_isolated_no_commit) ... ok
+test_concurrent_state_write_is_not_overwritten_or_retried (test_state_branch.StateBranchTests.test_concurrent_state_write_is_not_overwritten_or_retried) ... ok
+test_existing_init_never_writes (test_state_branch.StateBranchTests.test_existing_init_never_writes) ... ok
+test_migration_preserves_state_product_files_and_parent_history (test_state_branch.StateBranchTests.test_migration_preserves_state_product_files_and_parent_history) ... ok
+test_new_init_has_state_only_tree_and_no_product_parent (test_state_branch.StateBranchTests.test_new_init_has_state_only_tree_and_no_product_parent) ... ok
+test_plan_is_read_only_and_identifies_exact_files (test_state_branch.StateBranchTests.test_plan_is_read_only_and_identifies_exact_files) ... ok
+test_stale_and_busy_and_unconfirmed_never_mutate (test_state_branch.StateBranchTests.test_stale_and_busy_and_unconfirmed_never_mutate) ... ok
+test_unknown_remote_outcome_is_not_retried (test_state_branch.StateBranchTests.test_unknown_remote_outcome_is_not_retried) ... ok
+test_all_prior_code_authors_excluded (test_workflow.WorkflowTests.test_all_prior_code_authors_excluded) ... /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py:2259: ResourceWarning: unclosed file <_io.FileIO name=3 mode='rb' closefd=True>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py:2259: ResourceWarning: unclosed file <_io.FileIO name=5 mode='rb' closefd=True>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py:2259: ResourceWarning: unclosed file <_io.FileIO name=4 mode='rb' closefd=True>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py:2259: ResourceWarning: unclosed file <_io.FileIO name=7 mode='rb' closefd=True>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_bootstrap_preserves_existing (test_workflow.WorkflowTests.test_bootstrap_preserves_existing) ... ok
+test_bootstrap_symlink_escape (test_workflow.WorkflowTests.test_bootstrap_symlink_escape) ... ok
+test_cas_simulation_two_contenders (test_workflow.WorkflowTests.test_cas_simulation_two_contenders) ... ok
+test_closed_issue_can_finalize_and_release (test_workflow.WorkflowTests.test_closed_issue_can_finalize_and_release) ... {"operation": "4b24ebc74092494ca88a2d6ed73d43ee", "phase": "attempt", "token": "t"}
+{"operation": "6d1adea37111490c9f3db876b1c05d02", "phase": "attempt", "token": "t"}
+ok
+test_closed_issue_merge_ready_claim (test_workflow.WorkflowTests.test_closed_issue_merge_ready_claim) ... {"operation": "a3db221181ed4550bfb4df2a690eb856", "phase": "attempt", "token": "079220e5d64b4e3ebaf9cf1dcd532f40"}
+ok
+test_contents_payload_uses_cas (test_workflow.WorkflowTests.test_contents_payload_uses_cas) ... ok
+test_full_lifecycle (test_workflow.WorkflowTests.test_full_lifecycle) ... ok
+test_heartbeat_extends_owned_lease (test_workflow.WorkflowTests.test_heartbeat_extends_owned_lease) ... ok
+test_immutable_input_on_failure (test_workflow.WorkflowTests.test_immutable_input_on_failure) ... ok
+test_independent_design_review (test_workflow.WorkflowTests.test_independent_design_review) ... ok
+test_network_timeout_never_retries (test_workflow.WorkflowTests.test_network_timeout_never_retries) ... ok
+test_no_expired_takeover (test_workflow.WorkflowTests.test_no_expired_takeover) ... ok
+test_no_skip_review (test_workflow.WorkflowTests.test_no_skip_review) ... ok
+test_only_one_claim (test_workflow.WorkflowTests.test_only_one_claim) ... ok
+test_pre_pr_block (test_workflow.WorkflowTests.test_pre_pr_block) ... ok
+test_qa_global_slot (test_workflow.WorkflowTests.test_qa_global_slot) ... ok
+test_qa_requires_exact_integration (test_workflow.WorkflowTests.test_qa_requires_exact_integration) ... ok
+test_queue_admission_not_done (test_workflow.WorkflowTests.test_queue_admission_not_done) ... ok
+test_recover_closed_issue_expired_qa (test_workflow.WorkflowTests.test_recover_closed_issue_expired_qa) ... {"operation": "1761ad0483d14a008b5a8513f4281995", "phase": "attempt", "token": null}
+ok
+test_recovery_fences_old_token_and_preserves_history (test_workflow.WorkflowTests.test_recovery_fences_old_token_and_preserves_history) ... ok
+test_released_author_cannot_review (test_workflow.WorkflowTests.test_released_author_cannot_review) ... ok
+test_remote_head_and_base (test_workflow.WorkflowTests.test_remote_head_and_base) ... ok
+test_repo_normalization (test_workflow.WorkflowTests.test_repo_normalization) ... ok
+test_review_candidate_mismatch (test_workflow.WorkflowTests.test_review_candidate_mismatch) ... ok
+test_wrong_token_cannot_release (test_workflow.WorkflowTests.test_wrong_token_cannot_release) ... ok
+
+----------------------------------------------------------------------
+Ran 170 tests in 17.320s
+
+OK
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmp_djarcy5/out/20261008T063149Z-developer", "started_at": 1791441109, "issue": 7, "claim_state": "ready", "worker_exit": 0, "killed": false, "observed_next_state": "code-review", "released": false, "usage": null, "remote_unknown": false, "status": "incomplete", "detail": "claim is gone without a stage advance"}
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmpqmrjoci7/out/20261008T063149Z-developer", "started_at": 1791441109, "issue": null, "claim_state": null, "worker_exit": null, "killed": false, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": true, "status": "blocked", "detail": "COORD_FAILED preflight: HTTP 502", "attempt": {"operation": "op1"}}
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmpo3ae6_tb/out/20261008T063149Z-developer", "started_at": 1791441109, "issue": null, "claim_state": null, "worker_exit": null, "killed": false, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": false, "status": "idle", "detail": "no eligible task; host not invoked"}
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmp0s967_7b/out/20261008T063149Z-developer", "started_at": 1791441109, "issue": null, "claim_state": null, "worker_exit": null, "killed": false, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": false, "status": "blocked", "detail": "coordination refused: invalid policy: max_run_minutes must be a positive integer"}
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmp0s967_7b/out/20261008T063149Z-developer-2", "started_at": 1791441109, "issue": 1, "claim_state": null, "worker_exit": null, "killed": false, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": false, "status": "blocked", "detail": "internal error: KeyError('token')"}
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmpzsfu1stf/out/20261008T063149Z-developer", "started_at": 1791441109, "issue": null, "claim_state": null, "worker_exit": null, "killed": false, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": false, "status": "blocked", "detail": "LOCK_BUSY: an active run already holds /var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmpzsfu1stf/.aegis-local/locks/developer-dev-1.lock"}
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmp26lmd4gx/out/20261008T063149Z-developer", "started_at": 1791441109, "issue": 7, "claim_state": "ready", "worker_exit": 1, "killed": false, "observed_next_state": "testing", "released": false, "usage": null, "remote_unknown": false, "status": "incomplete", "detail": "host exited 1; claim left to expire; owner release or maintainer recovery required"}
+{"repo": "o/r", "role": "planner", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmpsn4jvd8n/out/20261008T063149Z-planner", "started_at": 1791441109, "issue": null, "claim_state": null, "worker_exit": null, "killed": false, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": false, "status": "idle", "detail": "no eligible task; host not invoked"}
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmpvnasprw0/out/20261008T063149Z-developer", "started_at": 1000, "issue": 7, "claim_state": "ready", "worker_exit": null, "killed": true, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": false, "status": "blocked", "detail": "hard timeout: max_run_minutes exceeded; host tree terminated; completion not claimed; claim left for owner release, expiry or maintainer recovery"}
+{"repo": "o/r", "role": "developer", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmp55qqhlto/out/20261008T063149Z-developer", "started_at": 1791441109, "issue": 1, "claim_state": null, "worker_exit": null, "killed": false, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": false, "status": "blocked", "detail": "continuation requires reconciliation; host not invoked", "continuation": {"status": "needs_attention", "diagnostics": ["REQUIREMENTS_CHANGED"]}}
+{"repo": "o/r", "role": "planner", "actor": "dev-1", "run_dir": "/private/var/folders/pb/87yb6zg14tq57yq7zv6sm3040000gn/T/tmp87gji7vq/out/20261008T063149Z-planner", "started_at": 1791441109, "issue": null, "claim_state": null, "worker_exit": null, "killed": false, "observed_next_state": null, "released": false, "usage": null, "remote_unknown": false, "status": "idle", "detail": "no eligible task; host not invoked"}

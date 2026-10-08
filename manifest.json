@@ -1,0 +1,26 @@
+{
+  "files": {
+    "final-full.log": "23ff935eed015842fadf8ca25d611290b3fe02d0f285a874f678fc32b9a6719c",
+    "first-full.log": "9adfaa5a06d647dffe34692cc5f48526c7ee78151d0862d47c7f6c4b62056c0f",
+    "first-targeted.log": "af5bae39e102ea10004ca2b97a1994bd661234ba99cccf7079a0d2a85b30a114",
+    "run.json": "7fbad2bd791a73dac2613278165e6946e4e4cfaeb795313077a74af8646a5ecd",
+    "verification.json": "657267aff49093682c6502fec1f2f050bb9c64fc7f06a34136bcc3650409a419"
+  },
+  "metadata": {
+    "candidate_sha": "c494b1a54122199069255aa02b364e3ad8e4558e",
+    "environment": {
+      "build_mode": "stdlib unittest",
+      "runtime": "Python 3.14.7",
+      "target": "isolated source and local bare Git fixtures"
+    }
+  },
+  "run": {
+    "issue": 3,
+    "repo": "petrel2015/aegis",
+    "retry_of": null,
+    "role": "developer",
+    "run_id": "348984643a0748edbca13a4f1de5b2d2",
+    "schema": "aegis-run/v1"
+  },
+  "schema": "aegis-manifest/v1"
+}

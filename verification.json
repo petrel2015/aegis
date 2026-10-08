@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "exit_code": 0,
+  "tests": 170,
+  "new_tests": 29,
+  "proof": "Offline real Git and provider fixtures; not product deployment.",
+  "scope": "AC1-5 implemented; AC6 developer stage only, independent review/QA pending."
+}
