@@ -31,7 +31,7 @@ python3 skills/aegis/scripts/release_pipeline.py verify \
   --artifact /ABS/FRESH_RELEASE_RUN --output /ABS/FRESH_ONLINE_CHECK
 ```
 
-All public files must equal the retained ZIP bytes. There are no implicit exclusions. A changed file or connection failure records unknown with diagnostics, retaining partial observations. A retry uses a new verification directory. `files_verified` does not mean deployed acceptance: additionally inspect actual deployment success and browser smoke.
+All public files must equal the retained ZIP bytes. There are no implicit exclusions. A changed file or connection failure records unknown with diagnostics, retaining partial observations. A retry uses a new verification directory. On hosts with demonstrated urllib stream truncation, the operator may explicitly use `verify --transport curl` with existing curl; it adds no Python package and performs no automatic retries or cross-origin redirects. Keep the original unknown attempt. `files_verified` does not mean deployed acceptance: additionally inspect actual deployment success and browser smoke.
 
 Put the trusted project-specific browser command in a JSON argv array (no shell), targeting the exact site and writing its own date/viewport/screenshots observations:
 

@@ -6,6 +6,7 @@ No inferred deployment authorization; each command retains its own result direct
 import argparse
 import fnmatch
 import hashlib
+import http.client
 import json
 import os
 import signal
@@ -193,6 +194,16 @@ def fetch(url):
         return response.read()
 
 
+def fetch_curl(url):
+    # Optional explicit transport for hosts whose urllib/proxy streams truncate.
+    # No redirect following and no automatic retries; retain original attempt.
+    result = subprocess.run(['curl', '--fail', '--silent', '--show-error',
+                             '--connect-timeout', '10', '--max-time', '30', url],
+                            capture_output=True, timeout=35)
+    require(result.returncode == 0, 'PUBLIC_TRANSPORT: curl exit=' + str(result.returncode))
+    return result.stdout
+
+
 def verify(directory, output, downloader=fetch):
     manifest, files = load_artifact(directory)
     output = Path(output)
@@ -201,7 +212,8 @@ def verify(directory, output, downloader=fetch):
     output.mkdir(parents=True)
     observed = {}
     result = {'status': 'remote_unknown', 'source_sha': manifest['source_sha'],
-              'site_url': manifest['site_url'], 'files': observed, 'exclusions': []}
+              'site_url': manifest['site_url'], 'files': observed, 'exclusions': [],
+              'transport': 'curl' if downloader is fetch_curl else 'urllib' if downloader is fetch else 'injected'}
     try:
         for name, data in files.items():
             url = manifest['site_url'] + urllib.parse.quote(name, safe='/') + '?aegis=' + manifest['artifact_digest'][7:19]
@@ -264,6 +276,7 @@ def main():
         p.add_argument('--' + arg, required=True)
     p = sub.add_parser('verify')
     p.add_argument('--artifact', required=True); p.add_argument('--output', required=True)
+    p.add_argument('--transport', choices=('urllib', 'curl'), default='urllib')
     p = sub.add_parser('smoke')
     p.add_argument('--argv-json', required=True); p.add_argument('--output', required=True)
     p.add_argument('--target', required=True); p.add_argument('--timeout', type=int, default=180)
@@ -273,7 +286,7 @@ def main():
     elif a.operation == 'publish':
         result = publish(a.artifact, a.checkout, a.repo, a.expected_base, a.authorization_ref)
     elif a.operation == 'verify':
-        result = verify(a.artifact, a.output)
+        result = verify(a.artifact, a.output, fetch_curl if a.transport == 'curl' else fetch)
     else:
         result = smoke(json.loads(Path(a.argv_json).read_text()), a.output, a.target, a.timeout)
     print(json.dumps(result, indent=2))
@@ -283,5 +296,5 @@ def main():
 if __name__ == '__main__':
     try:
         raise SystemExit(main())
-    except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
+    except (OSError, ValueError, KeyError, subprocess.SubprocessError, http.client.HTTPException) as error:
         raise SystemExit(str(error))

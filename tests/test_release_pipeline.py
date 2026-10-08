@@ -49,6 +49,15 @@ class ReleasePipelineTests(unittest.TestCase):
   with self.assertRaisesRegex(ValueError,'PUBLIC_FILE_MISMATCH'):rp.verify(self.out,self.root/'fail',lambda url:b'old')
   r=json.loads((self.root/'fail/verification.json').read_text());self.assertEqual(r['status'],'remote_unknown');self.assertNotIn('observed_artifact_digest',r)
   with self.assertRaisesRegex(ValueError,'RUN_EXISTS'):rp.verify(self.out,self.root/'fail',lambda url:b'')
+ def test_truncated_download_preserves_unknown_without_success_digest(self):
+  self.prepare()
+  def truncated(url):raise rp.http.client.IncompleteRead(b'partial',7)
+  with self.assertRaises(rp.http.client.IncompleteRead):rp.verify(self.out,self.root/'truncated',truncated)
+  result=json.loads((self.root/'truncated/verification.json').read_text());self.assertEqual(result['status'],'remote_unknown');self.assertIn('IncompleteRead',result['diagnostics']);self.assertNotIn('observed_artifact_digest',result)
+ def test_optional_transport_does_not_accept_partial_download(self):
+  import subprocess
+  with patch.object(rp.subprocess,'run',return_value=subprocess.CompletedProcess(['curl'],18,stdout=b'partial',stderr=b'truncated')):
+   with self.assertRaisesRegex(ValueError,'PUBLIC_TRANSPORT'):rp.fetch_curl(self.site+'data.json')
  def test_smoke_runs_actual_command_and_retains_failure(self):
   r=rp.smoke([sys.executable,'-c','print("evidence");raise SystemExit(3)'],self.root/'smoke',self.site)
   self.assertEqual(r['status'],'fail');self.assertEqual(r['exit_code'],3);self.assertIn('evidence',(self.root/'smoke/stdout.log').read_text())
