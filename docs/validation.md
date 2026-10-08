@@ -77,3 +77,194 @@ All 27 tests pass under the renamed `skills/aegis/scripts/aegis.py`; all six ren
 Skills pass format validation and local documentation links resolve. Active source,
 examples and configuration use AEGIS naming. Earlier decision records preserve historical
 names with a link to decision 0003. No remote state or repository was renamed.
+
+## Automatic Issue projection — 2026-10-07
+
+41 offline tests pass. The process-boundary fake GitHub lifecycle now asserts that each
+successful transition returns synced, the final managed label is aegis:done, business/intake
+labels remain, and each durable event has exactly one corresponding comment.
+
+Fault-injection tests cover blocked reason/evidence, repeated reconciliation, permissions,
+timeout before/after comment creation, CAS conflicts, concurrent send reservation,
+paginated comments, legacy snapshots, manual label drift, recovery, stage changes during
+label updates, silent heartbeat/release, and no projection after a failed state write.
+Local Markdown links and git diff whitespace checks pass. No real GitHub Issue was modified.
+Label projection is eventually consistent; ambiguous comment attempts remain pending for
+reconciliation rather than automatic retransmission. See the Issue visibility reference.
+
+API references checked for this implementation:
+[labels](https://docs.github.com/en/rest/issues/labels) and
+[Issue comments](https://docs.github.com/en/rest/issues/comments).
+
+## Executable policy and host runner — 2026-10-07
+
+79 offline tests pass. New coverage includes policy validation, trusted issue intake,
+AC contracts, dependency/rework gates, design digests, current-head checks, QA command
+records, and fail-closed queue admission. `agent-attestation` is cooperative role evidence;
+it does not prove independent GitHub accounts or factual correctness.
+
+The Hermes worker produced the initial runner in a bounded requested run. Its process
+exceeded the requested 900-second budget and was explicitly stopped; its output/log was
+preserved locally, not silently replaced by a new run. Independent acceptance repaired
+CLI intake arguments, lost-lease behavior, descendant cleanup and completion reporting.
+A second independent forward-test reproduced SIGTERM leaving a host alive, coordinator
+timeout leaving a child alive and losing attempt IDs, and stale-round completion. Fixes
+were independently retested using actual isolated processes. `test_runner_process.py`
+asserts SIGTERM/SIGINT cleanup, preserved unknown-attempt IDs and exact current claim token.
+No provider usage/cost was available; unknown is not recorded as zero.
+
+All six Skills pass the bundled quick validator using the existing Hermes Python environment
+(the system Python lacks PyYAML; no runtime dependency was added to AEGIS). `git diff --check`
+passes. Added strict evidence/runbook guidance supersedes earlier minimal-field examples.
+
+ChronoAtlas was used as a real local role-workflow application: independent design rejection
+and revision, independent code review identifying two real HTTP/UTF-8 defects, repair,
+14 unit/API tests, production build, desktop/390px browser smoke and real terrain tiles.
+Target documentation preserves the exact approved design digest and local proof boundary.
+Creating/pushing its GitHub repository was rejected by automatic approval review pending
+explicit target authorization. No remote Issue/PR/CI/lease or merge is claimed by this trial.
+Live queue plan/account permissions and real AI provider calls remain unverified.
+
+## Field-trial repairs — 2026-10-08
+
+101 local tests pass (`python3 -m unittest discover -s tests -v`). New coverage includes
+read-only continuation, CAS-bound revision, retained requirements/history/contributors,
+busy/completed/queued/stale revision rejection, exact requirement-epoch evidence, stage-specific
+AC results, successful predecessor decisions, approved same-candidate QA retesting, configured
+verification groups, unique QA run IDs, environment metadata, evidence tamper/symlink detection,
+release-without-Issue records, pending/failed receipts with genuinely unknown artifacts,
+public-version mismatch rejection, queue rejection after requirement changes, and preventing
+host invocation when continuation diagnostics need reconciliation. The full fake-gh lifecycle
+now exercises v2; unchanged legacy v1 evidence remains explicitly supported.
+
+An independent offline forward test used the clarified map-polygon requirement through
+resume → revise → design → review → development → review → QA, plus a pending Pages receipt.
+It found a legitimate QA retest incorrectly rejected and a rejected review reusable after
+recovery. Both were repaired and independently retested. It also found missing release
+workflow linkage instructions, no-Issue external release friction, and failure receipts that
+required nonexistent artifact hashes; these were repaired with dedicated regressions.
+
+All seven Skill entrypoints pass skill-creator quick_validate.py using the existing Hermes
+venv Python (system Python has no PyYAML; no dependency was added). Local Markdown links,
+JSON resources, CLI help, fictional pending-release validation and git diff whitespace checks
+pass. Receipt validation is structural; manifest verification establishes local integrity,
+not trusted semantic truth or independent observation of a public deployment.
+
+No live GitHub Issue, PR, state branch, merge queue or deployment was mutated for this repair.
+ChronoAtlas's earlier successful public deployment is product evidence, not a complete remote
+AEGIS workflow trial. The live acceptance list above remains open and requires an explicitly
+designated sandbox destination. These changes are verified in the local working tree; no
+remote publication of this AEGIS update is claimed here.
+
+## Real ChronoAtlas monthly-playback task — 2026-10-08
+
+At the user's explicit request to use AEGIS for a new ChronoAtlas requirement, the local
+repaired framework was used against the authorized private target petrel2015/ChronoAtlas.
+The previously absent aegis-state branch was initialized; this was real task coordination,
+not an arbitrary live race/fault-injection test. Local framework file hashes are retained
+under .aegis-local/chrono-monthly/framework-snapshot.json; no published framework version is claimed.
+
+- Requirements: https://github.com/petrel2015/ChronoAtlas/issues/1
+- Independent design approval: issue comment 6051317684.
+- Candidate: https://github.com/petrel2015/ChronoAtlas/pull/2,
+  head 64c8ed43a381f77e342b20c18db401630695d23a.
+- Independent code approval: PR comment 6051482516. A CI-only virtual-clock race was
+  identified, repaired in a new head, and the failed evidence retained.
+- QA report: PR comment 6051543979. Actual integration commit
+  47431072d8f9acf22d44c4862108e21bce165c93 has parents head above and base
+  6f6f41d60a2afd8fbbe35b5c88b88f0888787ebf.
+- 23 unit/API tests, normal/Pages builds, long monthly progression, minor-event fixture,
+  real timers, phone panels, actual polygon colors, and 5,955 date-boundary checks passed.
+  QA used its own checkout and an evidence-only orphan branch; artifact commit
+  0b3afea2e030ae3061ea313d152d89298d2d2552 preserves independent logs/screenshots.
+- Both final candidate CI runs passed: 37721718383 and 37721722405.
+- Actual AEGIS finish to merge-ready: c3705402a1bd4d3c9906ec5dea2d4da9, Issue label synced.
+  Manual-stage revalidation/report and release completed; no lease or QA slot remains.
+  Manual-wait report: PR comment 6051569487. No merge or production deployment was performed.
+
+This verifies one live requirement→design→independent review→development→independent review→
+serialized QA→manual-ready path. It does not verify multi-machine claim races, live crash
+recovery, merge-queue server gates, arbitrary-host native activation or public deployment.
+Earlier local-only statements remain historical; this is the newer, bounded remote proof.
+
+A further operational issue was observed: inherited product workflows also ran on aegis-state
+pushes (for example run 37721046528). Those runs are not PR candidate evidence and waste CI
+capacity. Future initialization/migration should prevent inherited workflow execution on
+coordination branches through a reviewed mechanism; this trial did not hand-edit state history.
+
+
+## ChronoAtlas PR #2 merge and public release — 2026-10-08
+
+This later record advances the previously recorded manual-ready stage; its earlier
+no-merge/no-deployment statement remains a historical observation. After the user
+explicitly requested GitHub Pages deployment, PR #2 was manually merged at
+2026-10-08T04:56:02Z to source commit
+`6554631600015b92c80e06261db44374365e46d1`. The retained merge observation is
+[PR comment 6052606744](https://github.com/petrel2015/ChronoAtlas/pull/2#issuecomment-6052606744).
+The approved head and preceding independent QA evidence remain attached to PR #2;
+the merger did not claim a fresh independent review or a server-side merge-queue gate.
+
+[Release acceptance](https://github.com/petrel2015/ChronoAtlas/pull/2#issuecomment-6052645744)
+records the separate authorized public destination
+[ChronoAtlas Pages](https://petrel2015.github.io/ChronoAtlas-pages/), artifact commit
+`ed23d7cd3b04a2109126842626ad17bcda74f996`, and
+[successful deployment run 37730028153](https://github.com/petrel2015/ChronoAtlas-pages/actions/runs/37730028153).
+The sealed release receipt and browser evidence are retained at
+[source evidence commit 0e0521d1](https://github.com/petrel2015/ChronoAtlas/tree/0e0521d1b17ea3975dd8817e80e4b64a9fcd3b57/c499e5c005954df9b6de673c51c73b14).
+The receipt records matching observed source SHA and artifact digest, live-file comparison,
+and public desktop/mobile playback smoke. This section is reconciled from those saved
+observations and receipts; it does not claim a new online probe at documentation-update time.
+
+The first artifact update omitted existing `ATTRIBUTION.md`; the final artifact corrected
+it and retained the earlier attempt. The original sandbox API-test `EPERM` was also
+retained before a separately authorized local-listener retry passed all 23 tests.
+These findings motivate explicit release-file preservation and read-only environment
+diagnostics. One public release is proof of this destination and candidate, not all
+hosts, all deployment providers or live crash/race recovery.
+
+## Publication and coordination isolation repairs — 2026-10-08
+
+133 local tests pass after independent forward testing, including actual temporary Git publication and delayed concurrent invocations. No live Git/push occurred in those tests. Seven Skill entrypoints pass quick validation. Guarded static preparation preserves attribution/domain/license files, binds the exact previous inventory, and requires reviewed deletion paths. Checkout-local exclusion and post-lock revalidation prevent stale cooperating local publishers. Public verification rejects overlap and compares every file against the retained ZIP; project browser observations and provider status remain separate.
+
+Environment checks classify dependency failures and localhost restrictions without automatically rerunning tests. Generic handoff docs now distinguish new v2 evidence from unchanged legacy v1.
+
+The user authorized ChronoAtlas Issue #3 as a live field trial. Before intake, isolate-state-ci removed only inherited .github/workflows/pages.yml and test.yml at commit 23202a28bd6f20f645ba26ed6e96a0b4f4aa03b9; state blob 0d4df79ec16c317f9d759432b32486dfd401ea52 and revision29 remained unchanged. This is actual migration proof, not multi-machine crash/concurrency proof. State-only orphan initialization remains tested offline against a Git API fake; no new live repository was created to test initialization.
+
+A read-only live verification of the existing ChronoAtlas Pages deployment used the new artifact helper. Two urllib downloads ended with IncompleteRead and retained remote_unknown observations. Explicit optional curl transport (existing host CLI, no automatic retry) subsequently verified all 10 public files and source6554631600015b92c80e06261db44374365e46d1 against the retained ZIP. No redeployment was performed for this check. Two transport/error regressions were added; full suite now has135 tests. This proves file verification for that deployed artifact, not acceptance or deployment of Issue#3.
+
+Issue#3 preparation additionally exposed a sequencing defect: generated build.json was reviewed as a deletion before regeneration. Ordering was corrected and the actual candidate3d2698ba0f1b35362a7e8b8b66a4d252b8dcce9d now prepares successfully with retained attribution and explicit reviewed old CSS/JS removals. No publication was performed. A developer evidence attempt copied fixture dependencies, stopped before remote publication and reconciled remote absence; seal/verify now reject .git/node_modules/.ssh/.env paths, including empty dependency directories. Independent forward testing of these final repairs passed; the full suite is137 tests. One developer screenshot was overwritten before collection, explicitly documented rather than claimed preserved.
+
+The first new-candidate preparation used an ordinary localhost build with /assets URLs for a project Pages base; it was never published. That draft archive and pending receipt remain retained with a supersession record. Preparation/load now validate HTML resource paths against the authorized site base, including base tags and encoded traversal. Independent checks reject the actual ordinary index and prior draft while accepting actual Pages index and unchanged current-public archive. Full suite is141 tests; publication-specific suite24. The guard covers HTML resources, not arbitrary runtime URLs or semantic browser correctness.
+
+Independent QA of Issue#3 found a mobile popup close control covered by an expanded country panel. The previously passing country browser test manually collapsed that panel and therefore missed the user flow. QA published failure and returned the task to ready under actual claim/state operations; this is a genuine rework cycle, not a waived acceptance condition. New candidate must receive fresh code review and integration QA.
+
+## ChronoAtlas Issue #3 field trial and rework — 2026-10-08
+
+The requested country-background requirement is Issue #3; there was no PR #3.
+Its implementation is [PR #5](https://github.com/petrel2015/ChronoAtlas/pull/5).
+Six country fills, borders and labels, independent background visibility, and two
+explicitly generalized junction reference points were implemented. Existing geometry
+and history files remain byte-identical; no China–Thailand–Myanmar junction is invented.
+
+[Failed independent QA](https://github.com/petrel2015/ChronoAtlas/pull/5#issuecomment-6053113594)
+returned the task to ready. Repair head `2d38b0a9870a829b85d099e96128e0fb074bdb91`
+automatically collapses the country panel before opening a junction popup.
+[Fresh independent review](https://github.com/petrel2015/ChronoAtlas/pull/5#issuecomment-6053202539)
+and [fresh integration QA](https://github.com/petrel2015/ChronoAtlas/pull/5#issuecomment-6053268920)
+passed. QA checked actual integration commit `d383659bff12fa33ec660cbcb1bfc6773b7d0841`,
+with base `6554631600015b92c80e06261db44374365e46d1` and repaired head as parents.
+All 26 unit/API tests, normal/Pages builds, desktop/mobile country pixels and labels,
+both junctions, monthly playback and existing panel/territory regressions passed.
+The original failed popup steps now pass without forced clicks or manual panel collapse.
+Sealed independent evidence is retained at private source commit
+`84e01ee2666dc8eadef52e22210ad90dd5d1b390`, run `d3feaae81409427fba4640c4d12ec363`.
+Finish operation `71ef5dba3e3b4ab8bd9a688f14d46750` confirmed `merge-ready`,
+synced the Issue label and released the QA slot. Manual merge remains pending.
+
+The final integration Pages build was freshly prepared using the repaired helper:
+10 public files, retained attribution, individually reviewed replaced CSS/JS deletions,
+and correct `/ChronoAtlas-pages/` resource paths. Archive digest is
+`sha256:92324a334cd525dfade50db0737bb38e809a11a7832528aa0b7c45840f1855f8`.
+This is an unmerged candidate archive, not a published release. The old wrong-base
+draft, failed QA and explicit retries remain historical evidence. No candidate merge
+or new Pages deployment was performed in this trial.

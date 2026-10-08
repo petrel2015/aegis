@@ -18,10 +18,10 @@ Users need to export the currently filtered task list as CSV for offline analysi
 Export visible rows and columns. Exclude server exports, scheduling and hidden rows.
 
 ## Acceptance criteria
-| ID | Observable result | Verification method |
-|---|---|---|
-| AC-1 | CSV includes only filtered rows | Export a fixture with one hidden row |
-| AC-2 | Quotes, commas and newlines round-trip correctly | Parse exported CSV and compare input cells |
+| ID | Observable result | Counterexample that fails | Verification method |
+|---|---|---|---|
+| AC-1 | CSV includes only filtered rows | Download exists but contains hidden rows | Export a fixture with one hidden row |
+| AC-2 | Quotes, commas and newlines round-trip correctly | CSV looks readable but splits multiline cells | Parse exported CSV and compare input cells |
 
 ## Design and alternatives
 Add a pure CSV serializer and a toolbar download action. Reuse the filtered selector.

@@ -4,7 +4,7 @@
 
 1. Project AGENTS.md, policy and documentation entry; existing architecture and relevant decisions.
 2. Open Issues from all pages: only configured trusted intake, excluding PRs. For unregistered
-   Issues, verify author/maintainer intake approval before `register`. For registered work,
+   Issues, run `intake --actor ID` after preflight; it validates author/label, form fields and AC IDs. For registered work,
    use `scan --role planner`; only `new` with no claim is eligible.
 3. Feature/improvement: background, benefit, scope, acceptance. Bug: environment, reproduction,
    actual/expected behavior and impact. Missing information is not permission to guess.
@@ -58,3 +58,11 @@ with observed data. [Filled evidence example](../examples/evidence.json) demonst
 `finish --to design-review --evidence evidence.json`; select the actual outcome's allowed
 state from the table above, not the example by default. JSON evidence points to the
 published report. It is a local CLI input, not a replacement for the readable report.
+
+## Continued work and current evidence contract
+
+For a follow-up request, use [continuation and revision](../../aegis/references/continuation.md).
+Read [evidence versions](../../aegis/references/evidence-v2.md) when preparing a report.
+New tasks use v2; every report, including blocked/rework, binds the current requirement
+version and digest. Existing v1 tasks remain explicitly legacy; do not rewrite their history.
+The JSON examples are fictional and must be filled from the current task.

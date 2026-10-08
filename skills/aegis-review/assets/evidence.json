@@ -2,5 +2,23 @@
   "summary": "<actual summary>",
   "pr": 0,
   "head": "<actual head>",
-  "url": "<actual url>"
+  "url": "<actual url>",
+  "schema": "aegis-evidence/v2",
+  "acceptance": {
+    "AC-1": {
+      "result": "reviewed",
+      "evidence": "<actual HTTPS evidence URL>",
+      "observation": "<concrete phase-specific observation; include counterexample check>"
+    },
+    "AC-2": {
+      "result": "reviewed",
+      "evidence": "<actual HTTPS evidence URL>",
+      "observation": "<concrete phase-specific observation; include counterexample check>"
+    }
+  },
+  "kind": "code-review",
+  "result": "approve",
+  "reviewed_head": "<actual head>",
+  "requirements_version": 1,
+  "requirements_digest": "<digest from current task requirements>"
 }

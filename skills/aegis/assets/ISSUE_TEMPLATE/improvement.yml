@@ -57,10 +57,22 @@
       "id": "field-3",
       "attributes": {
         "label": "Acceptance criteria",
-        "description": "Measurable completion conditions."
+        "description": "One AC-N block per criterion. State the observable outcome, a misleading result that must fail, and how it will be checked.",
+        "placeholder": "AC-1: Territory colors\nOutcome: Geographic polygon fills change with the selected date.\nCounterexample: Only the legend or event marker changes color.\nVerification: Compare actual map fills at two sourced dates in the browser."
       },
       "validations": {
         "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "dependencies",
+      "attributes": {
+        "label": "Dependencies",
+        "description": "Optional prerequisite Issue numbers, e.g. #12 #13. Leave blank if none."
+      },
+      "validations": {
+        "required": false
       }
     }
   ]

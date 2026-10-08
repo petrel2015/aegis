@@ -72,7 +72,7 @@ to `merge-ready (unchanged)` and next action to observe later; call `release`.
 For `merged`, retain source QA record and verified head/PR identity; record the actual
 merged commit (which may differ from PR head under squash), timestamp and PR URL. Set
 next role `none`, next state `done`, and requested action `close Issue with evidence`.
-Use JSON `summary`, `url`, `pr`, `head` with the original PR head, not the squash merge SHA.
+Keep `schema`, exact `acceptance` coverage and JSON `summary`, `url`, `pr`, `head` with the original PR head, not the squash merge SHA.
 Only call `finish --to done` after the live API confirms merge. If the PR's head differs
 from the approved candidate, stop for reconciliation instead of borrowing prior QA evidence.
 
@@ -83,16 +83,16 @@ reproduction and logs. JSON still includes `pr` and current full `head`, but mus
 ## Evidence fields by decision
 
 The JSON asset is specifically the **test-pass → merge-ready** template. Do not copy its
-`result: pass` into a failure, blocked or drift report. Use these exact field sets:
+`result: pass` into a failure, blocked or drift report. Every v2 row also requires requirements_version and requirements_digest. Use these field sets:
 
 | Action | Required JSON fields | Result handling |
 |---|---|---|
-| Test pass → merge-ready | summary, url, pr, head, base, tested_commit, result | result must be pass; all SHAs observed |
-| Failure → ready | summary, url, pr, head | Omit result/base/tested_commit unless separately explaining observed data |
-| Missing prerequisite → blocked | summary, url, pr, head | Omit result; describe missing evidence in report |
-| Base drift → testing | summary, url, pr, head | Omit result; no new test pass is claimed |
-| Head drift → ready | summary, url, pr, current head | Omit result; request review of new candidate |
-| Observed merge → done | summary, url, pr, approved PR head | Omit result; actual merge observation belongs in report |
+| Test pass → merge-ready | schema, kind, acceptance, tests, run_id, environment, summary, url, pr, head, base, tested_commit, result | result must be pass; all SHAs observed |
+| Failure → ready | schema, summary, url, pr, head | Omit result/base/tested_commit unless separately explaining observed data |
+| Missing prerequisite → blocked | schema, summary, url, pr, head | Omit result; describe missing evidence in report |
+| Base drift → testing | schema, summary, url, pr, head | Omit result; no new test pass is claimed |
+| Head drift → ready | schema, summary, url, pr, current head | Omit result; request review of new candidate |
+| Observed merge → done | schema, acceptance, summary, url, pr, approved PR head | Omit result; actual merge observation belongs in report |
 | Queued / manual wait | No finish JSON; publish report and release | State remains merge-ready |
 
 The helper still requires a live open, non-draft PR for non-done transitions from QA
@@ -107,3 +107,13 @@ identical to the linked full report. A handoff comment requests a transition; on
 successful CLI write confirms it. On an ambiguous finish, retain the report and reconcile
 state instead of announcing completion. If publishing the complete report directly on the
 Issue (e.g. design review or pre-PR block), do not add a redundant handoff comment.
+
+## Continued work and current evidence contract
+
+For a follow-up request, use [continuation and revision](../../aegis/references/continuation.md).
+Read [evidence versions](../../aegis/references/evidence-v2.md) when preparing a report.
+New tasks use v2; every report, including blocked/rework, binds the current requirement
+version and digest. Existing v1 tasks remain explicitly legacy; do not rewrite their history.
+The JSON examples are fictional and must be filled from the current task.
+
+Use all `verification_groups` as well as `test_commands`; groups are mandatory when configured. Use a unique evidence directory per run, preserving screenshots and logs. Record viewport in browser evidence. Do not overwrite a failed run on retry. See [evidence versions](../../aegis/references/evidence-v2.md) for the storage helper.

@@ -5,5 +5,40 @@
   "base": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "tested_commit": "cccccccccccccccccccccccccccccccccccccccc",
   "result": "pass",
-  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105"
+  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105",
+  "schema": "aegis-evidence/v2",
+  "acceptance": {
+    "AC-1": {
+      "result": "verified",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Integration browser export excludes the fixture hidden row; parsed download matches visible rows."
+    },
+    "AC-2": {
+      "result": "verified",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Parsed integration export preserves comma, quote and multiline cell values exactly."
+    }
+  },
+  "kind": "qa",
+  "tests": [
+    {
+      "argv": [
+        "npm",
+        "test",
+        "--",
+        "--run"
+      ],
+      "exit_code": 0,
+      "log_url": "https://github.com/example/taskboard/actions/runs/101",
+      "group": "default"
+    }
+  ],
+  "requirements_version": 1,
+  "requirements_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "run_id": "123456781234123412341234567890ab",
+  "environment": {
+    "runtime": "Node 22",
+    "build_mode": "test",
+    "target": "isolated integration checkout"
+  }
 }

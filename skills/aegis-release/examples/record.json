@@ -1,0 +1,28 @@
+{
+  "schema": "aegis-release/v1",
+  "run_id": "123456781234123412341234567890ab",
+  "retry_of": null,
+  "execution_mode": "external",
+  "authorization_ref": "Fictional user request to publish example/taskboard-pages",
+  "source_repo": "example/taskboard",
+  "source_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "artifact_repo": "example/taskboard-pages",
+  "artifact_commit": null,
+  "artifact_digest": null,
+  "environment": "production",
+  "build_mode": "pages",
+  "site_url": "https://example.github.io/taskboard-pages/",
+  "deployment_url": null,
+  "deployment_status": "pending",
+  "status": "pending",
+  "observed_source_sha": null,
+  "observed_artifact_digest": null,
+  "smoke": {
+    "result": "unverified",
+    "target": "https://example.github.io/taskboard-pages/",
+    "evidence_url": null
+  },
+  "rollback": "Deploy prior retained artifact using project procedure",
+  "workflow_evidence_url": null,
+  "diagnostics": "Build has not produced an artifact yet; no public proof."
+}

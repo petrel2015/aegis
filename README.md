@@ -55,3 +55,25 @@ and state transitions. `assets/report.md` and `examples/` define fixed report co
 filled fictional examples; execution roles also provide CLI evidence JSON templates. Start
 with the [coder runbook](skills/aegis-develop/references/runbook.md). Markdown report format
 is an agent obligation; the CLI validates state/candidate fields, not report semantics.
+
+Workflow transitions automatically project to `aegis:STATE` Issue labels and append reason/
+evidence comments. Filter `label:aegis:blocked` for blockers. Unrelated labels are preserved.
+A committed transition with `sync.status: pending` needs display reconciliation, not repeated
+work. See [Issue visibility and recovery](skills/aegis/references/issue-visibility.md).
+
+## Deterministic execution
+
+Policy preflight, trusted Issue intake, dependency/rework gates, versioned evidence,
+design digests, exact-candidate CI/review checks and guarded merge-queue admission are
+implemented. The [one-shot host adapter](skills/aegis/references/policy-and-runner.md)
+provides locking, bounded execution, heartbeat supervision and durable logs without a
+model runtime or resident scheduler. See [proof boundaries](docs/validation.md).
+
+## Continued delivery
+
+For follow-up requests use [resume and versioned revisions](skills/aegis/references/continuation.md).
+New tasks use [phase-specific evidence](skills/aegis/references/evidence-v2.md), observable
+acceptance with counterexamples, mandatory configured verification groups and unique run
+artifacts. Existing v1 task history remains explicitly legacy. Publish authorized candidates
+with the optional [release Skill](skills/aegis-release/SKILL.md); merge and deployment are
+separate records. See [the field-trial decision](docs/decisions/0004-continuation-and-evidence.md).

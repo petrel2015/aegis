@@ -16,6 +16,7 @@ This is a lightweight router. When the user supplies a role, read **one** matchi
 | developer / worker / coder | [aegis-develop](../aegis-develop/SKILL.md) |
 | reviewer | [aegis-review](../aegis-review/SKILL.md) |
 | qa / tester | [aegis-qa](../aegis-qa/SKILL.md) |
+| release / deploy | [aegis-release](../aegis-release/SKILL.md) |
 
 If no role can be inferred, ask which role to run. Do not load every role to decide.
 Distinguish the skill repository from the target software repository; infer target only

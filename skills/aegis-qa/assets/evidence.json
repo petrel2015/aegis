@@ -5,5 +5,40 @@
   "base": "<actual base>",
   "tested_commit": "<actual tested_commit>",
   "result": "pass",
-  "url": "<actual url>"
+  "url": "<actual url>",
+  "schema": "aegis-evidence/v2",
+  "acceptance": {
+    "AC-1": {
+      "result": "verified",
+      "evidence": "<actual HTTPS evidence URL>",
+      "observation": "<concrete phase-specific observation; include counterexample check>"
+    },
+    "AC-2": {
+      "result": "verified",
+      "evidence": "<actual HTTPS evidence URL>",
+      "observation": "<concrete phase-specific observation; include counterexample check>"
+    }
+  },
+  "kind": "qa",
+  "tests": [
+    {
+      "argv": [
+        "npm",
+        "test",
+        "--",
+        "--run"
+      ],
+      "exit_code": 0,
+      "log_url": "<actual HTTPS log URL>",
+      "group": "default"
+    }
+  ],
+  "requirements_version": 1,
+  "requirements_digest": "<digest from current task requirements>",
+  "run_id": "<unique run ID>",
+  "environment": {
+    "runtime": "<runtime and version>",
+    "build_mode": "<actual build mode>",
+    "target": "<tested environment or URL>"
+  }
 }

@@ -93,3 +93,32 @@ Skill。角色职责和项目权限保持一致；这些是调用示例，不表
 
 模板格式是 Agent 的交付要求；当前 CLI 校验状态和提交身份，不自动判定报告的
 语义真实性。示例 URL、提交 SHA 和测试结果均为虚构，不可当作执行证据。
+
+## 在 Issue 中查看进度
+
+状态变化会自动同步为 `aegis:new`、`aegis:ready`、`aegis:blocked` 等标签，并发表
+包含原因和证据链接的状态评论。可用 `label:aegis:blocked` 筛选阻塞任务。
+原有业务标签会保留；手工改状态标签不会更改权威任务状态。
+
+若输出 `sync.status: pending`，状态已提交，但展示同步尚未完成。使用
+`aegis.py --repo OWNER/REPO sync --issue N` 修复，不要重做开发或重复 finish。
+详见[同步与恢复](skills/aegis/references/issue-visibility.md)。
+
+## 确定性执行与验证
+
+现在可执行配置预检、可信 Issue 准入、依赖/返工预算、证据格式和设计摘要校验、
+精确候选的 CI/审查检查，以及受服务端规则约束的合并队列入队。
+使用 [单次宿主运行器](skills/aegis/references/policy-and-runner.md) 对接本地 Agent CLI，
+运行器负责单任务、锁、超时、续约和日志；不内置模型或常驻调度器。
+离线通过不等于 GitHub 账户权限、真实模型调用或线上交付通过，见 [验证记录](docs/validation.md)。
+
+## 连续迭代与发布
+
+用户补充需求时，先用 [resume 续接检查与 revise 需求修订](skills/aegis/references/continuation.md)，
+保留旧需求和证据，修订后重新设计、独立审查。新任务的验收标准必须写出可观察结果、
+不算通过的反例及验证方式；[v2 证据](skills/aegis/references/evidence-v2.md)区分设计覆盖、
+实现、审查和实际验证。配置的浏览器/发布构建验收组都必须执行，每次运行保留独立证据。
+
+发布时按需读取 [aegis-release](skills/aegis-release/SKILL.md)，记录源码、产物、部署与公网验证。
+构建成功、合并完成都不等于已上线；已有 v1 任务保持原契约，不重写历史。
+参见[实战修正决策](docs/decisions/0004-continuation-and-evidence.md)。

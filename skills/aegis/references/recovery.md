@@ -27,7 +27,7 @@ Do not bypass the limit with a new Issue/identity.
 
 - No automatic stale lease takeover; correctness takes precedence over unattended recovery.
 - No multi-object GitHub transaction: state, comments, PRs, labels and merge are separate
-  effects. Publish evidence first; reconcile state on restart. Labels are optional mirrors.
+  effects. Publish evidence first; reconcile state on restart. Labels are automatically maintained mirrors; partial failures use [Issue sync recovery](issue-visibility.md).
 - Actor independence is a cooperative constraint. Separate credentials and protected checks
   are needed when GitHub must enforce reviewer identity.
 - No long-running daemon or model invocation in these scripts. Scheduler wakeups and

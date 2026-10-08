@@ -1,4 +1,21 @@
 {
   "summary": "CSV export design ready for independent review",
-  "url": "https://github.com/example/taskboard/issues/42#issuecomment-101"
+  "url": "https://github.com/example/taskboard/issues/42#issuecomment-101",
+  "schema": "aegis-evidence/v2",
+  "acceptance": {
+    "AC-1": {
+      "result": "covered",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Design uses the filtered selector; proposes a hidden-row fixture to reject export-all behavior."
+    },
+    "AC-2": {
+      "result": "covered",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Design specifies CSV escaping and parse-back tests for quotes, commas and multiline cells."
+    }
+  },
+  "kind": "design",
+  "design_ref": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "requirements_version": 1,
+  "requirements_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 }

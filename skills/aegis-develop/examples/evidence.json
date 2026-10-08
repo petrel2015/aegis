@@ -2,5 +2,22 @@
   "summary": "CSV export candidate submitted for independent review",
   "pr": 57,
   "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105"
+  "url": "https://github.com/example/taskboard/pull/57#issuecomment-105",
+  "schema": "aegis-evidence/v2",
+  "acceptance": {
+    "AC-1": {
+      "result": "implemented",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Candidate exports the filtered selector output; the linked fixture excludes the hidden row."
+    },
+    "AC-2": {
+      "result": "implemented",
+      "evidence": "https://github.com/example/taskboard/actions/runs/100",
+      "observation": "Candidate serializer escapes quotes and delimiters; linked parse-back test compares original cells."
+    }
+  },
+  "kind": "development",
+  "design_ref": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "requirements_version": 1,
+  "requirements_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 }
