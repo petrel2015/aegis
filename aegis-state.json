@@ -1,7 +1,7 @@
 {
   "last_operation": "dc135bac8bd14fc1858f1c40f1a06416",
   "qa": null,
-  "revision": 1,
+  "revision": 2,
   "tasks": {
     "3": {
       "authors": {},
@@ -11,7 +11,7 @@
         {
           "actor": "agent-aegis-release-planner",
           "at": 1791439809,
-          "delivery": "pending",
+          "delivery": "sending",
           "evidence": {
             "summary": "Task registered for planning"
           },
