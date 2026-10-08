@@ -1,7 +1,10 @@
 {
-  "last_operation": "8cad093f060f4db089bc9f1334979168",
-  "qa": null,
-  "revision": 36,
+  "last_operation": "59d7fafec63a47dc83c06df591439297",
+  "qa": {
+    "issue": "3",
+    "token": "91a19e3d2b644438832d89e5019500a8"
+  },
+  "revision": 37,
   "tasks": {
     "3": {
       "authors": {
@@ -869,7 +872,12 @@
           "to": "testing"
         }
       ],
-      "lease": null,
+      "lease": {
+        "actor": "agent-aegis-release-qa",
+        "expires": 1791444631,
+        "role": "qa",
+        "token": "91a19e3d2b644438832d89e5019500a8"
+      },
       "requirements": {
         "acceptance_ids": [
           "AC-1",
